@@ -1,0 +1,20 @@
+{
+  "name": "Create new item",
+  "tests": [
+    {
+      "name": "POST /items",
+      "request": {
+        "url": "http://localhost:8080/items",
+        "method": "POST",
+        "headers": {
+          "Authorization": "Token secret",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": "name=foobar"
+      },
+      "response": {
+        "body.id": "/items/1"
+      }
+    }
+  ]
+}
