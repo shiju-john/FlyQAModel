@@ -9,13 +9,14 @@
 import axios from 'axios'
 
 export default {
-  data () {
+  data() {
     return {
       text: ''
     }
   },
   methods: {
-    onSubmit () {
+    
+    onSubmit() {
       if (this.text.length === 0) {
         return
       }
@@ -26,11 +27,15 @@ export default {
         timestamp: new Date().toLocaleString()
       })
 
-      axios.post(process.env.API_URL + '/ask', { question: this.text }).then((resp) => {
+      axios.post(process.env.API_URL + '/ask', {
+        question: this.text
+      }).then((resp) => {
         this.$emit('messageSent', {
           author: 'bot',
           text: resp.data.answer,
-          accuracy : resp.data.accuracy,
+          accuracy: resp.data.accuracy,
+          remarks: resp.data.remarks,
+          question: resp.data.question,
           timestamp: new Date().toLocaleString()
         })
       }).catch(err => {

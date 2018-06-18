@@ -15,12 +15,19 @@
                 </ul>
                 <div>
                 </div>
+        
             </div>
             <div class="chartArea">               
                   <RFCChartView v-if="chartEnabled==='RFC'" :chartData='chartData'/> 
-                  <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData'/>                 
+                  <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData'/>   
+                  <ModelDialog  :remarks='remarks' :question='question' :version='version'/>
+                  <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata'/>  
+                  
+ 
+
             </div>
-          </div>        
+          </div> 
+                
         </div>
 
         <div class ="right" >
@@ -34,7 +41,7 @@
 
           </div>
           <div class='MessageList'>
-              <Message v-for='message in messages' :message='message'/>
+              <Message v-for='message in messages' :message='message' @remarkssent='onremarks'/>
               <MessageForm @messageSent='onMessageSent'/>
           </div>
         </div>      
@@ -53,130 +60,218 @@ import Message from './components/Message'
 import MessageForm from './components/MessageForm'
 import RFCChartView from './components/RFCChartView'
 import ProductChartView from './components/ProductChartView'
+import ModelDialog from './components/ModelDialog'
+import ReqSolution from './components/ReqSolution'
+// import modal_test from './components/modal_test'
+
 import axios from 'axios'
 
 
 export default {
-  components: { Message, MessageForm, RFCChartView,ProductChartView },
-  data () {
+  components: {
+    Message,
+    MessageForm,
+    RFCChartView,
+    ProductChartView,
+    ModelDialog,
+    ReqSolution,
+    // modal_test
+    
+  },
+  data() {
     return {
-       
+      remarks: [],
+      question:String,
+      version:String,
+      flag: 'none',
+      requestdata:[],
+
       messages: [{
         author: 'bot',
         text: 'Let us discuss about Neon!',
         timestamp: new Date().toLocaleString()
       }],
 
+
+
       chartEnabled: '',
       selected: 'Neon 3.5',
-      options :
-         [
-            { text: 'Neon 3.5', value: 'Neon 3.5' },
-            { text: 'Neon 3.0', value: 'Neon 3.0' },
-            { text: 'Neon 2.0', value: 'Neon 2.0' },
-            { text: 'Neon 1.0', value: 'Neon 1.0' }
-          ],
+      options: [{
+          text: 'Neon 3.5',
+          value: 'Neon 3.5'
+        },
+        {
+          text: 'Neon 3.0',
+          value: 'Neon 3.0'
+        },
+        {
+          text: 'Neon 2.0',
+          value: 'Neon 2.0'
+        },
+        {
+          text: 'Neon 1.0',
+          value: 'Neon 1.0'
+        }
+      ],
 
+
+
+      items: [{
+        url: '../static/img/pie1.jpeg',
+        name: 'RFP Based',
+        type: 'RFC'
+      }, {
+        url: '../static/img/bar.jpeg',
+        name: 'Product Based',
+        type: 'PDT'
+      },
+      {
+        url: '../static/img/pending_req.png',
+        name: 'Pending Solution',
+        type: 'REQ'
+      }
       
-
-      items: [{           
-         url: '../static/img/pie1.jpeg',
-         name: 'RFP Based',
-         type: 'RFC'
-         },{        
-         url: '../static/img/bar.jpeg',
-         name:'Product Based',
-         type: 'PDT'         
-       }],
+      ],
 
 
-       chartData :{
-        piedata :{ title:'', type :'', data :''},
-        bardata :{ title:'', type :'', data :''}
-       },
+      chartData: {
+        piedata: {
+          title: '',
+          type: '',
+          data: ''
+        },
+        bardata: {
+          title: '',
+          type: '',
+          data: ''
+        }
+      },
 
-       productchartData :{
-        piedata :{ title:'', type :'', data :''},
-        bardata :{ title:'', type :'', data :''}
-       }     
-       
+      productchartData: {
+        piedata: {
+          title: '',
+          type: '',
+          data: ''
+        },
+        bardata: {
+          title: '',
+          type: '',
+          data: ''
+        }
+      }
+
     }
   },
+
   methods: {
-    onMessageSent (message) {
+    onMessageSent(message) {
       this.messages.push(message)
     },
 
-     initRFCdata : function(value){
-      if (value==='pie' || value==='all') {
-       this.chartData.piedata = {
-          type :'',
-          title:'',
-          data :'' 
-        }
-      }
-      if (value==='bar' || value==='all'){
-        this.chartData.bardata = {
-          type :'',
-          title:'',
-          data :'' 
-        }
+    onremarks(message) {
+      this.remarks = message.text.remarks;
+      this.question=message.text.question,
+      this.flag = 'block',
+      this.version=this.selected;
+      this.show();
 
-       }
-      
+      // console.log(message);
     },
 
-    initProductdata : function(value){
-      if (value==='pie' || value==='all') {
-       this.productchartData.piedata = {
-          type :'',
-          title:'',
-          data :'' 
+    initRFCdata: function (value) {
+      if (value === 'pie' || value === 'all') {
+        this.chartData.piedata = {
+          type: '',
+          title: '',
+          data: ''
         }
       }
-      if (value==='bar' || value==='all'){
-        this.productchartData.bardata = {
-          type :'',
-          title:'',
-          data :'' 
+      if (value === 'bar' || value === 'all') {
+        this.chartData.bardata = {
+          type: '',
+          title: '',
+          data: ''
         }
 
-       }
-      
-    },   
-  
-    onClick(item) {
-      if(item.type === 'RFC'){  
-          this.chartEnabled = item.type ;    
-          axios.post(process.env.API_URL + '/rfc_chart', { type: item.type,chartType : 'pie' }).then((resp) => {
-            this.chartData.piedata.title = resp.data.title;
-            this.chartData.piedata.type = resp.data.type;
-            this.chartData.piedata.data = resp.data.data;
-            this.initRFCdata('bar');       
-            
-          }).catch(err => {
-            const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-            alert(message);
-          })
       }
-      if(item.type === 'PDT'){
-        this.chartEnabled = item.type ;  
+
+    },
+
+    initProductdata: function (value) {
+      if (value === 'pie' || value === 'all') {
+        this.productchartData.piedata = {
+          type: '',
+          title: '',
+          data: ''
+        }
+      }
+      if (value === 'bar' || value === 'all') {
+        this.productchartData.bardata = {
+          type: '',
+          title: '',
+          data: ''
+        }
+
+      }
+
+    },
+show () {
+    this.$modal.show('ModelDialog');
+  },
+  hide () {
+    this.$modal.hide('ModelDialog');
+  },
+    onClick(item) {
+      // this.show();
+      if (item.type === 'RFC') {
+        this.chartEnabled = item.type;
+        axios.post(process.env.API_URL + '/rfc_chart', {
+          type: item.type,
+          chartType: 'pie'
+        }).then((resp) => {
+          this.chartData.piedata.title = resp.data.title;
+          this.chartData.piedata.type = resp.data.type;
+          this.chartData.piedata.data = resp.data.data;
+          this.initRFCdata('bar');
+
+        }).catch(err => {
+          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          alert(message);
+        })
+      }
+      if (item.type === 'PDT') {
+        this.chartEnabled = item.type;
         this.initRFCdata('all');
-        axios.post(process.env.API_URL + '/product_chart', { type: item.type,chartType : 'bar' }).then((resp) => {
-            this.productchartData.bardata.title = resp.data.title;
-            this.productchartData.bardata.type = resp.data.type;
-            this.productchartData.bardata.data = resp.data.data;
-            this.initProductdata('pie');       
-            console.log(resp.data.data)
-          }).catch(err => {
-            const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-            alert(message);
-          })
+        axios.post(process.env.API_URL + '/product_chart', {
+          type: item.type,
+          chartType: 'bar'
+        }).then((resp) => {
+          this.productchartData.bardata.title = resp.data.title;
+          this.productchartData.bardata.type = resp.data.type;
+          this.productchartData.bardata.data = resp.data.data;
+          this.initProductdata('pie');
+          console.log(resp.data.data)
+        }).catch(err => {
+          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          alert(message);
+        })
+      }
+      if(item.type==='REQ'){
+        this.chartEnabled = item.type;
+        axios.get(process.env.REM_URL +'&status=OPEN', {
+
+        }).then((resp) => {
+          this.requestdata=resp.data;
+          // console.log(this.requestdata);
+        }).catch(err => {
+          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          alert(message);
+        })
       }
     }
 
   },
-  updated () {
+  updated() {
     this.$el.querySelector('form').scrollIntoView()
   }
 
