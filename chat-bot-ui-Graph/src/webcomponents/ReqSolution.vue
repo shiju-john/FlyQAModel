@@ -4,7 +4,7 @@
   <!-- The Modal -->
     <!-- Modal content -->
     <div class="modal-content">
-<div class="head1">Pending Request Solutions</div>
+<div class="head1">Pending  Solution Requests</div>
 <table-component  caption="heading" :data="requestdata" sort-by="requestTime">
   <table-column show="question" label="question"></table-column>
   <table-column show="productVersion" label="product Version"></table-column>
