@@ -1,5 +1,5 @@
 <template>
-<modal name="Feedback"  :width="800"
+<modal name="Feedback"  :width="900"
          :height="180">
     <div  class="replytab">
        <!-- <span class="span">Solution Response</span> -->

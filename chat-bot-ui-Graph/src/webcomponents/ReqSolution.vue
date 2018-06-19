@@ -7,9 +7,9 @@
 <div class="head1">Pending Request Solutions</div>
 <table-component  caption="heading" :data="requestdata" sort-by="requestTime">
   <table-column show="question" label="question"></table-column>
-  <table-column show="productVersion" label="productVersion"></table-column>
-  <table-column show="requestUser" label="requestUser"></table-column>
-  <table-column show="requestTime" label="requestTime"></table-column>
+  <table-column show="productVersion" label="product Version"></table-column>
+  <table-column show="requestUser" label="request User"></table-column>
+  <table-column show="requestTime" label="request Time"></table-column>
   <table-column :sortable="false" :filterable="false">
       <template slot-scope="row">
            <button class="btn" v-on:click="reply(row)">
