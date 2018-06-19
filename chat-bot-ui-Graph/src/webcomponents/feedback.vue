@@ -34,7 +34,7 @@
               <textarea v-model="docversion" rows="4" cols="30"></textarea>
             </td>
             <td>
-              <button class="save" v-on:click="sendreply()">Save</button>
+              <button  class="button button2" v-on:click="sendreply()">Save</button>
             </td>
           </tr>
       </table>
@@ -100,6 +100,28 @@ export default {
 </script>
 
 <style scoped>
+.button {
+    background-color: #7518a0;
+    border: none;
+    color: white;
+    padding: 11px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    margin-left: 0px;
+}
+
+
+
+.button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+
 .head1{
 font-weight: bold;
 padding: 15px;
