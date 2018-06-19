@@ -6,7 +6,7 @@
 
   <table>
     <tr>
-<span >Solution Response</span>
+<span class="head1">Solution Response</span>
     </tr>
     <tr>
  <table >
@@ -100,8 +100,9 @@ export default {
 </script>
 
 <style scoped>
-.span{
-
+.head1{
+font-weight: bold;
+padding: 15px;
 }
 
 .head2{

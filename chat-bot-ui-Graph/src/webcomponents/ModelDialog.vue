@@ -1,5 +1,6 @@
 <template>
 <modal name="ModelDialog"  height="auto" :scrollable="true">
+  <div class="head1">Solutions</div>
     <div class="modal-content" >
       <table>
         <tr>
@@ -66,7 +67,11 @@ export default {
 
 <style scoped>
 
-
+.head1{
+    font-weight: bold;
+    padding-top: 16px;
+    padding-left: 11px;
+}
 .req{
   cursor: pointer;
 }
@@ -94,7 +99,7 @@ export default {
     padding: 3px;
     border: 1px solid #888;
     width: 99%;
-    margin-top: 64px;
+    margin-top: 15px;
 }
 
 /* The Close Button */

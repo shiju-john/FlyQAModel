@@ -2,10 +2,9 @@
 <!-- ashik -->
 <div class="ReqSolution">
   <!-- The Modal -->
-  <div id="myModal">
     <!-- Modal content -->
     <div class="modal-content">
-
+<div class="head1">Pending Request Solutions</div>
 <table-component  caption="heading" :data="requestdata" sort-by="requestTime">
   <table-column show="question" label="question"></table-column>
   <table-column show="productVersion" label="productVersion"></table-column>
@@ -23,7 +22,6 @@
 
     
     </div> 
-  </div>
 </div>
 
 
@@ -72,6 +70,10 @@ export default {
 </script>
 
 <style scoped>
+
+.head1{
+    font-weight: bold;
+}
 /* scroll */
 table.scroll {
     width: 100%;
@@ -126,15 +128,6 @@ tbody td:last-child, thead th:last-child {
 }
 /* scroll */
 
-.head{
-background-color:#306696;
-padding:3%;
-}
-
-.head2{
-background-color:#306696;
-padding-top: 3%;
-}
 
 textarea {
     resize: none;
@@ -162,6 +155,9 @@ textarea {
     border: 1px solid #888;
     width: 99%;
     margin-top: 18px;
+    width: 100%;
+    height: 477px;
+    overflow: auto;
     /* background-color:#b2cfff */
 }
 
