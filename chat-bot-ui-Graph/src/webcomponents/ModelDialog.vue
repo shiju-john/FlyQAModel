@@ -16,21 +16,17 @@
     </div>
      <div id="snackbar">Solution request successfully sent!</div>
 </modal>
-<!-- modal dialog box -->
 </template>
-
-     
-
+   
 <script>
 // for api requests
 import axios from 'axios'
 
 export default {
 
-  props: ['remarks', 'flag','question','version'],
+  props: ['remarks', 'flag', 'question', 'version'],
 
   data() {
-
     return {
       modifiers: {},
     }
@@ -38,28 +34,27 @@ export default {
   methods: {
 
     request() {
-        console.log("api called");
-        console.log(process.env.REM_URL)
-      // inputs here are asked question and product version
       axios.post(process.env.REM_URL, {
         question: this.question,
-        productVersion:this.version
+        productVersion: this.version
       }).then((resp) => {
         this.toast(this.$modal);
-        
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })
     },
 
-     toast(modal) {
-    var x = document.getElementById("snackbar");
-    x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-    setTimeout(function(){ modal.hide('ModelDialog'); }, 1000);
-    //  this.$modal.hide('ModelDialog');
-}
+    toast(modal) {
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
+      setTimeout(function () {
+        modal.hide('ModelDialog');
+      }, 1000);
+    }
   }
 }
 
@@ -81,8 +76,6 @@ export default {
     transition-duration: 0.4s;
         margin-left: 200px;
 }
-
-
 
 .button2:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
@@ -123,25 +116,6 @@ export default {
     margin-top: 15px;
 }
 
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.r{
-  color: black
-}
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -153,6 +127,7 @@ td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    text-align: center;
 }
 
 /* toast css */

@@ -1,15 +1,12 @@
 <template>
-<modal name="Feedback"  :width="900"
-         :height="180">
-    <div  class="replytab">
-       <!-- <span class="span">Solution Response</span> -->
-
-  <table>
-    <tr>
-<span class="head1">Solution Response</span>
-    </tr>
-    <tr>
- <table >
+<modal name="Feedback" :width="900" :height="180">
+  <div class="replytab">
+    <table>
+      <tr>
+        <span class="head1">Solution Response</span>
+      </tr>
+      <tr>
+        <table>
           <tr>
             <th>Question</th>
             <th>Feature Status</th>
@@ -34,26 +31,20 @@
               <textarea v-model="docversion" rows="4" cols="30"></textarea>
             </td>
             <td>
-              <button  class="button button2" v-on:click="sendreply()">Save</button>
+              <button class="button button2" v-on:click="sendreply()">Save</button>
             </td>
           </tr>
-      </table>
-    </tr>
-  </table>
-   
-
-      
-    </div>
-      <div id="snackbar">Solution request successfully processed!</div>
+        </table>
+      </tr>
+    </table>
+  </div>
+  <div id="snackbar">Solution request successfully processed!</div>
 
 </modal>
-<!-- modal dialog box -->
 </template>
 
 <script>
 import axios from 'axios'
-
-
 export default {
 
   props: ['feedbackdata'],
@@ -61,22 +52,22 @@ export default {
 
     return {
       modifiers: {},
-         remarks:'',
-        docversion:'',
-        featureStatus:''
+      remarks: '',
+      docversion: '',
+      featureStatus: ''
     }
   },
   methods: {
-    sendreply(){
+    sendreply() {
       axios.put(process.env.REM_URL, {
-        id :this.feedbackdata.question_id,
-        question :this.feedbackdata.question,
-        productVersion:this.feedbackdata.productVersion,
-        requestUser:this.feedbackdata.requestUser,
-        requestTime :this.feedbackdata.requestTime,
-        answer:this.remarks,
-        docLink :this.docversion,
-        featureStatus :this.featureStatus
+        id: this.feedbackdata.question_id,
+        question: this.feedbackdata.question,
+        productVersion: this.feedbackdata.productVersion,
+        requestUser: this.feedbackdata.requestUser,
+        requestTime: this.feedbackdata.requestTime,
+        answer: this.remarks,
+        docLink: this.docversion,
+        featureStatus: this.featureStatus
       }).then((resp) => {
         this.toast(this.$modal);
         console.log(resp);
@@ -85,15 +76,16 @@ export default {
         console.log(message);
       })
     },
-
     toast(modal) {
-    var x = document.getElementById("snackbar");
-    x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-    setTimeout(function(){ modal.hide('Feedback'); }, 1000);
-}
-    
-    
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
+      setTimeout(function () {
+        modal.hide('Feedback');
+      }, 1000);
+    }
   }
 }
 
@@ -115,26 +107,15 @@ export default {
     margin-left: 0px;
 }
 
-
-
 .button2:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
-
 
 .head1{
 font-weight: bold;
 padding: 15px;
 }
 
-.head2{
-background-color:#306696;
-padding-top: 3%;
-}
-
-.save{
-  cursor: pointer;
-}
 .replytab{
     background-color: white;
     width: 100%;
@@ -145,7 +126,6 @@ textarea {
 }
 
 /* table */
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -203,6 +183,4 @@ td, th {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
-
-
 </style>
