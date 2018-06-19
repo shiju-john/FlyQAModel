@@ -21,7 +21,8 @@
                 <RFCChartView v-if="chartEnabled==='RFC'" :chartData='chartData'/> 
                 <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData'/>   
                 <ModelDialog  :remarks='remarks' :question='question' :version='version'/>
-                <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata'/>  
+                  <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback'/> 
+                  <feedback :feedbackdata='feedbackdata' ></feedback> 
             </div>
           </div> 
                 
@@ -59,7 +60,7 @@ import RFCChartView from './webcomponents/RFCChartView'
 import ProductChartView from './webcomponents/ProductChartView'
 import ModelDialog from './webcomponents/ModelDialog'
 import ReqSolution from './webcomponents/ReqSolution'
-// import modal_test from './components/modal_test'
+import Feedback from './webcomponents/feedback'
 
 import axios from 'axios'
 
@@ -72,7 +73,7 @@ export default {
     ProductChartView,
     ModelDialog,
     ReqSolution,
-    // modal_test
+    Feedback
     
   },
   data() {
@@ -82,7 +83,7 @@ export default {
       version:String,
       flag: 'none',
       requestdata:[],
-
+      feedbackdata:[],
       messages: [{
         author: 'bot',
         text: 'Let us discuss about Neon!',
@@ -175,6 +176,11 @@ export default {
       // console.log(message);
     },
 
+      onfeedback(data){
+        this.feedbackdata=data.reqdata;
+        this.$modal.show('Feedback');
+    },
+
     initRFCdata: function (value) {
       if (value === 'pie' || value === 'all') {
         this.chartData.piedata = {
@@ -217,9 +223,9 @@ show () {
   },
   hide () {
     this.$modal.hide('ModelDialog');
+      this.$modal.hide('Feedback');
   },
     onClick(item) {
-      // this.show();
       if (item.type === 'RFC') {
         this.chartEnabled = item.type;
         axios.post(process.env.API_URL + '/rfc_chart', {
@@ -316,7 +322,7 @@ show () {
   overflow-y: scroll;
 
    border: 4px solid #e5e5e5;
-   z-index: 1001;
+   z-index: 998;
   -moz-opacity: 0.8;
   opacity: .80;
   filter: alpha(opacity=80);

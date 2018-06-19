@@ -15,16 +15,14 @@
     I am {{message.accuracy}} % sure
   </div>
 </div>
-
 <!-- modal dialog box -->
 </template>
 
 <script>
-// import ModelDialog from './ModelDialog'
+
 
 export default {
   props: ['message'],
-  // components: { ModelDialog},
 
   data() {
      
@@ -39,7 +37,6 @@ export default {
   },
   methods: {
     myFunction(a) {
-    //  console.log(a);
     this.remark=a;
     this.$emit('remarkssent', {
         text: this.remark,
