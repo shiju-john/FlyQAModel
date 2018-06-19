@@ -21,7 +21,8 @@
                 <RFCChartView v-if="chartEnabled==='RFC'" :chartData='chartData'/> 
                 <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData'/>   
                 <ModelDialog  :remarks='remarks' :question='question' :version='version'/>
-                  <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback'/> 
+                  <!-- <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback'/>  -->
+                  <ReqSolution v-if="chartEnabled==='REQ'"  @reqsent='onfeedback'/> 
                   <feedback :feedbackdata='feedbackdata' ></feedback> 
             </div>
           </div> 
@@ -261,15 +262,6 @@ show () {
       }
       if(item.type==='REQ'){
         this.chartEnabled = item.type;
-        axios.get(process.env.REM_URL +'&status=OPEN', {
-
-        }).then((resp) => {
-          this.requestdata=resp.data;
-          // console.log(this.requestdata);
-        }).catch(err => {
-          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-          alert(message);
-        })
       }
     }
 

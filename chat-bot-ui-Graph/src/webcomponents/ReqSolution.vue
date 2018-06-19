@@ -1,15 +1,13 @@
 <template>
-<!-- ashik -->
 <div class="ReqSolution">
-  <!-- The Modal -->
     <!-- Modal content -->
     <div class="modal-content">
-<div class="head1">Pending  Solution Requests</div>
+<div class="head1">Solutions</div>
 <table-component  caption="heading" :data="requestdata" sort-by="requestTime">
   <table-column show="question" label="question"></table-column>
-  <table-column show="productVersion" label="product Version"></table-column>
-  <table-column show="requestUser" label="request User"></table-column>
-  <table-column show="requestTime" label="request Time"></table-column>
+  <table-column show="productVersion" label="productVersion"></table-column>
+  <table-column show="requestUser" label="requestUser"></table-column>
+  <table-column show="requestTime" label="requestTime"></table-column>
   <table-column :sortable="false" :filterable="false">
       <template slot-scope="row">
            <button class="btn" v-on:click="reply(row)">
@@ -19,8 +17,6 @@
   </table-column>
 
 </table-component>
-
-    
     </div> 
 </div>
 
@@ -33,26 +29,35 @@ import axios from 'axios'
 
 export default {
 
-  props: ['requestdata'],
-
   data() {
       return {
         modifiers: {},
         req_obj:{},
         flag:'none',
+        requestdata:[],
         question:String,
 
       }
     },
+
+    created: function() {
+    this.reqsolution();
+    this.timer = setInterval(this.reqsolution, 3000)
+
+},
     methods: {
 
-    close() {
-    //   this.reply_flag = "false"
+    reqsolution(){
+        axios.get(process.env.REM_URL +'&status=OPEN', {
+        }).then((resp) => {
+          this.requestdata=resp.data;
+          // console.log(this.requestdata);
+        }).catch(err => {
+          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          alert(message);
+        })
     },
 
-    display() {
-      this.flag = "block"
-    },
 
     reply(data){
       this.req_obj.question=data.question,
@@ -73,6 +78,8 @@ export default {
 
 .head1{
     font-weight: bold;
+    padding-top: 16px;
+    padding-left: 11px;
 }
 /* scroll */
 table.scroll {
@@ -128,6 +135,15 @@ tbody td:last-child, thead th:last-child {
 }
 /* scroll */
 
+.head{
+background-color:#306696;
+padding:3%;
+}
+
+.head2{
+background-color:#306696;
+padding-top: 3%;
+}
 
 textarea {
     resize: none;
@@ -155,9 +171,6 @@ textarea {
     border: 1px solid #888;
     width: 99%;
     margin-top: 18px;
-    width: 100%;
-    height: 477px;
-    overflow: auto;
     /* background-color:#b2cfff */
 }
 
