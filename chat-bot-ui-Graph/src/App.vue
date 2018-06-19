@@ -17,14 +17,11 @@
                 </div>
         
             </div>
-            <div class="chartArea">               
-                  <RFCChartView v-if="chartEnabled==='RFC'" :chartData='chartData'/> 
-                  <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData'/>   
-                  <ModelDialog  :remarks='remarks' :question='question' :version='version'/>
-                  <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata'/>  
-                  
- 
-
+            <div class="chartArea"> 
+                <RFCChartView v-if="chartEnabled==='RFC'" :chartData='chartData'/> 
+                <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData'/>   
+                <ModelDialog  :remarks='remarks' :question='question' :version='version'/>
+                <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata'/>  
             </div>
           </div> 
                 
@@ -56,12 +53,12 @@
 
 <script>
 import Vue from 'vue'
-import Message from './components/Message'
-import MessageForm from './components/MessageForm'
-import RFCChartView from './components/RFCChartView'
-import ProductChartView from './components/ProductChartView'
-import ModelDialog from './components/ModelDialog'
-import ReqSolution from './components/ReqSolution'
+import Message from './webcomponents/Message'
+import MessageForm from './webcomponents/MessageForm'
+import RFCChartView from './webcomponents/RFCChartView'
+import ProductChartView from './webcomponents/ProductChartView'
+import ModelDialog from './webcomponents/ModelDialog'
+import ReqSolution from './webcomponents/ReqSolution'
 // import modal_test from './components/modal_test'
 
 import axios from 'axios'

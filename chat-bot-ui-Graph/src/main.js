@@ -7,8 +7,10 @@ import VueChartkick from 'vue-chartkick'
 import Chart from 'chart.js'
 
 import vmodal from 'vue-js-modal'
-Vue.use(vmodal)
+import TableComponent from 'vue-table-component';
 
+Vue.use(TableComponent);
+Vue.use(vmodal)
 Vue.use(VueChartkick, {adapter: Chart})
 
 /* eslint-disable no-new */
