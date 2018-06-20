@@ -9,6 +9,9 @@ import Chart from 'chart.js'
 import vmodal from 'vue-js-modal'
 import TableComponent from 'vue-table-component';
 
+import CircleMenu from 'vue-circle-menu'
+Vue.component('CircleMenu', CircleMenu)
+
 Vue.use(TableComponent);
 Vue.use(vmodal)
 Vue.use(VueChartkick, {adapter: Chart})

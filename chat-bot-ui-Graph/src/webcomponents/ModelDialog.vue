@@ -1,8 +1,8 @@
 <template>
 <modal name="ModelDialog"  height="auto" :scrollable="true">
-  <div class="head1">Solutions</div>
+  <div class="head1" >Solutions</div>
     <div class="modal-content" >
-      <table>
+      <table v-if="this.remarks.doc_ref">
         <tr>
           <th>Document reference</th>
           <th>Remarks</th>
@@ -111,7 +111,7 @@ export default {
     background-color: #fefefe;
     margin: auto;
     padding: 3px;
-    border: 1px solid #888;
+    /* border: 1px solid #888; */
     width: 99%;
     margin-top: 15px;
 }

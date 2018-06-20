@@ -97,4 +97,8 @@ export default {
 .MessageForm__Send:active {
   background-color: #306696;
 }
+
+textarea {
+    resize: none;
+}
 </style>

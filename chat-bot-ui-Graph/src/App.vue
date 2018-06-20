@@ -1,57 +1,51 @@
 
-<template> 
+<template>
   <div id='app'>
-  
     <div class="wrapper" style="overflow:auto">
-        <div class ='aside-left'>
-          <div class="main">
-            <div class="menubar"> 
-                <ul id="example-1" class="container">
-                    <li v-for="item in items" v-bind:style="{ backgroundImage: 'url(' + item.url + ')' }" v-on:click="onClick(item)">
-                      <div class="chartHeading">
-                            {{item.name}}
-                      </div>
-                    </li>
-                </ul>
-                <div>
+      <div class='aside-left'>
+        <div class="main">
+          <div class="menubar">
+            <ul id="example-1" class="container">
+              <li v-for="item in items" v-bind:style="{ backgroundImage: 'url(' + item.url + ')' }" v-on:click="onClick(item)">
+                <div class="chartHeading">
+                  {{item.name}}
                 </div>
-        
+              </li>
+            </ul>
+            <div>
             </div>
-            <div class="chartArea"> 
-                <RFCChartView v-if="chartEnabled==='RFC'" :chartData='chartData'/> 
-                <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData'/>   
-                <ModelDialog  :remarks='remarks' :question='question' :version='version'/>
-                  <!-- <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback'/>  -->
-                  <ReqSolution v-if="chartEnabled==='REQ'"  @reqsent='onfeedback'/> 
-                  <feedback :feedbackdata='feedbackdata' ></feedback> 
-            </div>
-          </div> 
-                
+
+          </div>
+          <div class="chartArea">
+            <RFCChartView v-if="chartEnabled==='RFC'" :chartData='chartData' />
+            <ProductChartView v-if="chartEnabled==='PDT'" :productchartData='productchartData' />
+            <ModelDialog :remarks='remarks' :question='question' :version='version' />
+            <ReqSolution v-if="chartEnabled==='REQ'" />
+          </div>
         </div>
+      </div>
 
-        <div class ="right" >
-          <div class = 'bottop'>
-            <span class="label">Product Version</span>
-            <select class="listBox" v-model="selected">
-                <option v-for="option in options" v-bind:value="option.value">
-                  {{ option.text }}
-                 </option>
-            </select>
+      <div class="right">
+        <div class='bottop'>
+          <span class="label">Product Version</span>
+          <select class="listBox" v-model="selected">
+            <option v-for="option in options" v-bind:value="option.value">
+              {{ option.text }}
+            </option>
+          </select>
 
-          </div>
-          <div class='MessageList'>
-              <Message v-for='message in messages' :message='message' @remarkssent='onremarks'/>
-              <MessageForm @messageSent='onMessageSent'/>
-          </div>
-        </div>      
-        
+        </div>
+        <div class='MessageList'>
+          <Message v-for='message in messages' :message='message' @remarkssent='onremarks' />
+          <MessageForm @messageSent='onMessageSent' />
+        </div>
       </div>
 
     </div>
 
+  </div>
+
 </template>
-
-
 
 <script>
 import Vue from 'vue'
@@ -61,7 +55,6 @@ import RFCChartView from './webcomponents/RFCChartView'
 import ProductChartView from './webcomponents/ProductChartView'
 import ModelDialog from './webcomponents/ModelDialog'
 import ReqSolution from './webcomponents/ReqSolution'
-import Feedback from './webcomponents/feedback'
 
 import axios from 'axios'
 
@@ -73,18 +66,14 @@ export default {
     RFCChartView,
     ProductChartView,
     ModelDialog,
-    ReqSolution,
-    Feedback
-    
+    ReqSolution,    
   },
   data() {
     return {
       remarks: [],
       question:String,
       version:String,
-      flag: 'none',
       requestdata:[],
-      feedbackdata:[],
       messages: [{
         author: 'bot',
         text: 'Let us discuss about Neon!',
@@ -173,13 +162,6 @@ export default {
       this.flag = 'block',
       this.version=this.selected;
       this.show();
-
-      // console.log(message);
-    },
-
-      onfeedback(data){
-        this.feedbackdata=data.reqdata;
-        this.$modal.show('Feedback');
     },
 
     initRFCdata: function (value) {
@@ -196,9 +178,7 @@ export default {
           title: '',
           data: ''
         }
-
       }
-
     },
 
     initProductdata: function (value) {
@@ -221,10 +201,6 @@ export default {
     },
 show () {
     this.$modal.show('ModelDialog');
-  },
-  hide () {
-    this.$modal.hide('ModelDialog');
-      this.$modal.hide('Feedback');
   },
     onClick(item) {
       if (item.type === 'RFC') {
@@ -274,7 +250,6 @@ show () {
 </script>
 
 <style>
-/*@import url('https://fonts.googleapis.com/css?family=Lato:100,300,700');*/
 
 * {
   margin: 0px;
