@@ -8,13 +8,22 @@ import Chart from 'chart.js'
 
 import vmodal from 'vue-js-modal'
 import TableComponent from 'vue-table-component';
-
+// import Chat from 'vue-beautiful-chat'
 import CircleMenu from 'vue-circle-menu'
+// import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue);
 Vue.component('CircleMenu', CircleMenu)
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 Vue.use(TableComponent);
-Vue.use(vmodal)
-Vue.use(VueChartkick, {adapter: Chart})
+Vue.use(vmodal);
+Vue.use(VueChartkick, {adapter: Chart});
+// Vue.use(Chat);
+
 
 /* eslint-disable no-new */
 new Vue({

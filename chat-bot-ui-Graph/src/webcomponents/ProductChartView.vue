@@ -28,7 +28,7 @@ export default {
    return {  
     
       barevents :{  
-            title: { fontColor: "white"},
+            title: { fontColor: "black"},
             onClick : this.clickFunction    
           }
     }
@@ -70,7 +70,7 @@ export default {
   display: inline-block;
   margin: 5px 1px;
   padding: 1px;
-  border: 1px groove lightgrey;
+  /* border: 1px groove lightgrey; */
 }
 
 .chartnoborder{

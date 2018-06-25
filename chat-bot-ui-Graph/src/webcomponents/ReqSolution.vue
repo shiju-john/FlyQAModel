@@ -1,9 +1,6 @@
 <template>
 <div class="ReqSolution">
-  
-  <div class="modal-content">
-    <div class="head1">Solutions</div>
-    <table-component caption="heading" :data="requestdata" sort-by="requestTime">
+    <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
       <table-column show="question" label="question"></table-column>
       <table-column show="productVersion" label="productVersion"></table-column>
       <table-column show="requestUser" label="requestUser"></table-column>
@@ -16,9 +13,7 @@
         </template>
       </table-column>
     </table-component>
-  </div>
   <div id="myModal" v-bind:style="{ display: modal }">
-  <!-- Modal content -->
   <div class="modal-content_pop" >
     <span v-on:click="close()" class="close">&times;</span>
       <div class="replytab">
@@ -275,7 +270,8 @@ padding-top: 3%;
 
 .head1{
 font-weight: bold;
-padding: 15px;
+/* padding: 15px; */
+font-size: 15px;
 }
 
 .replytab{

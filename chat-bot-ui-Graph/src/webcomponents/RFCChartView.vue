@@ -26,12 +26,12 @@ export default {
   data () {
      return {       
         pieevents :{  
-              title: { fontColor: "white"},
+              title: { fontColor: "black"},
               onClick : this.clickFunction    
         },
 
          barptions :{  
-              title: { fontColor: "white"}                
+              title: { fontColor: "black"}                
         },
 
       }
@@ -73,4 +73,6 @@ export default {
   padding: 1px;
   
 }
+
+
 </style>
