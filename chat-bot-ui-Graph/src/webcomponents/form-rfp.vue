@@ -1,9 +1,9 @@
 <template>
   <div class="form-rfp">
-    <div class="container">
+    <div class="container" v-if="showsheet==='false'">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="exampleInputGroup2" label="File Input" label-for="exampleInput2">
-        <RfpUploader @filename='filename'></RfpUploader>
+        <RfpUploader @sheetnames='sheetnames'></RfpUploader>
       </b-form-group>
       <b-form-group id="exampleInputGroup2" label="RFP Name" label-for="exampleInput2">
         <b-form-input id="exampleInput2" type="text" v-model="file_name" required placeholder="Enter RFP name">
@@ -19,20 +19,24 @@
       </div>
     </b-form>
     </div>
-
+   <SheetDetails v-if="showsheet==='true'" :index=0  :docarray="doc_arr"></SheetDetails>
   </div>
 </template>
 
 <script>
 import RfpUploader from '../webcomponents/RfpUploader'
+import SheetDetails from '../webcomponents/sheet-details'
+
 export default {
-   components: {RfpUploader},
+   components: {RfpUploader,SheetDetails},
   data () {
     return {
       form: {
         name: '',
         food: null,
       },
+      showsheet:'false',
+      doc_arr:[],
       file_name:'',
       selectedversion:'Neon 3.5',
       foods: [{
@@ -58,10 +62,8 @@ export default {
   methods: {
     onSubmit (evt) {
       evt.preventDefault();
-      // alert(JSON.stringify(this.form));
-        this.$emit('sheetstatus', {
-        show: 'true'
-      })
+      this.showsheet= 'true'
+
     },
     onReset (evt) {
       evt.preventDefault();
@@ -73,9 +75,24 @@ export default {
       this.show = false;
       this.$nextTick(() => { this.show = true });
     },
-    filename(name){
-      this.file_name=name.text;
+    sheetnames(sheets){
+      
+      console.log(sheets);
+
+      for (var sheet in sheets[0].sheets){
+        this.doc_arr.push(
+           {
+          headerIndex:'',
+          sheetname:sheet,
+          questionColumn:'',
+          resetColumn:'',
+          statusColumn:''
+          }
+        )
     }
+
+
+  }
   }
 }
 </script>

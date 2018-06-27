@@ -28,7 +28,6 @@
     </div>
   </div>
 </template>
-
 <script>
     
 import axios from 'axios'
@@ -40,6 +39,7 @@ export default {
   data() {
     return {
       uploadedFiles: [],
+      sheetnames: [],
       uploadError: null,
       currentStatus: null,
       uploadFieldName: 'rfpfile'
@@ -74,39 +74,30 @@ export default {
     },
 
     upload(data) {
-      const url = `http://192.168.19.24:8080/fileupload`;
+      const url = `http://192.168.127.17:8080/fileupload`;
       axios.post(url, data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then((resp) => {
-        // this.toast(this.$modal);
-        console.log("hi")
+        this.$emit('sheetnames', resp.data)
         this.currentStatus = STATUS_SUCCESS;
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
-        // this.currentStatus = STATUS_FAILED;
       })
-
     },
 
     filesChange(fieldName, fileList) {
-      this.$emit('filename', {
-        text: fileList[0].name,
-      })
       // handle file changes
       const formData = new FormData();
 
       if (!fileList.length) return;
-
-      //   // append the files to FormData
       Array
         .from(Array(fileList.length).keys())
         .map(x => {
           formData.append('filetoupload', fileList[x], fileList[x].name);
         });
-
       // save it
       this.save(formData);
     }

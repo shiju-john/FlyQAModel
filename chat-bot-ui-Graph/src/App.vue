@@ -20,8 +20,8 @@
           <b-card :header="cardtitle" v-if="chartEnabled!='landing'" > 
           <statistics v-if="chartEnabled==='ST'"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback' />
-          <formrfp  v-if="chartEnabled==='RFPU'" @sheetstatus='sheet'></formrfp>
-          <SheetDetails v-if="showsheet==='true'" ></SheetDetails>
+          <formrfp  v-if="chartEnabled==='RFPU'"></formrfp>
+         
         </b-card>
          <ModelDialog :remarks='remarks' :question='question' :version='version' />
       </div>
@@ -44,7 +44,7 @@ import landingpage from './webcomponents/landing-page'
 import statistics from './webcomponents/statistics'
 import RfpUploader from './webcomponents/RfpUploader'
 import formrfp from './webcomponents/form-rfp'
-import SheetDetails from './webcomponents/sheet-details'
+
 
 import axios from 'axios'
 
@@ -57,8 +57,8 @@ export default {
     landingpage,
     statistics,
     RfpUploader,
-    formrfp ,
-    SheetDetails 
+    formrfp 
+ 
   },
   data() {
     return {
@@ -66,7 +66,6 @@ export default {
       question: String,
       version: String,
       flag: 'false',
-      showsheet:'false',
       cardtitle: '',
       requestdata: [],
       feedbackdata: [],
@@ -142,10 +141,6 @@ export default {
   },
 
   methods: {
-    sheet(status){
-      this.showsheet=status.show;
-      this.chartEnabled='';
-    },
     home() {
       this.chartEnabled = 'landing'
     },
@@ -425,7 +420,7 @@ ul li:hover {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #a9f2fe;
+    background-color: #17a2b8;
     color: white;
     text-align: center;
     height: 5%;
