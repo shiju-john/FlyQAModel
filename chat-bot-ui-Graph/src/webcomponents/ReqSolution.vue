@@ -2,9 +2,9 @@
 <div class="ReqSolution">
     <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
       <table-column show="question" label="question"></table-column>
-      <table-column show="productVersion" label="productVersion"></table-column>
-      <table-column show="requestUser" label="requestUser"></table-column>
-      <table-column show="requestTime" label="requestTime"></table-column>
+      <table-column show="productVersion" label="product Version"></table-column>
+      <table-column show="requestUser" label="requested User"></table-column>
+      <table-column show="requestTime" label="requested Time"></table-column>
       <table-column :sortable="false" :filterable="false">
         <template slot-scope="row">
            <button v-on:click="reply(row)" class="btn btn-primary">
@@ -13,13 +13,11 @@
         </template>
       </table-column>
     </table-component>
-  <div id="myModal" v-bind:style="{ display: modal }">
-  <div class="modal-content_pop" >
-    <span v-on:click="close()" class="close">&times;</span>
-      <div class="replytab">
+  <div id="myModal" class="modal-content_pop"  v-bind:style="{ display: modal }">
     <table>
       <tr>
         <span class="head1">Solution Response</span>
+        <span v-on:click="close()" class="close">&times;</span>
       </tr>
       <tr>
         <table>
@@ -54,8 +52,6 @@
       </tr>
     </table>
   </div>
-  </div>
-</div>
   <div><div id="snackbar">Solution request successfully processed!</div></div>
 </div>
 
@@ -79,7 +75,7 @@ export default {
       remarks: '',
       docversion: '',
       featureStatus: '',
-      property: ''
+      property: '',
 
     }
   },
@@ -220,7 +216,7 @@ padding-top: 3%;
 
 /* Modal Content */
 .modal-content_pop {
-    height: 185px;
+    height: 179px;
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -232,6 +228,7 @@ padding-top: 3%;
     margin-left: 12px;
     border-radius: 15px;
     display: table;
+    box-shadow: 0 5px 35px rgb(67, 153, 190);
 }
 
 /* The Close Button */
@@ -240,6 +237,7 @@ padding-top: 3%;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    padding-right: 1%;
 }
 
 .close:hover,
@@ -275,11 +273,7 @@ font-weight: bold;
 font-size: 15px;
 }
 
-.replytab{
-     background-color: white;
-    width: 100%;
-    margin-top: 25px;
-}
+
 textarea {
     resize: none;
 }
@@ -294,7 +288,7 @@ table {
 }
 
 td, th {
-    border: 1px solid #dddddd;
+    
     text-align: left;
     padding: 8px;
     font-size: 11px;

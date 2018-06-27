@@ -7,7 +7,7 @@
           <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
             class="input-file">
           <p v-if="isInitial">
-            Drag your RFP here to begin
+            Drag your RFP file here to begin
             <br> or click to browse
           </p>
           <p v-if="isSaving">

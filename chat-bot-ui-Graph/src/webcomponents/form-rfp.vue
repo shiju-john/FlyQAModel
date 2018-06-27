@@ -2,15 +2,15 @@
   <div class="form-rfp">
     <div class="container" v-if="showsheet==='false'">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group id="exampleInputGroup2" label="File Input" label-for="exampleInput2">
+      <b-form-group  label="File Input">
         <RfpUploader @sheetnames='sheetnames'></RfpUploader>
       </b-form-group>
-      <b-form-group id="exampleInputGroup2" label="RFP Name" label-for="exampleInput2">
-        <b-form-input id="exampleInput2" type="text" v-model="file_name" required placeholder="Enter RFP name">
+      <b-form-group label="RFP Name">
+        <b-form-input type="text" v-model="file_name" required placeholder="Enter RFP name">
         </b-form-input>
       </b-form-group>
-      <b-form-group id="exampleInputGroup3" label="Product Version" label-for="exampleInput3">
-        <b-form-select id="exampleInput3" :options="foods" required v-model="selectedversion">
+      <b-form-group  label="Product Version">
+        <b-form-select  :options="foods" required v-model="selectedversion">
         </b-form-select>
       </b-form-group>
       <div style="margin-left: 50%;}">
@@ -19,7 +19,7 @@
       </div>
     </b-form>
     </div>
-   <SheetDetails v-if="showsheet==='true'" :index=0  :docarray="doc_arr"></SheetDetails>
+   <SheetDetails v-if="showsheet==='true'" :index=0  :docarray="doc_arr" :productversion="selectedversion"></SheetDetails>
   </div>
 </template>
 
@@ -28,17 +28,20 @@ import RfpUploader from '../webcomponents/RfpUploader'
 import SheetDetails from '../webcomponents/sheet-details'
 
 export default {
-   components: {RfpUploader,SheetDetails},
-  data () {
+  components: {
+    RfpUploader,
+    SheetDetails
+  },
+  data() {
     return {
       form: {
         name: '',
         food: null,
       },
-      showsheet:'false',
-      doc_arr:[],
-      file_name:'',
-      selectedversion:'Neon 3.5',
+      showsheet: 'false',
+      doc_arr: [],
+      file_name: '',
+      selectedversion: 'Neon 3.5',
       foods: [{
           text: 'Neon 3.5',
           value: 'Neon 3.5'
@@ -60,39 +63,36 @@ export default {
     }
   },
   methods: {
-    onSubmit (evt) {
+    onSubmit(evt) {
       evt.preventDefault();
-      this.showsheet= 'true'
+      this.showsheet = 'true'
 
     },
-    onReset (evt) {
+    onReset(evt) {
       evt.preventDefault();
       /* Reset our form values */
       this.form.name = '';
       this.form.food = null;
-      this.file_name=''
+      this.file_name = ''
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
-      this.$nextTick(() => { this.show = true });
+      this.$nextTick(() => {
+        this.show = true
+      });
     },
-    sheetnames(sheets){
-      
-      console.log(sheets);
-
-      for (var sheet in sheets[0].sheets){
-        this.doc_arr.push(
-           {
-          headerIndex:'',
-          sheetname:sheet,
-          questionColumn:'',
-          resetColumn:'',
-          statusColumn:''
-          }
-        )
+    sheetnames(sheets) {
+      this.file_name=sheets[0].id;
+      for (var sheet in sheets[0].sheets) {
+        this.doc_arr.push({
+          headerIndex: '',
+          sheetname: sheet,
+          questionColumn: '',
+          resetColumn: '',
+          statusColumn: '',
+          documentReference:''
+        })
+      }
     }
-
-
-  }
   }
 }
 </script>

@@ -97,9 +97,10 @@ export default {
       ],
       items: [{
           url: '../static/img/statistics.svg',
-          name: 'Statistics',
+          name: 'Analytics',
           type: 'ST',
           card: true,
+          content:'Graphical representation of product compliance and solutions',
           icon: 'fa fa-bar-chart',
           submenu: [{
             url: '../static/img/rfp.svg',
@@ -120,6 +121,7 @@ export default {
           name: 'Pending Solution',
           type: 'REQ',
           card: true,
+          content:' Solution requirements with pending response.',
           icon: 'fa fa-hourglass-start',
         },
         {
@@ -127,13 +129,15 @@ export default {
           name: ' RFP Uploader',
           type: 'RFPU',
           card: true,
+          content:'Upload a RFP File',
           icon: 'fa fa-cloud-upload',
         },
         {
           url: '../static/img/track.svg',
-          name: ' RFP status Tracker',
+          name: ' RFP Status Tracker',
           type: 'RFPS',
           card: true,
+          content:'Know the current status',
           icon: 'fa fa-map-signs',
         },
       ],
@@ -452,8 +456,8 @@ ul li:hover {
 }
 
 .landing{
-    margin:4%;
-        margin-left: 14%;
+    margin:.1%;
+        margin-left: 10%;
 }
 </style>
 

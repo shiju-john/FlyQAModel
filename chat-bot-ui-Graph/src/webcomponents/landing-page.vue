@@ -4,11 +4,9 @@
     <div v-for="item in items" v-if="item.card">
       <b-card bg-variant="primary" text-variant="white" :header="item.name" class="text-center zoom" v-on:click="click(item)">
         <img :src="item.url" style="width: 43%;height: 81%;margin: 2%;">
-        <span style="margin-left: 50%;margin-top: -56%;margin-right: 4%;">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy
-          text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
-          book.
+        <span style="margin-left: 50%;      text-align: justify;  margin-top: -41%;
+margin-right: 4%;">
+         {{item.content}}
         </span>
       </b-card>
     </div>

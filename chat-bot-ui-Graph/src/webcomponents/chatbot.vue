@@ -110,7 +110,7 @@ body{
 
 .sc-chat-window[data-v-2a21bba5] {
     width: 370px;
-    height: calc(100% - 329px)!important;
+    height: calc(100% - 30%)!important;
     }
 
     .chat{
