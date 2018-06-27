@@ -1,21 +1,18 @@
 <template>
-<div class='landing-page'>
-     <b-card-group deck
-                  class="mb-3" >
-    <div  v-for="item in items" v-if="item.card" >
-        <b-card bg-variant="primary"
-                text-variant="white"
-                :header="item.name"
-                class="text-center zoom"
-                v-on:click="click(item)"
-                >
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </b-card>
-            </div>
-    </b-card-group>
-        
-
-   
+<div class='landing-page'  >
+  <b-card-group deck class="mb-3">
+    <div v-for="item in items" v-if="item.card">
+      <b-card bg-variant="primary" text-variant="white" :header="item.name" class="text-center zoom" v-on:click="click(item)">
+        <img :src="item.url" style="width: 43%;height: 81%;margin: 2%;">
+        <span style="margin-left: 50%;margin-top: -56%;margin-right: 4%;">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+          Lorem Ipsum has been the industry's standard dummy
+          text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
+          book.
+        </span>
+      </b-card>
+    </div>
+  </b-card-group>
 </div>
 </template>
 
@@ -42,7 +39,8 @@ export default {
 <style scoped>
 .card-deck .card {
     display: -ms-flexbox;
-    display: flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
     -ms-flex: 1 0 0%;
     flex: 1 0 0%;
     -ms-flex-direction: column;
@@ -50,9 +48,11 @@ export default {
     margin-right: 15px;
     margin-bottom: 0;
     margin-left: 15px;
-    height: 195px!important;
-     box-shadow: 1px 2px 5px grey!important;
-     margin-top: 2em!important;
+    height: 228px!important;
+    width: 340px;
+    box-shadow: 1px 2px 5px grey!important;
+    margin-top: 2em!important;
+    font-size: 12px;
 }
 
 .zoom {
@@ -66,14 +66,33 @@ export default {
 }
 
 .bg-primary {
-    background-color: #f76868 !important;
+    background-color: #016896 !important;
 }
 
 .card-body {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
-    margin-left: 19%!important;
+    margin-left: 2%!important;
     margin-top: 11%!important;
+        display: contents;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+    font-style: bold;
+    font-weight: bold!important;
 }
 </style>

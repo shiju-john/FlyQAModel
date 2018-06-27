@@ -19,8 +19,9 @@
           <landingpage v-if="chartEnabled==='landing'" :items='items' @onselect='onClick' class="landing"></landingpage>
           <b-card :header="cardtitle" v-if="chartEnabled!='landing'" > 
           <statistics v-if="chartEnabled==='ST'"></statistics>
-         
           <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback' />
+          <formrfp  v-if="chartEnabled==='RFPU'" @sheetstatus='sheet'></formrfp>
+          <SheetDetails v-if="showsheet==='true'" ></SheetDetails>
         </b-card>
          <ModelDialog :remarks='remarks' :question='question' :version='version' />
       </div>
@@ -41,6 +42,10 @@ import quickMenu from './webcomponents/quickMenu'
 import chatbot from './webcomponents/chatbot'
 import landingpage from './webcomponents/landing-page'
 import statistics from './webcomponents/statistics'
+import RfpUploader from './webcomponents/RfpUploader'
+import formrfp from './webcomponents/form-rfp'
+import SheetDetails from './webcomponents/sheet-details'
+
 import axios from 'axios'
 
 export default {
@@ -50,7 +55,10 @@ export default {
     quickMenu,
     chatbot,
     landingpage,
-    statistics
+    statistics,
+    RfpUploader,
+    formrfp ,
+    SheetDetails 
   },
   data() {
     return {
@@ -58,19 +66,17 @@ export default {
       question: String,
       version: String,
       flag: 'false',
+      showsheet:'false',
       cardtitle: '',
       requestdata: [],
       feedbackdata: [],
       selectedversion:'Neon 3.5',
-
       messages: [{
         author: 'bot',
         text: 'Let us discuss about Neon!',
         type: 'text',
         timestamp: new Date().toLocaleString()
       }],
-
-
       chartEnabled: 'landing',
       selected: 'Neon 3.5',
       options: [{
@@ -91,19 +97,19 @@ export default {
         }
       ],
       items: [{
-          url: '../static/img/pie1.jpeg',
+          url: '../static/img/statistics.svg',
           name: 'Statistics',
           type: 'ST',
           card: true,
           icon: 'fa fa-bar-chart',
           submenu: [{
-            url: '../static/img/pie1.jpeg',
+            url: '../static/img/rfp.svg',
             name: 'RFP Based',
             type: 'RFC',
             card: false,
             icon: 'fa fa-bar-chart',
           }, {
-            url: '../static/img/bar.jpeg',
+            url: '../static/img/tree.svg',
             name: 'Product Based',
             type: 'PDT',
             card: false,
@@ -111,21 +117,21 @@ export default {
           }]
         },
         {
-          url: '../static/img/pending_req.png',
+          url: '../static/img/pending.svg',
           name: 'Pending Solution',
           type: 'REQ',
           card: true,
           icon: 'fa fa-hourglass-start',
         },
         {
-          url: '../static/img/pending_req.png',
+          url: '../static/img/upload.svg',
           name: ' RFP Uploader',
           type: 'RFPU',
           card: true,
           icon: 'fa fa-cloud-upload',
         },
         {
-          url: '../static/img/pending_req.png',
+          url: '../static/img/track.svg',
           name: ' RFP status Tracker',
           type: 'RFPS',
           card: true,
@@ -136,6 +142,10 @@ export default {
   },
 
   methods: {
+    sheet(status){
+      this.showsheet=status.show;
+      this.chartEnabled='';
+    },
     home() {
       this.chartEnabled = 'landing'
     },
@@ -168,6 +178,7 @@ export default {
       this.flag = "true"
       this.cardtitle = item.name
       this.chartEnabled = item.type;
+      this.showsheet=''
 
       if (item.type === 'REQ') {
 
@@ -176,11 +187,14 @@ export default {
 
         }).then((resp) => {
           this.requestdata = resp.data;
-          // console.log(this.requestdata);
         }).catch(err => {
           const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
           alert(message);
         })
+      }
+
+        if (item.type === 'RFPU') {
+        this.chartEnabled = item.type;
       }
     }
 
@@ -202,7 +216,6 @@ export default {
 
 .wrapper {
   width: 100%;
-  /* height: auto; */
   background-color: white;
   position: absolute;
   width: 100%;
@@ -231,12 +244,13 @@ export default {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
- margin-left: -1.3%!important;
-    margin-top: -1.2%!important;
-    margin-right: -1.3%!important;
-
 }
 
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0rem!important;
+}
 .wrapper .right {
   z-index: 998;
   -moz-opacity: 0.8;
@@ -297,7 +311,6 @@ h2 {
 .menubar {
   margin-top: 3px;
   border: 1px groove lightgrey;
-  /*border-color: #93b1e2;*/
   padding: 2px;
   text-align: left;
   height: 25%;
@@ -307,8 +320,6 @@ h2 {
 .chartArea {
   width: 100%;
   height: 100%;
-
-  /* margin-top: 243px; */
 }
 
 .chart {
@@ -317,9 +328,6 @@ h2 {
   display: inline-block;
   margin: 5px 1px;
   padding: 1px;
-  /* border: 1px groove lightgrey; */
-  /* box-shadow: 2px 5px 1px 1px #85a6c6; */
-  /*/*background: #2db34a; */
   border-radius: 6px;
   transition-property: border-radius;
   transition-duration: .5s;
@@ -331,8 +339,6 @@ h2 {
 }
 
 .container li {
-  /**/
-  /*float: left;*/
   display: inline-block;
   margin-top: 20px;
   margin-left: 20px;
@@ -344,7 +350,6 @@ h2 {
   margin-bottom: 20px;
   position: relative;
   box-shadow: 2px 5px #06422a;
-  /*/*background: #2db34a; */
   border-radius: 6px;
   transition-property: border-radius;
   transition-duration: .5s;
@@ -415,8 +420,6 @@ ul li:hover {
     border-radius: 0.25rem;
 }
 
-
-
 .footer {
     position: fixed;
     left: 0;
@@ -454,8 +457,8 @@ ul li:hover {
 }
 
 .landing{
-    margin-top: 2%;
-    margin-left: 20%;
+    margin:4%;
+        margin-left: 14%;
 }
 </style>
 

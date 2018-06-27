@@ -231,6 +231,7 @@ padding-top: 3%;
     padding: 6px;
     margin-left: 12px;
     border-radius: 15px;
+    display: table;
 }
 
 /* The Close Button */

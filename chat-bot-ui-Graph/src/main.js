@@ -22,6 +22,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(TableComponent);
 Vue.use(vmodal);
 Vue.use(VueChartkick, {adapter: Chart});
+
+// file uploader
+const VueUploadComponent = require('vue-upload-component')
+Vue.component('file-upload', VueUploadComponent)
 // Vue.use(Chat);
 
 
