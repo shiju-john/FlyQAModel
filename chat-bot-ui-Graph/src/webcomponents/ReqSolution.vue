@@ -126,7 +126,7 @@ export default {
         featureStatus: this.featureStatus
       }).then((resp) => {
         this.toast();
-        console.log(resp);
+        // console.log(resp);
         this.modal = 'none';
         this.remarks = '',
         this.docversion = ''
@@ -141,9 +141,7 @@ export default {
       setTimeout(function () {
         x.className = x.className.replace("show", "");
       }, 3000);
-    },
-
-    
+    },   
   }
 }
 

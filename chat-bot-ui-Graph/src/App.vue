@@ -2,16 +2,16 @@
 <template>
   <div id='app'>
     <div class="wrapper" style="overflow:auto">
-      <b-navbar toggleable="md" type="dark" variant="info">
+      <b-navbar toggleable="md" type="dark" variant="info" style="padding:0%">
         <b-navbar-brand>
-          <img style="width:50%;     margin-left: 16%;" src="../static/img/flytxt-logo-color.svg">
+          <img style="width:50%; margin-left: 16%;" src="../static/img/flytxt-logo-color.svg">
         </b-navbar-brand>
          <b-navbar-nav class="ml-auto">
           <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;" v-on:click="home()" title="home"></i>
-              <select style=" cursor:pointer;padding:5px; height: 10%;margin-top: 7%;" title="select version" v-model="selectedversion">
+              <select style="cursor: pointer;height: 9%;margin-top: 9%;font-size: smaller;" title="select version" v-model="selectedversion">
           <option  v-for="option of options">{{option.text}}</option>
         </select>
-          <i class="fa fa-power-off" style="font-size:26px; color:white; cursor:pointer;padding:12px;" title="sign-out"></i>
+          <i class="fa fa-power-off" style="font-size:26px; color:white;cursor:pointer;padding:12px;" title="sign-out"></i>
           </b-navbar-nav>
       </b-navbar>
       <div class="main">
@@ -21,18 +21,15 @@
           <statistics v-if="chartEnabled==='ST'"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback' />
           <formrfp  v-if="chartEnabled==='RFPU'"></formrfp>
-         
         </b-card>
          <ModelDialog :remarks='remarks' :question='question' :version='version' />
       </div>
-      <div class="footer">
+      <div >
         <chatbot :messages='messages' @messageSent='onMessageSent' @remarkssent='onremarks'></chatbot>
       </div>
     </div>
   </div>
 </template>
-
-
 
 <script>
 import Vue from 'vue'
@@ -271,20 +268,8 @@ export default {
   flex: 1;
 }
 
-h2 {
-  color: white;
-}
-
-.bottop {
-  padding: 2px;
-  text-align: left;
-  height: 5vh;
-  background-color: #f82363;
-}
 
 #app {
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
   background-color: #1E1E1E;
   min-height: 100vh;
 }
@@ -333,60 +318,7 @@ h2 {
   transition-timing-function: linear;
 }
 
-.container {
-  list-style: none;
-}
 
-.container li {
-  display: inline-block;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-right: 25px;
-  width: 100px;
-  height: 100px;
-  background-size: 90%;
-  background-repeat: no-repeat;
-  margin-bottom: 20px;
-  position: relative;
-  box-shadow: 2px 5px #06422a;
-  border-radius: 6px;
-  transition-property: border-radius;
-  transition-duration: .5s;
-  transition-timing-function: linear;
-}
-
-ul li:hover {
-  background: #555;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  border-radius: 50%;
-}
-
-.container li:active {
-  background-color: indianred;
-  cursor: pointer;
-}
-
-.container li .chartHeading {
-  position: absolute;
-  bottom: -25px;
-  left: 0;
-  line-height: 20px;
-  font-size: 13px;
-  color: white;
-  margin-left: 10px;
-}
-
-.container::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.label {
-  color: white;
-  font-size: 10pt;
-}
 
 .listBox {
   float: right;
@@ -419,6 +351,23 @@ ul li:hover {
     border-radius: 0.25rem;
 }
 
+
+
+
+.card-header {
+    padding: 0.75rem 6.25rem!important;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-deck {
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-right: 0px!important;
+    margin-left: -15px;
+}
+
 .footer {
     position: fixed;
     left: 0;
@@ -427,7 +376,7 @@ ul li:hover {
     background-color: #17a2b8;
     color: white;
     text-align: center;
-    height: 5%;
+    height: 4%;
     
 }
 
@@ -445,19 +394,26 @@ ul li:hover {
     box-shadow: 1px 2px 5px grey!important;
     }
 
+    .navbar-nav {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: initial;
+    margin-bottom: 0;
+    list-style: none;
+}
+
     .form-inline {
     display: -ms-flexbox;
-    /* display: flex; */
     -ms-flex-flow: row wrap;
     flex-flow: row wrap;
     -ms-flex-align: center;
     align-items: end;
-    /* margin-left: 54%!important; */
 }
 
 .landing{
     margin:.1%;
-        margin-left: 10%;
+    margin-left: 10%;
 }
 </style>
 

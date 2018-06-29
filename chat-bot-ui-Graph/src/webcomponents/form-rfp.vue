@@ -1,29 +1,40 @@
 <template>
   <div class="form-rfp">
     <div class="container" v-if="showsheet==='false'">
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group  label="File Input">
-        <RfpUploader @sheetnames='sheetnames'></RfpUploader>
-      </b-form-group>
-      <b-form-group label="RFP Name">
-        <b-form-input type="text" v-model="file_name" required placeholder="Enter RFP name">
-        </b-form-input>
-      </b-form-group>
-      <b-form-group  label="Product Version">
-        <b-form-select  :options="foods" required v-model="selectedversion">
-        </b-form-select>
-      </b-form-group>
-      <div style="margin-left: 50%;}">
-        <b-button type="reset" variant="danger">Reset</b-button>
-        <b-button type="submit" variant="primary">Next</b-button>
-      </div>
-    </b-form>
+
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <div class="flex-container">
+          <div>
+            <b-form-group label="File Input">
+              <RfpUploader @sheetnames='sheetnames'></RfpUploader>
+            </b-form-group>
+          </div>
+          <div>
+            <div style="margin-top: 9%;">
+              <b-form-group label="RFP Name">
+                <b-form-input type="text" v-model="file_name" required placeholder="Enter RFP name">
+                </b-form-input>
+              </b-form-group>
+              <b-form-group label="Product Version">
+                <b-form-select :options="foods" required v-model="selectedversion">
+                </b-form-select>
+              </b-form-group>
+              <div style="margin-left: 73%;}">
+                <b-button type="reset" variant="danger">Reset</b-button>
+                <b-button type="submit" variant="primary">Next</b-button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </b-form>
     </div>
-   <SheetDetails v-if="showsheet==='true'" :index=0  :docarray="doc_arr" :productversion="selectedversion"></SheetDetails>
+    <SheetDetails v-if="showsheet==='true'" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
   </div>
 </template>
 
 <script>
+
 import RfpUploader from '../webcomponents/RfpUploader'
 import SheetDetails from '../webcomponents/sheet-details'
 
@@ -40,6 +51,7 @@ export default {
       },
       showsheet: 'false',
       doc_arr: [],
+      sheetarray:[],
       file_name: '',
       selectedversion: 'Neon 3.5',
       foods: [{
@@ -81,15 +93,17 @@ export default {
       });
     },
     sheetnames(sheets) {
+      this.sheetarray=sheets[0].sheets
       this.file_name=sheets[0].id;
       for (var sheet in sheets[0].sheets) {
         this.doc_arr.push({
           headerIndex: '',
-          sheetname: sheet,
+          sheetname:  sheets[0].sheets[sheet],
           questionColumn: '',
-          resetColumn: '',
+          remarks: '',
           statusColumn: '',
-          documentReference:''
+          documentReference:'',
+          skippable:''
         })
       }
     }
@@ -98,8 +112,8 @@ export default {
 </script>
 <style>
 .form-rfp{
-    font-size: 17px;
-    margin: 1%;
+    /* font-size: 17px; */
+    /* margin: 1%; */
 }
 
 .form-control {
@@ -116,4 +130,20 @@ export default {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.flex-container {
+  display: flex;
+  width: 100%;
+  box-shadow: 0px 0px 6px 0px grey;
+  border-radius: 16px;
+  margin-top: 4%;
+}
+
+.flex-container>div {
+  margin: -1px;
+  padding: 1%;
+  /* font-size: 20px; */
+  /* width: 31%; */
+  margin-top: 1%;
+  width: 47%;
+}
 </style>

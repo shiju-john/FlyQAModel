@@ -13,9 +13,9 @@
           <p v-if="isSaving">
             Uploading {{ fileCount }} files...
           </p>
-          <div v-if="isSuccess" style="margin-top: 10%;margin-left: 27%;">
-            <h2>Uploaded {{ fileCount }} file(s) successfully.</h2>
-          </div>
+          <p v-if="isSuccess" >
+            Uploaded {{ fileCount }} file(s) successfully.
+          </p>
           <!--FAILED-->
           <div v-if="isFailed">
             <h2>Uploaded failed.</h2>
@@ -75,6 +75,9 @@ export default {
 
     upload(data) {
       const url = `http://192.168.127.17:8080/fileupload`;
+      // const url =process.env.UPLD_URL;
+      // const url='http://192.168.127.76:8000';
+
       axios.post(url, data, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -119,7 +122,7 @@ export default {
     min-height: 200px;
     position: relative;
     cursor: pointer;
-    box-shadow: 5px 5px 3px grey;
+    box-shadow: 1px 2px 6px 0px grey;
 
   }
 
