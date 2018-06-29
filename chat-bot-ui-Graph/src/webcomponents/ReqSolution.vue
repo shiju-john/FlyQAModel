@@ -8,7 +8,7 @@
       <table-column :sortable="false" :filterable="false">
         <template slot-scope="row">
            <button v-on:click="reply(row)" class="btn btn-primary">
-             <span class="glyphicon glyphicon-share-alt"></span> 
+             <i class="fa fa-reply"></i>
           </button>
         </template>
       </table-column>
