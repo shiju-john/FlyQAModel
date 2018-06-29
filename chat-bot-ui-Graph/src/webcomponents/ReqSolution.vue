@@ -13,15 +13,15 @@
         </template>
       </table-column>
     </table-component>
-      <vue-modaltor  
+      <vue-modaltor 
     :visible="open" 
     @hide="open = false"
     :animation-panel="'modal-slide-right'"
-    
     >
+    <div class="subject" v-on:click="close" style="cursor:pointer"><h3>Solution Response</h3></div>
        <table>
       <tr>
-        <span class="head1">Solution Response</span>
+        <!-- <span class="head1">Solution Response</span> -->
         <!-- <span v-on:click="close()" class="close">&times;</span> -->
       </tr>
       <tr>
@@ -121,6 +121,7 @@ export default {
     close() {
       this.remarks = '',
       this.docversion = ''
+      this.open = false
     },
 
     sendreply() {
@@ -202,6 +203,8 @@ padding-top: 3%;
   width: 24px;
 }
 
+td, th {
+    border: 1px solid #dddddd;}
 
 /* popup css */
 

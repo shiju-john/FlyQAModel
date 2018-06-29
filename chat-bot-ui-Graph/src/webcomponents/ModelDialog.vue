@@ -1,5 +1,5 @@
 <template>
-<modal name="ModelDialog"  height="auto" :scrollable="true">
+<modal name="ModelDialog"  height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
   <div class="head1" >Solutions</div>
     <div class="modal-content" >
       <table v-if="this.remarks.doc_ref">
