@@ -28,6 +28,11 @@ import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 Vue.use(VueFormWizard)
 
+// MODAL
+// import Vue from 'vue'
+import VueModalTor from 'vue-modaltor'
+Vue.use(VueModalTor)
+
 // file uploader
 const VueUploadComponent = require('vue-upload-component')
 Vue.component('file-upload', VueUploadComponent)

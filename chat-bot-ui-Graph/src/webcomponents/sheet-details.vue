@@ -1,7 +1,7 @@
 <template>
   <div class="SheetDetails">
     <div class="container">
-      <form-wizard title='' subtitle='Fill the excel sheet template details' color="#17a2b8" @on-complete="onSubmit()">
+      <form-wizard title='' subtitle='Fill the excel sheet template details' color="#e86824" @on-complete="onSubmit()">
         <tab-content v-for="doc in docarray" :title="doc.sheetname">
           <div class="flex-container">
             <div>
@@ -31,9 +31,9 @@
                 </b-form-input>
               </b-form-group>
 
-              <b-form-group label="Skippable">
+              <b-form-group >
                 <b-form-checkbox-group v-model="doc.skippable">
-                  <b-form-checkbox value="true">True</b-form-checkbox>
+                  <b-form-checkbox value="true">Skippable</b-form-checkbox>
                 </b-form-checkbox-group>
               </b-form-group>
             </div>

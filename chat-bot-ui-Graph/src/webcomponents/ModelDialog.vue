@@ -9,11 +9,14 @@
         </tr>
         <tr>
           <td>{{this.remarks.doc_ref}}</td>
-          <td>{{this.remarks.remark_text}}</td>
+          <td ><div style="width:100%; max-height:100px; overflow:auto">
+            {{this.remarks.remark_text}}
+            </div>
+            </td>
         </tr>
       </table>
       <!-- <button v-on:click="request"  class="button button2">request for solution</button> -->
-       <b-button variant="success" v-on:click="request">request for solution</b-button>
+       <b-button variant="success" v-on:click="request">Request for Solution</b-button>
     </div>
      <div id="snackbar">Solution request successfully sent!</div>
 </modal>

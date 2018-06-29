@@ -13,11 +13,16 @@
         </template>
       </table-column>
     </table-component>
-  <div id="myModal" class="modal-content_pop"  v-bind:style="{ display: modal }">
-    <table>
+      <vue-modaltor  
+    :visible="open" 
+    @hide="open = false"
+    :animation-panel="'modal-slide-right'"
+    
+    >
+       <table>
       <tr>
         <span class="head1">Solution Response</span>
-        <span v-on:click="close()" class="close">&times;</span>
+        <!-- <span v-on:click="close()" class="close">&times;</span> -->
       </tr>
       <tr>
         <table>
@@ -25,11 +30,14 @@
             <th>Question</th>
             <th>Feature Status</th>
             <th>Remarks</th>
-            <th>Doc_version</th>
+            <th>Document version</th>
             <th> </th>
           </tr>
           <tr>
-            <td>{{this.property}}</td>
+            <td ><div style="width:90%; max-height:90px; overflow-x:auto;overflow-y:auto">
+              {{this.property}}
+              </div>
+              
             <td>
               <select v-model="featureStatus">
                 <option disabled value="">Please select one</option>
@@ -39,10 +47,10 @@
               </select>
             </td>
             <td>
-              <textarea v-model="remarks" rows="4" cols="30" ></textarea>
+              <textarea v-model="remarks"  ></textarea>
             </td>
             <td>
-              <textarea v-model="docversion" rows="4" cols="30" ></textarea>
+              <textarea v-model="docversion"  ></textarea>
             </td>
             <td>
                <button type="button" v-on:click="sendreply()" class="btn btn-success">Save</button>
@@ -51,7 +59,8 @@
         </table>
       </tr>
     </table>
-  </div>
+  </vue-modaltor>
+  
   <div><div id="snackbar">Solution request successfully processed!</div></div>
 </div>
 
@@ -70,7 +79,8 @@ export default {
       requestdata: [],
       send_reply: [],
       question: String,
-      modal: 'none',
+   
+      open:false,
       property: '',
       remarks: '',
       docversion: '',
@@ -84,7 +94,7 @@ export default {
     this.timer = setInterval(this.reqsolution, 3000);
         window.addEventListener('keydown', (e) => {
       if (e.key == 'Escape') {
-      this.modal = 'none';
+      
       this.remarks = '',
       this.docversion = ''
       }
@@ -102,14 +112,13 @@ export default {
     },
 
     reply(data) {
+      this.open=true
       this.send_reply = data;
       this.property = data.question
       var modal = document.getElementById('myModal');
-      this.modal = 'block';
     },
 
     close() {
-      this.modal = 'none';
       this.remarks = '',
       this.docversion = ''
     },
@@ -150,9 +159,7 @@ export default {
 <style scoped>
 
 .head1{
-    font-weight: bold;
-    padding-top: 16px;
-    padding-left: 11px;
+font-weight: bold;
 }
 
 .head{
@@ -212,22 +219,7 @@ padding-top: 3%;
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content */
-.modal-content_pop {
-    height: 179px;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 99%;
-    z-index: 900;
-    margin-top: -386px;
-    padding: 6px;
-    margin-left: 12px;
-    border-radius: 15px;
-    display: table;
-    box-shadow: 0 5px 35px rgb(67, 153, 190);
-}
+
 
 /* The Close Button */
 .close {
@@ -265,15 +257,16 @@ padding-top: 3%;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-.head1{
-font-weight: bold;
-/* padding: 15px; */
-font-size: 15px;
-}
+
 
 
 textarea {
     resize: none;
+    height: 100px;
+   width: 100%;
+   padding:1%;
+   border: 1px solid #CCCCCC !important;
+   /* border:none; */
 }
 
 /* table */
@@ -281,14 +274,13 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    /* background-color:#b2cfff */
-    /* margin-top: 11px; */
+
 }
 
 td, th {
     
     text-align: left;
-    padding: 8px;
+    padding: 6px;
     font-size: 11px;
 }
 
