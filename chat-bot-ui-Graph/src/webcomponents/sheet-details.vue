@@ -2,7 +2,7 @@
   <div class="SheetDetails">
     <div class="container">
       <form-wizard title='' subtitle='Fill the excel sheet template details' color="#e86824" @on-complete="onSubmit()">
-        <tab-content v-for="doc in docarray" :title="doc.sheetname">
+        <tab-content v-for="doc in docarray" :title="doc.sheetname" >
           <div class="flex-container">
             <div>
               <b-form-group label="Header Row Index:">
@@ -32,15 +32,20 @@
               </b-form-group>
 
               <b-form-group >
-                <b-form-checkbox-group v-model="doc.skippable">
-                  <b-form-checkbox value="true">Skippable</b-form-checkbox>
+                <b-form-checkbox-group>
+                  <b-form-checkbox value="true"  v-model="doc.skippable">Skippable</b-form-checkbox>
+                   <!-- <b-form-checkbox v-on:change="sameSettings">Same settings for all</b-form-checkbox> -->
                 </b-form-checkbox-group>
+                
               </b-form-group>
+
+     
             </div>
           </div>
         </tab-content>
       </form-wizard>
     </div>
+    <div><div id="snackbar">sheet details submitted successfully!</div></div>
   </div>
 </template>
 
@@ -52,7 +57,7 @@ export default {
     components: {
        StepProgress
     },
-  props: ['docarray', 'index', 'productversion', 'rfpname','sheetarray'],
+  props: ['docarray', 'index', 'productversion', 'rfpname','sheetarray','file_id','file_path'],
 
   data() {
     return {
@@ -60,7 +65,8 @@ export default {
       submit_flag: "false",
       indexs: this.index,
       resp_str: {
-        file: '',
+        id:'',
+        filepath:'',
         rfp_name: '',
         product_version: '',
         sheets: []
@@ -69,8 +75,22 @@ export default {
   },
 
   methods: {
+
+    sameSettings(){
+      for (let i = 0; i < this.docarray.length; i++) {
+          this.docarray[i+1]=this.docarray[0]  
+      }
+    },
+
+    beforeTabSwitch(evt) {
+      evt.preventDefault();
+      console.log("This is called before switchind tabs");
+      return true;
+    },
+
     onSubmit(evt) {
-      this.resp_str.file = this.rfpname;
+      this.resp_str.id = this.file_id;
+      this.resp_str.filepath = this.file_path;
       this.resp_str.rfp_name = this.rfpname;
       this.resp_str.product_version = this.productversion;
       for (let i = 0; i < this.docarray.length; i++) {
@@ -104,13 +124,16 @@ export default {
     },
 
     upload(data) {
-      const url = `http://192.168.127.17:3000`;
-      axios.post(url, data, {
+      console.log(data)
+      // const url = `http://192.168.127.17:3000`;
+      const url =process.env.UPLD_URL;
+      axios.put(url, data, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'application/json'
         }
       }).then((resp) => {
         this.toast();
+        console.log(resp);
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);

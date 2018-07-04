@@ -1,5 +1,6 @@
 <template>
 <div class="ReqSolution">
+  
     <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
       <table-column show="question" label="question"></table-column>
       <table-column show="productVersion" label="product Version"></table-column>
@@ -13,6 +14,9 @@
         </template>
       </table-column>
     </table-component>
+    <div v-if="loader" style="margin-top: -23%;">
+    <Spinner  message="Loading..."></Spinner>
+  </div>
       <vue-modaltor 
     :visible="open" 
     @hide="open = false"
@@ -21,8 +25,6 @@
     <div class="subject" v-on:click="close" style="cursor:pointer"><h3>Solution Response</h3></div>
        <table>
       <tr>
-        <!-- <span class="head1">Solution Response</span> -->
-        <!-- <span v-on:click="close()" class="close">&times;</span> -->
       </tr>
       <tr>
         <table>
@@ -68,8 +70,15 @@
 
 <script>
 import axios from 'axios'
+// import vuemodel from './vue_model'
+import Spinner from 'vue-simple-spinner'
 
 export default {
+
+  components: {
+    // vuemodel,
+    Spinner
+     },
 
   data() {
     return {
@@ -79,6 +88,7 @@ export default {
       requestdata: [],
       send_reply: [],
       question: String,
+      loader:true,
    
       open:false,
       property: '',
@@ -101,9 +111,15 @@ export default {
     });
   },
 
+  beforeDestroy() {
+    clearInterval(this.timer);
+   },
+
+
   methods: {
     reqsolution() {
       axios.get(process.env.REM_URL + '&status=OPEN', {}).then((resp) => {
+        this.loader=false;
         this.requestdata = resp.data;
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message

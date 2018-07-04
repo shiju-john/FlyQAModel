@@ -4,8 +4,7 @@
     <div v-for="item in items" v-if="item.card">
       <b-card bg-variant="primary" text-variant="white" :header="item.name" class="text-center zoom" v-on:click="click(item)">
         <img :src="item.url" style="width: 43%;height: 81%;margin: 2%;">
-        <span style="margin-left: 50%;      text-align: justify;  margin-top: -41%;
-margin-right: 4%;">
+        <span style="margin-left:50%;text-align: justify;margin-top:-41%;margin-right:4%;">
          {{item.content}}
         </span>
       </b-card>

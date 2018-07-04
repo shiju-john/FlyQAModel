@@ -33,6 +33,8 @@ Vue.use(VueFormWizard)
 import VueModalTor from 'vue-modaltor'
 Vue.use(VueModalTor)
 
+
+
 // file uploader
 const VueUploadComponent = require('vue-upload-component')
 Vue.component('file-upload', VueUploadComponent)

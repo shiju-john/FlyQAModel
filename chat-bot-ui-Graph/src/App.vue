@@ -1,10 +1,10 @@
 
 <template>
   <div id='app'>
-    <div class="wrapper" style="overflow:auto">
+    <div class="wrapper" style="overflow:auto;">
       <b-navbar toggleable="md" type="dark" variant="info" style="padding:0%">
         <b-navbar-brand>
-          <img style="width:50%; margin-left: 16%;" src="../static/img/flytxt-logo-color.svg">
+          <img style="width:50%; margin-left: 21%;" src="../static/img/flytxt-logo-color.svg">
         </b-navbar-brand>
          <b-navbar-nav class="ml-auto">
           <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;" v-on:click="home()" title="home"></i>
@@ -21,6 +21,7 @@
           <statistics v-if="chartEnabled==='ST'"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback' />
           <formrfp  v-if="chartEnabled==='RFPU'"></formrfp>
+          <statusTracker v-if="chartEnabled==='RFPS'"></statusTracker>
         </b-card>
          <ModelDialog :remarks='remarks' :question='question' :version='version' />
       </div>
@@ -41,6 +42,8 @@ import landingpage from './webcomponents/landing-page'
 import statistics from './webcomponents/statistics'
 import RfpUploader from './webcomponents/RfpUploader'
 import formrfp from './webcomponents/form-rfp'
+import statusTracker from './webcomponents/statusTracker'
+
 
 
 import axios from 'axios'
@@ -54,7 +57,8 @@ export default {
     landingpage,
     statistics,
     RfpUploader,
-    formrfp 
+    formrfp ,
+    statusTracker
  
   },
   data() {

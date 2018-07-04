@@ -29,7 +29,7 @@
         </div>
       </b-form>
     </div>
-    <SheetDetails v-if="showsheet==='true'" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
+    <SheetDetails v-if="showsheet==='true'" :file_path="file_path" :file_id="file_id" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
   </div>
 </template>
 
@@ -53,6 +53,8 @@ export default {
       doc_arr: [],
       sheetarray:[],
       file_name: '',
+      file_id:'',
+      file_path:'',
       selectedversion: 'Neon 3.5',
       foods: [{
           text: 'Neon 3.5',
@@ -93,12 +95,14 @@ export default {
       });
     },
     sheetnames(sheets) {
-      this.sheetarray=sheets[0].sheets
-      this.file_name=sheets[0].id;
-      for (var sheet in sheets[0].sheets) {
+      this.sheetarray=sheets.sheets
+      this.file_id=sheets.id;
+      this.file_name=sheets.name;
+      this.file_path=sheets.filename;
+      for (var sheet in sheets.sheets) {
         this.doc_arr.push({
           headerIndex: '',
-          sheetname:  sheets[0].sheets[sheet],
+          sheetname:  sheets.sheets[sheet],
           questionColumn: '',
           remarks: '',
           statusColumn: '',
