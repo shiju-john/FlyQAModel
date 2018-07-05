@@ -1,36 +1,22 @@
 <template>
 <div class="statusTracker">
   <div  v-if="status">
- <input type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-  <table id="myTable">
-    <tr class="header">
-      <th>Name</th>
-      <th>Product Version</th>
-      <th>Uploaded User</th>
-      <th>Uploaded Time</th>
-      <th>Status</th>
-      <th>Response</th>
-    </tr>
-    <tr v-for="data in statusdata">
-      <td>{{data.name}}</td>
-      <td>{{data.productVersion}}</td>
-      <td>{{data.uploadedUser}}</td>
-      <td>{{data.uploadedTime}}</td>
-      <td>{{data.status}}</td>
-      <td v-if="data.status=='completed'">
-        <button class="btn btn-primary" :v-model="statusid=data.id" v-on:click="clik(data.id)">
-          <i class="fa fa-reply"></i>
-        </button>
-        <td v-if="data.status=='uploaded'">
-          <button disabled class="btn btn-primary" >
-            <i class="fa fa-reply"></i>
-          </button>
-        </td>
-    </tr>
-  </table>
+          <table-component caption="heading" :data="statusdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
+          <table-column show="name" label="name"></table-column>
+          <table-column show="productVersion" label="Product Version"></table-column>
+          <table-column show="uploadedUser" label="Uploaded User"></table-column>
+          <table-column show="uploadedTime" label="Uploaded Time"></table-column>
+          <table-column show="status" label="status"></table-column>
+          <table-column :sortable="false" :filterable="false">
+            <template slot-scope="row"  v-if="row.status=='true'">
+              <b-button variant="primary"  title="Request for solution" v-on:click="clik(row.id)">  <i class="fa fa-reply"></i></b-button>
+            </template>
+          </table-column>
+        </table-component>
+
   </div>
- 
-  <answerSelect v-if="answer"></answerSelect>
+     <answerSelect v-if="answer"></answerSelect>
+
 </div>
 </template>
 
@@ -69,30 +55,14 @@ export default {
       this.answer=true;
       this.status=false;
     },
-    myFunction() {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("myTable");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }       
-      }
-    },
+
     getstatusdatas() {
-    //   axios.get(process.env.REM_URL + '&status=OPEN', {}).then((resp) => {
+      // axios.get(process.env.STAT_URL + '&status=OPEN', {}).then((resp) => {
         this.statusdata = [
                 {   
                     id:'stat-1',
                     name:'test_1',
-                    status:'uploaded',
+                    status:'false',
                     uploadedUser:'user_1',
                     uploadedTime:'10:30',
                     productVersion:'3.5',
@@ -101,7 +71,7 @@ export default {
                 ,{
                     id:'stat-2',
                     name:'test_2',
-                    status:'completed',
+                    status:'true',
                     uploadedUser:'user_2',
                     uploadedTime:'3:30',
                     productVersion:'3.3',
@@ -110,11 +80,32 @@ export default {
             
         ];
 
-        // console.log(this.statusdata);
-    //   }).catch(err => {
-    //     const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-    //     alert(message);
-    //   })
+        // console.log(resp);
+      // }).catch(err => {
+      //       this.statusdata = [
+      //           {   
+      //               id:'stat-1',
+      //               name:'test_1',
+      //               status:'uploaded',
+      //               uploadedUser:'user_1',
+      //               uploadedTime:'10:30',
+      //               productVersion:'3.5',
+      //               completed:false
+      //           }
+      //           ,{
+      //               id:'stat-2',
+      //               name:'test_2',
+      //               status:'completed',
+      //               uploadedUser:'user_2',
+      //               uploadedTime:'3:30',
+      //               productVersion:'3.3',
+      //               completed:true
+      //               }
+            
+      //   ];
+      //   const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+      //   alert(message);
+      // })
     },
   }
 }
@@ -123,43 +114,6 @@ export default {
 
 <style scoped>
 
-* {
-  box-sizing: border-box;
-}
 
-#myInput {
- 
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 100%;
-  /* font-size: 16px; */
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
-#myTable {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-  box-shadow: 0px 0px 3px 0px grey;
-  /* font-size: 18px; */
-}
-
-#myTable th, #myTable td {
-  text-align: left;
-  padding: 12px;
-}
-
-#myTable tr {
-  border-bottom: 1px solid #ddd;
-}
-
-#myTable tr.header, #myTable tr:hover {
-  background-color: #f1f1f1;
-}
 </style>
 

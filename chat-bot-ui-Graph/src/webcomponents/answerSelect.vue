@@ -1,55 +1,54 @@
 <template>
   <div class="answerSelect">
     <div class="flex-container">
-      <div>
-        <table class="question">
-            
-          <tr>
-            <th style="background-color: #086d9b;
-            color: white;">Question</th>
-          </tr>
-          <tr v-for="answer in answers" v-on:click="clik(answer.id)">
-            <td :v-model="questionId=answer.id" >{{answer.question}}</td>
-          </tr>
-        </table>
+      <div style="width:60%">
+        <table-component caption="heading" :data="answers" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;">
+          <table-column show="question" label="question"></table-column>
+          <table-column :sortable="false" :filterable="false">
+            <template slot-scope="row">
+              <b-button variant="primary"  title="Request for solution">  <i class="fa fa-reply"></i></b-button>
+              <b-button variant="success" v-on:click="clik(row)" title="answers"> <i class="fa fa-comment"></i></b-button>
+            </template>
+          </table-column>
+        </table-component>
       </div>
-      <div>
-        <div>
-          <b-tabs  >
+      <div style="width:40%">
+        <div style="padding-top:9%">
+          <b-tabs pills card >
             <b-tab :title=a.id v-for="a in ans" v-on:click="toggle">
-              <table class="answer">
+              <table>
+                <tr>
+                  <th style="width: 24%;">Feature Status:</th>
+                  <td>
+                    <textarea style="top: 8px;"  @click="selects" v-if="text">{{a.featureStatus}}</textarea>
+                    <select  @change="edited" v-if="select">
+                      <option value="">Fully Compliance</option>
+                      <option value="">Partially Compliance</option>
+                      <option value="">Non Compliance</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th >Document :</th>
+                  <td height="10">
+                    <textarea style="top: 8px;"  @keyup="edited">{{a.doc_ref}}</textarea>
+                  </td>
+                </tr>
                 <tr>
                   <th>Answer:</th>
                   <td height="200">
-                    <textarea >{{a.answer}}</textarea></td>
+                    <textarea @keyup="edited">{{a.answer}}</textarea>
+                  </td>
                 </tr>
                 <tr>
-                  <th>Document :</th>
-                  <td height="10"> <textarea v-on:keyup="edited">{{a.doc_ref}}</textarea></td>
-                </tr>
-                <tr>
-                  <th>Feature Status:</th>
-                  <td> 
-                    <select name="" id=""  @change="edited">
-                        <option value="">Fully Compliance</option>
-                        <option value="">Partially Compliance</option>
-                        <option value="">Non Compliance</option>  
-                    </select>
-                </td>
-                </tr>
-                <tr>
-                  <th>User Status:</th>
+                  <th></th>
                   <td>
-                    <select name="" id="" @change="edited">
-                        <option value="">accept</option>
-                        <option value="">reject</option>
-                    </select>
-                </td>
+                    <b-button variant="success">accept</b-button>
+                    <b-button variant="danger" style="margin-left: 50px;">reject</b-button>
+                    <b-button variant="info" v-if="updateFlag" style="margin-left: 50px;">Update</b-button>
+                  </td>
                 </tr>
               </table>
-              <div align="center" >
-                <b-button variant="success" v-if="updateFlag">Update</b-button>
-                </div>
             </b-tab>
           </b-tabs>
         </div>
@@ -71,7 +70,9 @@ export default {
         answers:[],
         questionId:'',
         ans:[],
-        updateFlag:false
+        updateFlag:false,
+        select:false,
+        text:true
     }
   },
   created: function () {
@@ -83,8 +84,14 @@ export default {
    },
 
   methods: {
+      selects(){
+          this.select=true;
+          this.text=false;
+      },
       toggle(){
-        this.updateFlag=false
+        this.updateFlag=false;
+        this.select=false;
+          this.text=true;
       },
       edited(){
           this.updateFlag=true;
@@ -92,9 +99,9 @@ export default {
 
     clik(id){
       for (let i = 0; i < this.answers.length; i++) {
-          if(this.answers[i].id==id){
+          if(this.answers[i].id==id.id||this.answers[i].id==id){
               this.ans=this.answers[i].answers
-              this.updateFlag!=this.updateFlag
+              this.updateFlag!=this.updateFlag;
           }else{
           }
           
@@ -162,7 +169,181 @@ export default {
                         userStatus:'bb',
                     }
                 ]
-            }  
+            },
+                {   
+                id:'q-2',
+                question:'How many employees are assigned specifically to the product.',
+                rownumber:'1.1',
+                template_ref:'temp_1.1',
+                answers:[
+                    {
+                        id:'ans-1.1',
+                        answer:'235 employees among the total strength are assigned specifically to its flagship product NEON. Apart from this, there are also shared resources like R&D, sales team, finance team etc. who are associated with the product.',
+                        doc_ref:'doc-1.1',
+                        featureStatus:'bb',
+                        userStatus:'',
+                        },
+                    {
+                        id:'ans-2.1',
+                        answer:'answer-2.1',
+                        doc_ref:'doc-2.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    },
+                    {
+                        id:'ans-3.1',
+                        answer:'The initial version NEON 3.0 was an integrated real-time and closed-loop campaign management platform. It had near-real time capability and could perform Descriptive analytics and Heuristic analytics .Based on the CSPs needs and requirements, Flytxt has continuously upgraded NEON in-order to deliver best possible technology, features and functions. NEON 4.0 is the most advanced version of Flytxt’s award winning NEON Customer Experience and revenue management platform. NEON 4.0 is a big data analytics powered platform with real-time event triggered marketing and multi-dimensional advanced analytics capabilities. Neon 4.0 is purpose built for generating real time insights and enriching them using insight generated from longer term analytics. It also combines various big data technologies like Hadoop, In-memory capabilities and relational databases that brings in cutting edge differentiators to CIOs, CFOs & CMOs. NEON-dX is the latest version which was released recently. It comes with more advanced self-serve data analytics features like UI driven data ETL and an advanced analytics workbench which allows data scientists to build new models or work on model templates made available by Flytxt data science team. This speeds up model deployment and execution to realise business value faster. NEON-dX has also more intuitive UIs for executing outbound and inbound multi-channel marketing campaigns. ',
+                        doc_ref:'doc-3.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    }
+                ]
+            },
+                {   
+                id:'q-2',
+                question:'How many employees are assigned specifically to the product.',
+                rownumber:'1.1',
+                template_ref:'temp_1.1',
+                answers:[
+                    {
+                        id:'ans-1.1',
+                        answer:'235 employees among the total strength are assigned specifically to its flagship product NEON. Apart from this, there are also shared resources like R&D, sales team, finance team etc. who are associated with the product.',
+                        doc_ref:'doc-1.1',
+                        featureStatus:'bb',
+                        userStatus:'',
+                        },
+                    {
+                        id:'ans-2.1',
+                        answer:'answer-2.1',
+                        doc_ref:'doc-2.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    },
+                    {
+                        id:'ans-3.1',
+                        answer:'The initial version NEON 3.0 was an integrated real-time and closed-loop campaign management platform. It had near-real time capability and could perform Descriptive analytics and Heuristic analytics .Based on the CSPs needs and requirements, Flytxt has continuously upgraded NEON in-order to deliver best possible technology, features and functions. NEON 4.0 is the most advanced version of Flytxt’s award winning NEON Customer Experience and revenue management platform. NEON 4.0 is a big data analytics powered platform with real-time event triggered marketing and multi-dimensional advanced analytics capabilities. Neon 4.0 is purpose built for generating real time insights and enriching them using insight generated from longer term analytics. It also combines various big data technologies like Hadoop, In-memory capabilities and relational databases that brings in cutting edge differentiators to CIOs, CFOs & CMOs. NEON-dX is the latest version which was released recently. It comes with more advanced self-serve data analytics features like UI driven data ETL and an advanced analytics workbench which allows data scientists to build new models or work on model templates made available by Flytxt data science team. This speeds up model deployment and execution to realise business value faster. NEON-dX has also more intuitive UIs for executing outbound and inbound multi-channel marketing campaigns. ',
+                        doc_ref:'doc-3.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    }
+                ]
+            },
+                {   
+                id:'q-2',
+                question:'How many employees are assigned specifically to the product.',
+                rownumber:'1.1',
+                template_ref:'temp_1.1',
+                answers:[
+                    {
+                        id:'ans-1.1',
+                        answer:'235 employees among the total strength are assigned specifically to its flagship product NEON. Apart from this, there are also shared resources like R&D, sales team, finance team etc. who are associated with the product.',
+                        doc_ref:'doc-1.1',
+                        featureStatus:'bb',
+                        userStatus:'',
+                        },
+                    {
+                        id:'ans-2.1',
+                        answer:'answer-2.1',
+                        doc_ref:'doc-2.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    },
+                    {
+                        id:'ans-3.1',
+                        answer:'The initial version NEON 3.0 was an integrated real-time and closed-loop campaign management platform. It had near-real time capability and could perform Descriptive analytics and Heuristic analytics .Based on the CSPs needs and requirements, Flytxt has continuously upgraded NEON in-order to deliver best possible technology, features and functions. NEON 4.0 is the most advanced version of Flytxt’s award winning NEON Customer Experience and revenue management platform. NEON 4.0 is a big data analytics powered platform with real-time event triggered marketing and multi-dimensional advanced analytics capabilities. Neon 4.0 is purpose built for generating real time insights and enriching them using insight generated from longer term analytics. It also combines various big data technologies like Hadoop, In-memory capabilities and relational databases that brings in cutting edge differentiators to CIOs, CFOs & CMOs. NEON-dX is the latest version which was released recently. It comes with more advanced self-serve data analytics features like UI driven data ETL and an advanced analytics workbench which allows data scientists to build new models or work on model templates made available by Flytxt data science team. This speeds up model deployment and execution to realise business value faster. NEON-dX has also more intuitive UIs for executing outbound and inbound multi-channel marketing campaigns. ',
+                        doc_ref:'doc-3.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    }
+                ]
+            },
+                {   
+                id:'q-2',
+                question:'How many employees are assigned specifically to the product.',
+                rownumber:'1.1',
+                template_ref:'temp_1.1',
+                answers:[
+                    {
+                        id:'ans-1.1',
+                        answer:'235 employees among the total strength are assigned specifically to its flagship product NEON. Apart from this, there are also shared resources like R&D, sales team, finance team etc. who are associated with the product.',
+                        doc_ref:'doc-1.1',
+                        featureStatus:'bb',
+                        userStatus:'',
+                        },
+                    {
+                        id:'ans-2.1',
+                        answer:'answer-2.1',
+                        doc_ref:'doc-2.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    },
+                    {
+                        id:'ans-3.1',
+                        answer:'The initial version NEON 3.0 was an integrated real-time and closed-loop campaign management platform. It had near-real time capability and could perform Descriptive analytics and Heuristic analytics .Based on the CSPs needs and requirements, Flytxt has continuously upgraded NEON in-order to deliver best possible technology, features and functions. NEON 4.0 is the most advanced version of Flytxt’s award winning NEON Customer Experience and revenue management platform. NEON 4.0 is a big data analytics powered platform with real-time event triggered marketing and multi-dimensional advanced analytics capabilities. Neon 4.0 is purpose built for generating real time insights and enriching them using insight generated from longer term analytics. It also combines various big data technologies like Hadoop, In-memory capabilities and relational databases that brings in cutting edge differentiators to CIOs, CFOs & CMOs. NEON-dX is the latest version which was released recently. It comes with more advanced self-serve data analytics features like UI driven data ETL and an advanced analytics workbench which allows data scientists to build new models or work on model templates made available by Flytxt data science team. This speeds up model deployment and execution to realise business value faster. NEON-dX has also more intuitive UIs for executing outbound and inbound multi-channel marketing campaigns. ',
+                        doc_ref:'doc-3.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    }
+                ]
+            },
+            {   
+                id:'q-2',
+                question:'How many employees are assigned specifically to the product.',
+                rownumber:'1.1',
+                template_ref:'temp_1.1',
+                answers:[
+                    {
+                        id:'ans-1.1',
+                        answer:'235 employees among the total strength are assigned specifically to its flagship product NEON. Apart from this, there are also shared resources like R&D, sales team, finance team etc. who are associated with the product.',
+                        doc_ref:'doc-1.1',
+                        featureStatus:'bb',
+                        userStatus:'',
+                        },
+                    {
+                        id:'ans-2.1',
+                        answer:'answer-2.1',
+                        doc_ref:'doc-2.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    },
+                    {
+                        id:'ans-3.1',
+                        answer:'The initial version NEON 3.0 was an integrated real-time and closed-loop campaign management platform. It had near-real time capability and could perform Descriptive analytics and Heuristic analytics .Based on the CSPs needs and requirements, Flytxt has continuously upgraded NEON in-order to deliver best possible technology, features and functions. NEON 4.0 is the most advanced version of Flytxt’s award winning NEON Customer Experience and revenue management platform. NEON 4.0 is a big data analytics powered platform with real-time event triggered marketing and multi-dimensional advanced analytics capabilities. Neon 4.0 is purpose built for generating real time insights and enriching them using insight generated from longer term analytics. It also combines various big data technologies like Hadoop, In-memory capabilities and relational databases that brings in cutting edge differentiators to CIOs, CFOs & CMOs. NEON-dX is the latest version which was released recently. It comes with more advanced self-serve data analytics features like UI driven data ETL and an advanced analytics workbench which allows data scientists to build new models or work on model templates made available by Flytxt data science team. This speeds up model deployment and execution to realise business value faster. NEON-dX has also more intuitive UIs for executing outbound and inbound multi-channel marketing campaigns. ',
+                        doc_ref:'doc-3.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    }
+                ]
+            }  ,
+            {   
+                id:'q-2',
+                question:'How many employees are assigned specifically to the product.',
+                rownumber:'1.1',
+                template_ref:'temp_1.1',
+                answers:[
+                    {
+                        id:'ans-1.1',
+                        answer:'235 employees among the total strength are assigned specifically to its flagship product NEON. Apart from this, there are also shared resources like R&D, sales team, finance team etc. who are associated with the product.',
+                        doc_ref:'doc-1.1',
+                        featureStatus:'bb',
+                        userStatus:'',
+                        },
+                    {
+                        id:'ans-2.1',
+                        answer:'answer-2.1',
+                        doc_ref:'doc-2.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    },
+                    {
+                        id:'ans-3.1',
+                        answer:'The initial version NEON 3.0 was an integrated real-time and closed-loop campaign management platform. It had near-real time capability and could perform Descriptive analytics and Heuristic analytics .Based on the CSPs needs and requirements, Flytxt has continuously upgraded NEON in-order to deliver best possible technology, features and functions. NEON 4.0 is the most advanced version of Flytxt’s award winning NEON Customer Experience and revenue management platform. NEON 4.0 is a big data analytics powered platform with real-time event triggered marketing and multi-dimensional advanced analytics capabilities. Neon 4.0 is purpose built for generating real time insights and enriching them using insight generated from longer term analytics. It also combines various big data technologies like Hadoop, In-memory capabilities and relational databases that brings in cutting edge differentiators to CIOs, CFOs & CMOs. NEON-dX is the latest version which was released recently. It comes with more advanced self-serve data analytics features like UI driven data ETL and an advanced analytics workbench which allows data scientists to build new models or work on model templates made available by Flytxt data science team. This speeds up model deployment and execution to realise business value faster. NEON-dX has also more intuitive UIs for executing outbound and inbound multi-channel marketing campaigns. ',
+                        doc_ref:'doc-3.1',
+                        featureStatus:'bb',
+                        userStatus:'bb',
+                    }
+                ]
+            }                
         ];
         this.clik(this.answers[0].id)
     },
@@ -177,7 +358,7 @@ export default {
 table[data-v-03ad4c97] {
     font-family: inherit;
     border-collapse: inherit;
-    /* width: 100%; */
+        width: 100%;
 }
 
 td, th {
@@ -185,56 +366,39 @@ td, th {
     padding: 8px;
 }
 
-th{
-    width:20%;
-}
-/* .question > th {
-    width:20%;
-}
-.answer >th {
-    width:10%;
-} */
-
-tr:hover {background-color:#f5f5f5;}
-
 
 
 .flex-container > div {
-    border-radius: 8px;
-    width: 50%;
-    box-shadow: 0px 0px 3px 0px grey;
-    margin: 10px;
-    padding: 0.80%;
-    /* margin-top: 0%; */
-    height: 557px;
+    margin: 0px; 
+    width: 47%;
 }
-
 
 .flex-container {
     display: -ms-flexbox;
     display: flex;
     width: 100%;
     box-shadow: 0px 0px 0px 0px grey;
-    /* border-radius: 16px; */
     margin-top: 0%;
+    font-size: 13px;
 }
 
 textarea {
-    width: 100%;
-  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   position: absolute;
-	resize: none;
-	-webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
-      -moz-box-sizing: border-box; /* FF1+ */
-           box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
-    border: none;
-    border-bottom: 1px solid #7d7d7d;
+  resize: none;
+  border: none;
 }
 
 select {
     border: 0;
     width: 100%;
 }
+
+
 
 </style>
 
