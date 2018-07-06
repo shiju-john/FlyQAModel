@@ -19,18 +19,18 @@
     <div v-if="loader" style="margin-top: -23%;">
       <Spinner message="Loading..."></Spinner>
     </div>
-    <answerSelect :rfpdata="answer" v-if="answer_flag"></answerSelect>
+    <QuestionSelect :rfpdata="answer" v-if="answer_flag"></QuestionSelect>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import answerSelect from './answerSelect';
+import QuestionSelect from './QuestionSelect';
 import Spinner from 'vue-simple-spinner'
 export default {
 
   components: {
-    answerSelect,Spinner
+    QuestionSelect,Spinner
      },
 
   data() {
