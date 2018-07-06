@@ -74,8 +74,8 @@ export default {
     },
 
     upload(data) {
-      const url = `http://192.168.127.17:8080/fileupload`;
-      // const url =process.env.UPLD_URL;
+      // const url = `http://192.168.127.17:8080/fileupload`;
+      const url =process.env.UPLD_URL;
       // const url='http://192.168.127.76:8000';
 
       axios.post(url, data, {

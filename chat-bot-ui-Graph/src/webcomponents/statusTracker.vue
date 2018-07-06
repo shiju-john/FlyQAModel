@@ -1,44 +1,50 @@
 <template>
-<div class="statusTracker">
-  <div  v-if="status">
-          <table-component caption="heading" :data="statusdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
-          <table-column show="name" label="name"></table-column>
-          <table-column show="productVersion" label="Product Version"></table-column>
-          <table-column show="uploadedUser" label="Uploaded User"></table-column>
-          <table-column show="uploadedTime" label="Uploaded Time"></table-column>
-          <table-column show="status" label="status"></table-column>
-          <table-column :sortable="false" :filterable="false">
-            <template slot-scope="row"  v-if="row.status=='true'">
-              <b-button variant="primary"  title="Request for solution" v-on:click="clik(row.id)">  <i class="fa fa-reply"></i></b-button>
-            </template>
-          </table-column>
-        </table-component>
-
+  <div class="statusTracker">
+    <div v-if="status">
+      <table-component id="st" caption="heading" :data="statusdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
+        <table-column show="rfp_name" label="rfp name"></table-column>
+        <table-column show="product_version" label="Product Version"></table-column>
+        <table-column show="uploadedUser" label="Uploaded User"></table-column>
+        <table-column show="uploadedTime" label="Uploaded Time"></table-column>
+        <table-column show="status" label="status"></table-column>
+        <table-column :sortable="false" :filterable="false">
+          <template slot-scope="row">
+            <b-button variant="primary" title="Request for solution" v-on:click="clik(row)">
+              <i class="fa fa-chevron-right"></i>
+            </b-button>
+          </template>
+        </table-column>
+      </table-component>
+    </div>
+    <div v-if="loader" style="margin-top: -23%;">
+      <Spinner message="Loading..."></Spinner>
+    </div>
+    <answerSelect :rfpdata="answer" v-if="answer_flag"></answerSelect>
   </div>
-     <answerSelect v-if="answer"></answerSelect>
-
-</div>
 </template>
 
 <script>
 import axios from 'axios';
-import answerSelect from './answerSelect'
+import answerSelect from './answerSelect';
+import Spinner from 'vue-simple-spinner'
 export default {
 
   components: {
-    answerSelect
+    answerSelect,Spinner
      },
 
   data() {
     return {
       statusdata: [],
+      loader:true,
       status:'',
       uploadedUser:'',
       uploadedTime:'',
       productVersion:'',
       completed:'',
       statusid:'',
-      answer:false,
+      sheetdata:[],
+      answer_flag:false,
       status:true
     }
   },
@@ -50,66 +56,26 @@ export default {
    },
 
   methods: {
-    clik(a){
-      // console.log(a)
-      this.answer=true;
+    clik(rowdata){
+      this.answer=rowdata;
+      this.answer_flag=true;
       this.status=false;
     },
 
     getstatusdatas() {
-      // axios.get(process.env.STAT_URL + '&status=OPEN', {}).then((resp) => {
-        this.statusdata = [
-                {   
-                    id:'stat-1',
-                    name:'test_1',
-                    status:'false',
-                    uploadedUser:'user_1',
-                    uploadedTime:'10:30',
-                    productVersion:'3.5',
-                    completed:false
-                }
-                ,{
-                    id:'stat-2',
-                    name:'test_2',
-                    status:'true',
-                    uploadedUser:'user_2',
-                    uploadedTime:'3:30',
-                    productVersion:'3.3',
-                    completed:true
-                    }
-            
-        ];
+      axios.get(process.env.STAT_URL + '&status=OPEN', {
+      }).then((resp) => {
+         this.loader=false;
+        this.statusdata=resp.data;
 
-        // console.log(resp);
-      // }).catch(err => {
-      //       this.statusdata = [
-      //           {   
-      //               id:'stat-1',
-      //               name:'test_1',
-      //               status:'uploaded',
-      //               uploadedUser:'user_1',
-      //               uploadedTime:'10:30',
-      //               productVersion:'3.5',
-      //               completed:false
-      //           }
-      //           ,{
-      //               id:'stat-2',
-      //               name:'test_2',
-      //               status:'completed',
-      //               uploadedUser:'user_2',
-      //               uploadedTime:'3:30',
-      //               productVersion:'3.3',
-      //               completed:true
-      //               }
-            
-      //   ];
-      //   const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-      //   alert(message);
-      // })
+        console.log(resp);
+      }).catch(err => {
+        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+        alert(message);
+      })
     },
   }
 }
-
 </script>
 
 <style scoped>

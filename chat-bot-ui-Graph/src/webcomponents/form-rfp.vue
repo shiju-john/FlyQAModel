@@ -1,7 +1,6 @@
 <template>
   <div class="form-rfp">
     <div class="container" v-if="showsheet==='false'">
-
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <div class="flex-container">
           <div>
@@ -25,7 +24,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </b-form>
     </div>

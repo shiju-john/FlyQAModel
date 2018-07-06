@@ -18,7 +18,6 @@
       <!-- <button v-on:click="request"  class="button button2">request for solution</button> -->
        <b-button variant="success" v-on:click="request">Request for Solution</b-button>
     </div>
-     <div id="snackbar">Solution request successfully sent!</div>
 </modal>
 </template>
    
@@ -42,23 +41,12 @@ export default {
         question: this.question,
         productVersion: this.version
       }).then((resp) => {
-        this.toast(this.$modal);
+        this.$toaster.success('Solution request successfully sent!')
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })
     },
-
-    toast(modal) {
-      var x = document.getElementById("snackbar");
-      x.className = "show";
-      setTimeout(function () {
-        x.className = x.className.replace("show", "");
-      }, 3000);
-      setTimeout(function () {
-        modal.hide('ModelDialog');
-      }, 1000);
-    }
   }
 }
 
@@ -114,49 +102,6 @@ td, th {
     text-align: left;
     padding: 8px;
     text-align: center;
-}
-
-/* toast css */
-#snackbar {
-    visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    left: 50%;
-    bottom: 30px;
-    font-size: 17px;
-}
-
-#snackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
-    to {bottom: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
 }
 
 

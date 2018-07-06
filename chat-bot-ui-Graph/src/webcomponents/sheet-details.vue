@@ -1,7 +1,7 @@
 <template>
   <div class="SheetDetails">
     <div class="container">
-      <form-wizard title='' subtitle='Fill the excel sheet template details' color="#e86824" @on-complete="onSubmit()">
+      <form-wizard title=''  color="#e86824" @on-complete="onSubmit()">
         <tab-content v-for="doc in docarray" :title="doc.sheetname" >
           <div class="flex-container">
             <div>
@@ -34,18 +34,13 @@
               <b-form-group >
                 <b-form-checkbox-group>
                   <b-form-checkbox value="true"  v-model="doc.skippable">Skippable</b-form-checkbox>
-                   <!-- <b-form-checkbox v-on:change="sameSettings">Same settings for all</b-form-checkbox> -->
-                </b-form-checkbox-group>
-                
+                </b-form-checkbox-group>             
               </b-form-group>
-
-     
             </div>
           </div>
         </tab-content>
       </form-wizard>
     </div>
-    <div><div id="snackbar">sheet details submitted successfully!</div></div>
   </div>
 </template>
 
@@ -54,10 +49,10 @@ import axios from 'axios';
 import StepProgress from 'vue-step-progress';
 
 export default {
-    components: {
-       StepProgress
-    },
-  props: ['docarray', 'index', 'productversion', 'rfpname','sheetarray','file_id','file_path'],
+  components: {
+    StepProgress
+  },
+  props: ['docarray', 'index', 'productversion', 'rfpname', 'sheetarray', 'file_id', 'file_path'],
 
   data() {
     return {
@@ -65,8 +60,8 @@ export default {
       submit_flag: "false",
       indexs: this.index,
       resp_str: {
-        id:'',
-        filepath:'',
+        id: '',
+        filepath: '',
         rfp_name: '',
         product_version: '',
         sheets: []
@@ -76,9 +71,9 @@ export default {
 
   methods: {
 
-    sameSettings(){
+    sameSettings() {
       for (let i = 0; i < this.docarray.length; i++) {
-          this.docarray[i+1]=this.docarray[0]  
+        this.docarray[i + 1] = this.docarray[0]
       }
     },
 
@@ -106,12 +101,12 @@ export default {
           }
         }
         sheet_obj.sheet_name = this.docarray[i].sheetname;
-        if(this.docarray[i].skippable==""){
-           sheet_obj.skippable="false"
-        }else{
+        if (this.docarray[i].skippable == "") {
+          sheet_obj.skippable = "false"
+        } else {
           sheet_obj.skippable = this.docarray[i].skippable[0];
         }
-        
+
         sheet_obj.header_index = this.docarray[i].headerIndex;
         sheet_obj.columns.question = this.docarray[i].questionColumn;
         sheet_obj.columns.feature_status = this.docarray[i].statusColumn;
@@ -124,28 +119,35 @@ export default {
     },
 
     upload(data) {
-      console.log(data)
-      // const url = `http://192.168.127.17:3000`;
-      const url =process.env.UPLD_URL;
+      const url = process.env.UPLD_URL;
       axios.put(url, data, {
         headers: {
           'Content-Type': 'application/json'
         }
       }).then((resp) => {
-        this.toast();
-        console.log(resp);
+        this.$toaster.success('RFP File Succesfully Submitted')
+        this.afterupload(data.id);
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })
     },
 
-    toast() {
-      var x = document.getElementById("snackbar");
-      x.className = "show";
-      setTimeout(function () {
-        x.className = x.className.replace("show", "");
-      }, 3000);
+    afterupload(id) {
+      const url = process.env.AI_URL;
+      axios.post(url, {
+        "token": "1fccd19d207874326a0bf705fbe909d5b9408cbaf0e1d17d60b141389d86742183",
+        "template_ref_id": id,
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((resp) => {
+        this.$toaster.success('AI Process Started');
+      }).catch(err => {
+        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+        console.log(message);
+      })
     },
   }
 }
@@ -184,46 +186,5 @@ export default {
     padding-bottom: 12px!important;
 }
 
-/* toast css */
-#snackbar {
-    visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    left: 50%;
-    bottom: 30px;
-    font-size: 17px;
-}
 
-#snackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
-    to {bottom: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
-}
 </style>
