@@ -1,39 +1,37 @@
 <template>
-<modal name="ModelDialog"  height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
-  <div class="head1" >Solutions</div>
-    <div class="modal-content" >
-      <table v-if="this.remarks.doc_ref">
-        <tr>
-          <th>Document reference</th>
-          <th>Remarks</th>
-        </tr>
-        <tr>
-          <td>{{this.remarks.doc_ref}}</td>
-          <td ><div style="width:100%; max-height:100px; overflow:auto">
-            {{this.remarks.remark_text}}
-            </div>
-            </td>
-        </tr>
-      </table>
-      <!-- <button v-on:click="request"  class="button button2">request for solution</button> -->
-       <b-button variant="success" v-on:click="request">Request for Solution</b-button>
+  <modal name="ModelDialog" height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
+    <div class="head1" style="background-color: #0996b2;">Solutions</div>
+    <div class="modal-content">
+      <AnswerSelect :src="model" :answer="remarks.answerarray"></AnswerSelect>
+      <div style="padding: 1%;border-top: 1px solid #dee2e6;">
+        <b-button style="margin-left: 58%;" variant="success" v-on:click="request">Request for Solution</b-button>
+      </div>
     </div>
-</modal>
+  </modal>
 </template>
    
 <script>
 // for api requests
-import axios from 'axios'
+import axios from 'axios';
+import AnswerSelect from './AnswerSelect';
+
 
 export default {
+
+  components: {
+    AnswerSelect
+  },
 
   props: ['remarks', 'flag', 'question', 'version'],
 
   data() {
     return {
       modifiers: {},
+      model: true
     }
   },
+
+  mounted() {},
   methods: {
 
     request() {
@@ -56,8 +54,9 @@ export default {
 
 .head1{
     font-weight: bold;
-    padding-top: 16px;
-    padding-left: 11px;
+    padding: 16px;
+    padding-left: 17px;
+    color: aliceblue;
 }
 .req{
   cursor: pointer;
@@ -83,26 +82,15 @@ export default {
 .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 3px;
+    /* padding: 3px; */
     /* border: 1px solid #888; */
     width: 99%;
-    margin-top: 15px;
+    /* margin-top: 15px; */
+        /* margin-top: -40px; */
     font-size: 13px;
+        border: 0px solid rgba(0, 0, 0, 0.2);
 }
 
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    height: 206px;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    text-align: center;
-}
 
 
 </style>

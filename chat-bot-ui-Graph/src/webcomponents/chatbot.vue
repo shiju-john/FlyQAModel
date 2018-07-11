@@ -22,7 +22,7 @@ import axios from 'axios'
 
 import ChatWindow from './chatbot/ChatWindow'
 export default {
-   props: ['messages'],
+   props: ['messages','version'],
    components: {ChatWindow},
 
   data() {
@@ -46,16 +46,18 @@ export default {
 
     onMessageWasSent (msg) {
        this.$emit('messageSent',msg)
-
-      axios.post(process.env.API_URL + '/ask', {
-        question: msg.text
+      axios.post(process.env.AI_URL + '/botservice', {
+        question: msg.text,
+        product_version:this.version
       }).then((resp) => {
         this.$emit('messageSent', {
           author: 'bot',
           type:'text',
-          text: resp.data.answer,
-          accuracy: resp.data.accuracy,
-          remarks: resp.data.remarks,
+          text: resp.data.answers[0].featureStatus,
+          // accuracy: resp.data.accuracy,
+          // remarks: resp.data.remarks,
+          welcomemsg:'false',
+          answerarray:resp.data.answers,
           question: resp.data.question,
           timestamp: new Date().toLocaleString()
         })
@@ -120,7 +122,7 @@ body{
     .sc-chat-window[data-v-2a21bba5] {
     width: 320px;
     height: calc(100% - 120px);
-    max-height: 590px;
+    max-height: 483px;
     position: fixed;
     right: 25px;
     bottom: 76px!important;

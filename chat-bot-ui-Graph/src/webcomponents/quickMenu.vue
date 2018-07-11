@@ -40,7 +40,7 @@ name:'quickMenu',
     },
     position:{
       type:String,
-      default:'top-left'
+      default:'top-right'
     }
   },
   computed:{

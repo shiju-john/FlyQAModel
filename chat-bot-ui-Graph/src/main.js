@@ -33,6 +33,10 @@ Vue.use(VueFormWizard)
 import VueModalTor from 'vue-modaltor'
 Vue.use(VueModalTor)
 
+// spiner
+import Spinner from 'vue-spinkit'
+
+Vue.component('Spinner', Spinner)
 //toast
 import Toaster from 'v-toaster'
 

@@ -16,8 +16,11 @@
         </table-column>
       </table-component>
     </div>
-    <div v-if="loader" style="margin-top: -23%;">
-      <Spinner message="Loading..."></Spinner>
+    <div v-if="loader" >
+         <loading :active.sync="loader" 
+        :can-cancel="false" 
+        :is-full-page="true">
+        </loading>
     </div>
     <QuestionSelect :rfpdata="answer" v-if="answer_flag"></QuestionSelect>
   </div>
@@ -26,12 +29,15 @@
 <script>
 import axios from 'axios';
 import QuestionSelect from './QuestionSelect';
-import Spinner from 'vue-simple-spinner'
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.min.css';
 export default {
 
   components: {
-    QuestionSelect,Spinner
-     },
+    QuestionSelect,
+    Loading
+  },
 
   data() {
     return {
@@ -67,9 +73,8 @@ export default {
       }).then((resp) => {
          this.loader=false;
         this.statusdata=resp.data;
-
-        console.log(resp);
       }).catch(err => {
+        this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         alert(message);
       })

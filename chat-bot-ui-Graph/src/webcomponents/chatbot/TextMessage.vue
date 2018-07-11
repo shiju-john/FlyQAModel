@@ -1,5 +1,5 @@
 <template>
-  <div class="sc-message--text"> {{data.text}} <span class="span" v-if="data.remarks" v-on:click="myFunction(data)">....</span><p v-if="data.meta" class='sc-message--meta'>{{data.meta}}</p></div>
+  <div class="sc-message--text"> {{data.text}} <span class="span" v-if="data.welcomemsg=='false'" v-on:click="myFunction(data)">....</span><p v-if="data.meta" class='sc-message--meta'>{{data.meta}}</p></div>
 </template>
 
 <script>

@@ -78,10 +78,11 @@
 
 .table-component__table th {
   background-color: #e0e0e0;
-  color: #999;
+  color: black;
   text-transform: uppercase;
   white-space: nowrap;
   font-size: .85em;
+  width: 103px;
 }
 
 .table-component__table tbody tr:nth-child(even) {
@@ -100,7 +101,7 @@
 .table-component__th--sort,
 .table-component__th--sort-asc,
 .table-component__th--sort-desc {
-  text-decoration: underline;
+  /* text-decoration: underline; */
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;

@@ -4,29 +4,31 @@
     <div class="wrapper" style="overflow:auto;">
       <b-navbar toggleable="md" type="dark" variant="info" style="padding:0%">
         <b-navbar-brand>
-          <img style="width:50%; margin-left: 21%;" src="../static/img/flytxt-logo-color.svg">
+          <img style="width:50%;" src="../static/img/flytxt-logo-color.svg">
+          <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;top: 5px;left: -24px;" v-on:click="home()"
+            title="home"></i>
         </b-navbar-brand>
-         <b-navbar-nav class="ml-auto">
-          <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;" v-on:click="home()" title="home"></i>
-              <select style="cursor: pointer;height: 9%;margin-top: 9%;font-size: smaller;" title="select version" v-model="selectedversion">
-          <option  v-for="option of options">{{option.text}}</option>
-        </select>
+        <b-navbar-nav class="ml-auto">
+
+          <select style="cursor: pointer;height: 9%;margin-top: 9%;font-size: smaller;" title="select version" v-model="selectedversion">
+            <option v-for="option of options">{{option.text}}</option>
+          </select>
           <i class="fa fa-power-off" style="font-size:26px; color:white;cursor:pointer;padding:12px;" title="sign-out"></i>
-          </b-navbar-nav>
+        </b-navbar-nav>
       </b-navbar>
       <div class="main">
-        <quickMenu :menuUrlList="items"  @process="onClick" />
-          <landingpage v-if="chartEnabled==='landing'" :items='items' @onselect='onClick' class="landing"></landingpage>
-          <b-card :header="cardtitle" v-if="chartEnabled!='landing'" > 
+        <quickMenu :menuUrlList="items" @process="onClick" />
+        <landingpage v-if="chartEnabled==='landing'" :items='items' @onselect='onClick' class="landing"></landingpage>
+        <b-card :header="cardtitle" v-if="chartEnabled!='landing'">
           <statistics v-if="chartEnabled==='ST'"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' @reqsent='onfeedback' />
-          <formrfp  v-if="chartEnabled==='RFPU'"></formrfp>
+          <formrfp v-if="chartEnabled==='RFPU'"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"></statusTracker>
         </b-card>
-         <ModelDialog :remarks='remarks' :question='question' :version='version' />
+        <ModelDialog :remarks='remarks' :question='question' :version='version' />
       </div>
-      <div >
-        <chatbot :messages='messages' @messageSent='onMessageSent' @remarkssent='onremarks'></chatbot>
+      <div>
+        <chatbot :messages='messages' @messageSent='onMessageSent' @remarkssent='onremarks' :version="selectedversion"></chatbot>
       </div>
     </div>
   </div>
@@ -75,6 +77,7 @@ export default {
         author: 'bot',
         text: 'Let us discuss about Neon!',
         type: 'text',
+        welcomemsg:'true',
         timestamp: new Date().toLocaleString()
       }],
       chartEnabled: 'landing',
@@ -152,10 +155,11 @@ export default {
 
     onMessageSent(message) {
       this.messages.push(message)
+      // this.version=this.selectedversion;
     },
 
     onremarks(message) {
-      this.remarks = message.text.remarks;
+      this.remarks = message.text;
       this.question = message.text.question,
         this.flag = 'block',
         this.version = this.selectedversion;
@@ -359,9 +363,9 @@ export default {
 
 
 .card-header {
-    padding: 0.75rem 6.25rem!important;
+    /* padding: 0.75rem 6.25rem!important; */
     margin-bottom: 0;
-    background-color: rgba(0, 0, 0, 0.03);
+    /* background-color: rgba(0, 0, 0, 0.03); */
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
@@ -419,5 +423,8 @@ export default {
     margin:.1%;
     margin-left: 10%;
 }
+
+.ml-auto, .mx-auto {
+    margin-left: 60%!important;}
 </style>
 

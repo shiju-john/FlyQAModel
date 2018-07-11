@@ -54,7 +54,7 @@ export default {
 }
 
 .sc-header--team-name:hover {
-  background: #4882ed;
+  /* background: #4882ed; */
 }
 
 .sc-header--close-button {
