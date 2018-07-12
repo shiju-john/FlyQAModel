@@ -3,18 +3,21 @@
   <div id='app'>
     <div class="wrapper" style="overflow:auto;">
       <b-navbar toggleable="md" type="dark" variant="info" style="padding:0%">
-        <b-navbar-brand>
-          <img style="width:50%;" src="../static/img/flytxt-logo-color.svg">
-          <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;top: 5px;left: -24px;" v-on:click="home()"
-            title="home"></i>
-        </b-navbar-brand>
-        <b-navbar-nav class="ml-auto">
-
-          <select style="cursor: pointer;height: 9%;margin-top: 9%;font-size: smaller;" title="select version" v-model="selectedversion">
-            <option v-for="option of options">{{option.text}}</option>
-          </select>
-          <i class="fa fa-power-off" style="font-size:26px; color:white;cursor:pointer;padding:12px;" title="sign-out"></i>
-        </b-navbar-nav>
+        <div style="width:100%">
+          <div style="float:left">
+            <b-navbar-brand>
+              <img style="width:50%;" src="../static/img/flytxt-logo-color.svg">
+              <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;top: 5px;left: -24px;" v-on:click="home()"
+                title="home"></i>
+            </b-navbar-brand>
+          </div>
+          <div style="float:right;;padding-right:6%">
+            <select style="cursor: pointer;font-size: smaller;" title="select version" v-model="selectedversion">
+              <option v-for="option of options">{{option.text}}</option>
+            </select>
+            <i class="fa fa-power-off" style="font-size:26px;top:5px; color:white;cursor:pointer;padding:12px;" title="sign-out"></i>
+          </div>
+        </div>
       </b-navbar>
       <div class="main">
         <quickMenu :menuUrlList="items" @process="onClick" />
@@ -365,7 +368,7 @@ export default {
 .card-header {
     /* padding: 0.75rem 6.25rem!important; */
     margin-bottom: 0;
-    /* background-color: rgba(0, 0, 0, 0.03); */
+    background-color: rgba(0, 0, 0, 0)!important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
