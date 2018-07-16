@@ -1,7 +1,7 @@
 <template>
   <div class="sc-header">
     <img class="sc-header--img" :src="imageUrl" alt="" />
-    <div class="sc-header--team-name"> {{teamName}} </div>
+    <div class="sc-header--team-name" style="font-weight:bold"> {{teamName}} </div>
     <div class="sc-header--close-button" @click="onClose">
       <img src="./assets/close-icon.png" alt="" />
     </div>

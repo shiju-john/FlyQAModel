@@ -5,7 +5,7 @@
         <div class="flex-container">
           <div>
             <b-form-group label="File Input">
-              <RfpUploader @sheetnames='sheetnames'></RfpUploader>
+              <RfpUploader @sheetnames='sheetnames' :token="token"></RfpUploader>
             </b-form-group>
           </div>
           <div>
@@ -27,7 +27,7 @@
         </div>
       </b-form>
     </div>
-    <SheetDetails v-if="showsheet==='true'" :file_path="file_path" :file_id="file_id" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
+    <SheetDetails v-if="showsheet==='true'" :token="token" :file_path="file_path" :file_id="file_id" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
   </div>
 </template>
 
@@ -37,6 +37,7 @@ import RfpUploader from '../webcomponents/RfpUploader'
 import SheetDetails from '../webcomponents/sheet-details'
 
 export default {
+  props: ['token'],
   components: {
     RfpUploader,
     SheetDetails

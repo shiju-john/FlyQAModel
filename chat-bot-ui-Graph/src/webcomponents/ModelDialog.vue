@@ -22,7 +22,7 @@ export default {
     AnswerSelect
   },
 
-  props: ['remarks', 'flag', 'question', 'version'],
+  props: ['remarks', 'flag', 'question', 'version','token'],
 
   data() {
     return {
@@ -35,9 +35,10 @@ export default {
   methods: {
 
     request() {
-      axios.post(process.env.REM_URL, {
+      axios.post(process.env.SERV_URL + 'visionendpoints?token='+this.token, {
         question: this.question,
-        productVersion: this.version
+        productVersion: this.version,
+        requestedSource:'Bot'
       }).then((resp) => {
         this.$toaster.success('Solution request successfully sent!')
       }).catch(err => {

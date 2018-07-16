@@ -1,7 +1,7 @@
 <template>
   <div class="SheetDetails">
     <div class="container">
-      <form-wizard title=''  color="#e86824" @on-complete="onSubmit()">
+      <form-wizard title='' subtitle='' color="#e86824" @on-complete="onSubmit()">
         <tab-content v-for="doc in docarray" :title="doc.sheetname" >
           <div class="flex-container">
             <div>
@@ -34,6 +34,7 @@
               <b-form-group >
                 <b-form-checkbox-group>
                   <b-form-checkbox value="true"  v-model="doc.skippable">Skippable</b-form-checkbox>
+                  <!-- <b-form-checkbox value="same" @change="sameSettings"  v-model="chk">Same for all</b-form-checkbox> -->
                 </b-form-checkbox-group>             
               </b-form-group>
             </div>
@@ -52,7 +53,7 @@ export default {
   components: {
     StepProgress
   },
-  props: ['docarray', 'index', 'productversion', 'rfpname', 'sheetarray', 'file_id', 'file_path'],
+  props: ['docarray', 'index', 'productversion', 'rfpname', 'sheetarray', 'file_id', 'file_path','token'],
 
   data() {
     return {
@@ -66,12 +67,14 @@ export default {
         product_version: '',
         sheets: []
       },
+      chk:''
     }
   },
 
   methods: {
 
     sameSettings() {
+      // console.log('checked')
       for (let i = 0; i < this.docarray.length; i++) {
         this.docarray[i + 1] = this.docarray[0]
       }
@@ -79,7 +82,7 @@ export default {
 
     beforeTabSwitch(evt) {
       evt.preventDefault();
-      console.log("This is called before switchind tabs");
+      // console.log("This is called before switchind tabs");
       return true;
     },
 
@@ -119,7 +122,7 @@ export default {
     },
 
     upload(data) {
-      const url = process.env.UPLD_URL;
+      const url = process.env.SERV_URL+'uploaderendpoints?token='+this.token;;
       axios.put(url, data, {
         headers: {
           'Content-Type': 'application/json'
@@ -134,9 +137,9 @@ export default {
     },
 
     afterupload(id) {
-      const url = process.env.AI_URL;
+      const url = process.env.AI_URL+'ai';
       axios.post(url, {
-        "token": "1fccd19d207874326a0bf705fbe909d5b9408cbaf0e1d17d60b141389d86742183",
+        "token": this.token,
         "template_ref_id": id,
       }, {
         headers: {

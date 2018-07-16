@@ -36,6 +36,7 @@ const STATUS_INITIAL = 0,
   STATUS_SUCCESS = 2,
   STATUS_FAILED = 3;
 export default {
+  props: ['token'],
   data() {
     return {
       uploadedFiles: [],
@@ -75,7 +76,7 @@ export default {
 
     upload(data) {
       // const url = `http://192.168.127.17:8080/fileupload`;
-      const url =process.env.UPLD_URL;
+      const url =process.env.SERV_URL+'uploaderendpoints?token='+this.token;
       // const url='http://192.168.127.76:8000';
 
       axios.post(url, data, {

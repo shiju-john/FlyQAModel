@@ -9,7 +9,7 @@
       :messages="messageList"
       :imageUrl="agentProfile.imageUrl"
       :cutomFunction="cutomFunction"
-    />
+    ></MessageList>
     <UserInput :showEmoji="showEmoji" :onSubmit="onUserInputSubmit" :showFile="showFile" />
   </div>
 </template>

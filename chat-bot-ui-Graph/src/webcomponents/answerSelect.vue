@@ -22,7 +22,7 @@
             <tr>
               <th>Document Reference:</th>
               <td height="10">
-                <textarea :readonly="src" v-model="a.doc_ref" placeholder="no documents available" @keyup="edited"></textarea>
+                <textarea :readonly="src" v-model="a.doc_ref" placeholder="No documents available" @keyup="edited"></textarea>
               </td>
             </tr>
             <tr>

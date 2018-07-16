@@ -74,6 +74,7 @@
   padding: .75em 1.25em;
   vertical-align: top;
   text-align: left;
+  border-top: 1px solid #c6c1c1;
 }
 
 .table-component__table th {
@@ -86,7 +87,7 @@
 }
 
 .table-component__table tbody tr:nth-child(even) {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
 }
 
 .table-component__table a {

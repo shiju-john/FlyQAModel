@@ -10,7 +10,8 @@
       :open="openChat"
       :showEmoji="false"
       :showFile="false"
-      :cutomFunction="onremark" />
+      :cutomFunction="onremark">
+      </ChatWindow>
       <a href="#" class="float" @click.prevent="openChat()">
 <img class="chat" src="../../static/img/chat-icon.png">
 </a>
@@ -19,62 +20,75 @@
 
 <script>
 import axios from 'axios'
-
 import ChatWindow from './chatbot/ChatWindow'
 export default {
-   props: ['messages','version'],
-   components: {ChatWindow},
+props: ['messages', 'version','token'],
+  components: {
+    ChatWindow,
+
+  },
 
   data() {
     return {
       agentProfile: {
-        teamName: 'chatbot',
-        imageUrl: '../../static/img/robot.png'
+        teamName: 'Neon Digital Assistant',
+        imageUrl: ''
       },
       newMessagesCount: 1,
       isChatOpen: false,
-      flag:true
+      flag: true,
+      loader:false
     }
+  },
+
+  created: function () {
+    window.addEventListener('keydown', (e) => {
+      if (e.key == 'Escape') {
+        this.isChatOpen = false;
+      }
+    });
   },
   methods: {
 
-    onremark(remark){
-     this.$emit('remarkssent', {
+    onremark(remark) {
+      this.$emit('remarkssent', {
         text: remark,
       })
     },
 
-    onMessageWasSent (msg) {
-       this.$emit('messageSent',msg)
-      axios.post(process.env.AI_URL + '/botservice', {
+    onMessageWasSent(msg) {
+      this.loader=true;
+      this.$emit('messageSent', msg)
+        axios.post(process.env.AI_URL + 'botservice', {
         question: msg.text,
-        product_version:this.version
+        product_version: this.version,
+        token:this.token
       }).then((resp) => {
         this.$emit('messageSent', {
           author: 'bot',
-          type:'text',
+          type: 'text',
           text: resp.data.answers[0].featureStatus,
-          // accuracy: resp.data.accuracy,
-          // remarks: resp.data.remarks,
-          welcomemsg:'false',
-          answerarray:resp.data.answers,
+          welcomemsg: 'false',
+          answerarray: resp.data.answers,
           question: resp.data.question,
           timestamp: new Date().toLocaleString()
         })
       }).catch(err => {
+        this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         this.$emit('messageSent', {
           author: 'error',
+          type: 'text',
           text: message,
           timestamp: new Date().toLocaleString()
         })
       })
     },
-    openChat () {
+    openChat() {
       this.isChatOpen = !this.isChatOpen
       this.newMessagesCount = 0
     },
-    closeChat () {
+    closeChat() {
       this.isChatOpen = false
     }
   }

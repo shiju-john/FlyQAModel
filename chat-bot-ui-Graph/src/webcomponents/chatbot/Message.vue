@@ -2,10 +2,10 @@
   <div class="sc-message">
     <div class="sc-message--content" :class="{sent: message.author === 'me', received: message.author !== 'me'}">
       <div class="sc-message--avatar" :style="{
-        backgroundImage: `url(${this.chatIcon})`
-      }"></div><TextMessage v-if="message.type === 'text'" :data="message"  :cutomFunction='cutomFunction'/>
+        backgroundImage: `url(${this.chatIcon})`}"></div>
+      <TextMessage v-if="message.type === 'text'" :data="message"  :cutomFunction='cutomFunction'/>
       <EmojiMessage v-else-if="message.type === 'emoji'" :data="message" />
-      <FileMessage v-else-if="message.type === 'file'" :data="message" />
+      <FileMessage v-else-if="message.type === 'file'" :data="message" /> 
     </div>
   </div>
 </template>
@@ -16,6 +16,7 @@ import FileMessage from './FileMessage.vue'
 import EmojiMessage from './EmojiMessage.vue'
 import chatIcon from './assets/chat-icon.svg'
 
+
 export default {
   
   data () {
@@ -23,10 +24,16 @@ export default {
       chatIcon
     }
   },
+
+  created: function () {
+
+  },
   components: {
     TextMessage,
     FileMessage,
-    EmojiMessage
+    EmojiMessage,
+    
+    
   },
   props: {
     message: {
@@ -36,7 +43,8 @@ export default {
      'cutomFunction':{
       type: Function,
       required: true
-    }
+    },
+  
   }
   
 }

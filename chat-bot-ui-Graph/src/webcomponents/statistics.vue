@@ -70,7 +70,8 @@ export default {
           this.chartData.piedata.data = resp.data.data;
         }).catch(err => {
           const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-          alert(message);
+          // alert(message);
+          this.$toaster.error(message)
         })
       } else if (cityName === 'PDT') {
         axios.post(process.env.API_URL + '/product_chart', {
@@ -82,7 +83,8 @@ export default {
           this.productchartData.bardata.data = resp.data.data;
         }).catch(err => {
           const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-          alert(message);
+          // alert(message);
+          this.$toaster.error(message)
         })
       }
 

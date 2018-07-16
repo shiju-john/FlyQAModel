@@ -9,8 +9,11 @@
         <table-column show="status" label="status"></table-column>
         <table-column :sortable="false" :filterable="false">
           <template slot-scope="row">
-            <b-button variant="primary" title="Request for solution" v-on:click="clik(row)">
+            <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Request for solution" v-on:click="clik(row)">
               <i class="fa fa-chevron-right"></i>
+            </b-button>
+            <b-button v-if="row.status=='TEMP'" variant="primary"   title="Request for solution" v-on:click="clik(row)">
+              <i class="fa fa-trash-o"></i>
             </b-button>
           </template>
         </table-column>
@@ -22,7 +25,7 @@
         :is-full-page="true">
         </loading>
     </div>
-    <QuestionSelect :rfpdata="answer" v-if="answer_flag"></QuestionSelect>
+    <QuestionSelect :rfpdata="answer" v-if="answer_flag" :token="token" :version="version"></QuestionSelect>
   </div>
 </template>
 
@@ -38,6 +41,8 @@ export default {
     QuestionSelect,
     Loading
   },
+
+  props: ['version','token'],
 
   data() {
     return {
@@ -69,14 +74,14 @@ export default {
     },
 
     getstatusdatas() {
-      axios.get(process.env.STAT_URL + '&status=OPEN', {
+      axios.get(process.env.SERV_URL+'uploaderendpoints?token='+this.token+ '&status=OPEN', {
       }).then((resp) => {
          this.loader=false;
         this.statusdata=resp.data;
       }).catch(err => {
         this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-        alert(message);
+        // alert(message);
       })
     },
   }

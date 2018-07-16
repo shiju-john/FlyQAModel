@@ -1,16 +1,18 @@
 <template>
-<div class='landing-page'  >
-  <b-card-group deck class="mb-3">
-    <div v-for="item in items" v-if="item.card">
-      <b-card bg-variant="primary" text-variant="white" :header="item.name" class="text-center zoom" v-on:click="click(item)">
-        <img :src="item.url" style="width: 43%;height: 81%;margin: 2%;">
-        <span style="margin-left:50%;text-align: justify;margin-top:-41%;margin-right:4%;">
-         {{item.content}}
-        </span>
-      </b-card>
-    </div>
-  </b-card-group>
-</div>
+  <div class='landing-page'>
+    <!-- <div style="width:800px; margin:0 auto;margin-top: 7%;"> -->
+      <b-card-group deck class="mb-3">
+        <div v-for="item in items" v-if="item.card">
+          <b-card bg-variant="primary" text-variant="white" :header="item.name" class="text-center zoom" v-on:click="click(item)">
+            <img :src="item.url" style="width: 43%;height: 81%;margin: 2%;">
+            <span style="margin-left:50%;text-align: justify;margin-top:-41%;margin-right:4%;">
+              {{item.content}}
+            </span>
+          </b-card>
+        </div>
+      </b-card-group>
+    <!-- </div> -->
+  </div>
 </template>
 
 <script>
@@ -18,17 +20,15 @@ export default {
   props: ['items'],
 
   data() {
-     
     return {
-
     }
   },
   methods: {
-      click(item){
-        this.$emit('onselect', 
+    click(item) {
+      this.$emit('onselect',
         item
       )
-      }
+    }
   }
 }
 </script>
