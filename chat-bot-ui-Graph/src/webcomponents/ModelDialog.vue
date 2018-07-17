@@ -1,6 +1,8 @@
 <template>
   <modal name="ModelDialog" height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
-    <div class="head1" style="background-color: #0996b2;">Solutions</div>
+    <div class="head1" style="background-color: #0996b2;">Solutions
+       <span style="margin-left: 82%;cursor:pointer" v-on:click="close"><i class="fa fa-times"></i></span>
+    </div>
     <div class="modal-content">
       <answerSelect :src="model" :answer="remarks.answerarray"></answerSelect>
       <div style="padding: 1%;border-top: 1px solid #dee2e6;">
@@ -48,6 +50,10 @@ export default {
         console.log(message);
       })
     },
+
+    close(){
+      this.$modal.hide('ModelDialog');
+    }
   }
 }
 

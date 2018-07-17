@@ -26,5 +26,6 @@ export default {
 .span {
     font-weight: bold;
     cursor: pointer;
+    
   }
 </style>

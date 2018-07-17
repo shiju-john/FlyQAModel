@@ -1,7 +1,10 @@
 <template>
   <div class="chatbot">
-    <!-- <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }" -->
-    <ChatWindow 
+     <!-- <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }" -->
+ 
+     <ChatWindow  
+   
+
       :agentProfile="agentProfile"
       :onUserInputSubmit="onMessageWasSent"
       :messageList="messages"
@@ -13,8 +16,9 @@
       :showFile="false"
       :cutomFunction="onremark">
       </ChatWindow>
-      <a href="#" class="float" @click.prevent="openChat()">
-<img class="chat"  v-bind:class="{ 'chat': !isChatOpen,'chat1':isChatOpen }"  src="../../static/img/chat-icon.png">
+     
+      <a href="#" v-bind:class="{ 'float': !isChatOpen,'float1':isChatOpen }"  @click.prevent="openChat()">
+<img class="chat"   src="../../static/img/chat-icon.png">
 </a>
   </div>
 </template>
@@ -113,6 +117,27 @@ body{
 	border-radius:50px;
 	text-align:center;
 	box-shadow: 2px 2px 3px #999;
+        -webkit-transition: opacity 1s ease-in-out, -webkit-transform 1s ease-in-out;
+
+}
+
+.float1{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:1%;
+	right:40px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+        -ms-transform: rotate(180deg);
+      /* IE 9 */
+      -webkit-transform: rotate(180deg);
+      /* Chrome, Safari, Opera */
+      transform: rotate(180deg);
+        opacity: 0;
 }
 
 .my-float{
@@ -185,10 +210,14 @@ body{
     /* transition: 0.3s ease-in-out; */
     border-radius: 10px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-     -ms-transform: rotate(360deg);
+     -ms-transform: rotateY(360deg);
       /* IE 9 */
-      -webkit-transform: rotate(360deg);
+      -webkit-transform: rotateY(360deg);
       /* Chrome, Safari, Opera */
-      transform: rotate(360deg);
+      transform: rotateY(360deg);
 }
+
+
+
+
 </style>

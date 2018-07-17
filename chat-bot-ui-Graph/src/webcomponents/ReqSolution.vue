@@ -18,7 +18,9 @@
       </loading>
     </div>
     <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
-      <div class="head1" style="background-color: #0996b2;">Solution Response</div>
+      <div class="head1" style="background-color: #0996b2;">Solution Response
+        <span v-on:click="hide" style="margin-left: 71%;cursor:pointer;"><i class="fa fa-times"></i></span>
+      </div>
       <div class="modal-content">
         <table class="table">
           <col width="60">
@@ -100,7 +102,7 @@ export default {
   created: function () {
     window.addEventListener('keydown', (e) => {
       if (e.key == 'Escape') {
-        this.close()
+        this.hide()
         this.remarks = '',
           this.docversion = ''
       }
@@ -126,6 +128,10 @@ export default {
       this.$modal.show('Model');
       this.send_reply = data;
       this.property = data.question
+    },
+
+    hide(){
+       this.$modal.hide('Model');
     },
 
     sendreply() {
