@@ -1,63 +1,63 @@
 <template>
-<div class="ReqSolution">
-  <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
-    <table-column show="question" label="question"></table-column>
-    <table-column show="productVersion" label="product Version"></table-column>
-    <table-column show="requestUser" label="requested User"></table-column>
-    <table-column show="requestTime" label="requested Time"></table-column>
-    <table-column :sortable="false" :filterable="false">
-      <template slot-scope="row">
-        <button v-on:click="reply(row)" class="btn btn-primary">
-          <i class="fa fa-reply"></i>
-        </button>
-      </template>
-    </table-column>
-  </table-component>
-    <div v-if="loader" >
-         <loading :active.sync="loader" 
-        :can-cancel="false" 
-        :is-full-page="true">
-        </loading>
+  <div class="ReqSolution">
+    <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
+      <table-column show="question" label="question"></table-column>
+      <table-column show="productVersion" label="product Version"></table-column>
+      <table-column show="requestUser" label="requested User"></table-column>
+      <table-column show="requestTime" label="requested Time"></table-column>
+      <table-column :sortable="false" :filterable="false">
+        <template slot-scope="row">
+          <button v-on:click="reply(row)" class="btn btn-primary">
+            <i class="fa fa-reply"></i>
+          </button>
+        </template>
+      </table-column>
+    </table-component>
+    <div v-if="loader">
+      <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+      </loading>
     </div>
-  <vue-modaltor :visible="open" defaultWidth="40%" @hide="open = false" v-on:click="close" :animation-panel="'modal-slide-right'">
-    <div class="subject" v-on:click="close" style="cursor:pointer">
-      <h3>Solution Response</h3>
-    </div>
-    <table class="table">
-      <col width="60">
-      <tr>
-        <th>Question:</th>
-        <td>
-          <textarea :readonly="true"> {{this.property}}</textarea>
-        </td>
-      </tr>
-      <tr>
-        <th>Feature Status:</th>
-        <td>
-          <select v-model="featureStatus">
-            <option disabled value="">Please select one</option>
-            <option>Fully Compliance</option>
-            <option>Partially Compliance</option>
-            <option>Non Compliance</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <th>Remarks:</th>
-        <td>
-          <textarea v-model="remarks" style="position: absolute;"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <th>Document version:</th>
-        <td>
-          <textarea v-model="docversion" style="position: absolute;"></textarea>
-        </td>
-      </tr>
-    </table>
-    <button style="margin-left: 30%;" type="button" v-on:click="sendreply()" class="btn btn-success">Submit</button>
-  </vue-modaltor>
-</div>
+    <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
+      <div class="head1" style="background-color: #0996b2;">Solution Response</div>
+      <div class="modal-content">
+        <table class="table">
+          <col width="60">
+          <tr>
+            <th>Question:</th>
+            <td>
+              <textarea :readonly="true"> {{this.property}}</textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>Feature Status:</th>
+            <td>
+              <select v-model="featureStatus">
+                <option disabled value="">Please select one</option>
+                <option>Fully Compliance</option>
+                <option>Partially Compliance</option>
+                <option>Non Compliance</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>Remarks:</th>
+            <td>
+              <textarea v-model="remarks" style="position: absolute;"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>Document version:</th>
+            <td>
+              <textarea v-model="docversion" style="position: absolute;"></textarea>
+            </td>
+          </tr>
+        </table>
+        <div style="padding: 1%;">
+          <b-button style="margin-left: 58%;" variant="success" v-on:click="sendreply()">Submit</b-button>
+        </div>
+      </div>
+    </modal>
+  </div>
 </template>
 
 <script>
@@ -98,8 +98,6 @@ export default {
     }
   },
   created: function () {
-    //  this.requestdata
-    // this.reqsolution();
     window.addEventListener('keydown', (e) => {
       if (e.key == 'Escape') {
         this.close()
@@ -116,25 +114,18 @@ export default {
       axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=OPEN', {}).then((resp) => {
         this.loader = false;
         this.requestdata = resp.data;
-        // this.$toaster.success('Solution request successfully sent!')
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-        // alert(message);
         this.loader = false;
         this.$toaster.error(message)
       })
     },
 
     reply(data) {
-      this.open = true
+      // this.open = true
+      this.$modal.show('Model');
       this.send_reply = data;
       this.property = data.question
-    },
-
-    close() {
-      this.remarks = '',
-        this.docversion = ''
-      this.open = false
     },
 
     sendreply() {
@@ -149,7 +140,10 @@ export default {
         featureStatus: this.featureStatus
       }).then((resp) => {
         this.$toaster.success('Solution succesfully submitted!');
-        this.open = false
+        // this.open = false
+        this.$modal.hide('Model');
+        this.remarks = '',
+        this.docversion = ''
         //for refreshing table
         this.reqsolution();
         this.remarks = '',
@@ -199,5 +193,42 @@ select {
     line-height: 1.5;
 }
 
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    width: 99%;
+    font-size: 13px;
+        border: 0px solid rgba(0, 0, 0, 0.2);
+}
+.head1{
+    font-weight: bold;
+    padding: 16px;
+    padding-left: 17px;
+    color: aliceblue;
+}
+
+ body {font-family: Arial, Helvetica, sans-serif;}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0rem!important;
+    background-color: transparent;
+}
 </style>
 

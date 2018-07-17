@@ -55,12 +55,7 @@ export default {
 
 <style scoped>
 
-.head1{
-    font-weight: bold;
-    padding: 16px;
-    padding-left: 17px;
-    color: aliceblue;
-}
+
 .req{
   cursor: pointer;
 }
@@ -93,7 +88,12 @@ export default {
     font-size: 13px;
         border: 0px solid rgba(0, 0, 0, 0.2);
 }
-
+.head1{
+    font-weight: bold;
+    padding: 16px;
+    padding-left: 17px;
+    color: aliceblue;
+}
 
 
 </style>
