@@ -1,6 +1,10 @@
 <template>
   <div class="SheetDetails">
     <div class="container">
+      <div v-if="loader">
+      <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+      </loading>
+    </div>
       <form-wizard title='' subtitle='' color="#e86824" @on-complete="onSubmit()">
         <tab-content v-for="doc in docarray" :title="doc.sheetname" >
           <div class="flex-container">
@@ -48,6 +52,9 @@
 <script>
 import axios from 'axios';
 import StepProgress from 'vue-step-progress';
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.min.css';
 
 export default {
   components: {
@@ -67,7 +74,8 @@ export default {
         product_version: '',
         sheets: []
       },
-      chk:''
+      chk:'',
+      loader: false,
     }
   },
 
@@ -87,6 +95,7 @@ export default {
     },
 
     onSubmit(evt) {
+      this.loader=true;
       this.resp_str.id = this.file_id;
       this.resp_str.filepath = this.file_path;
       this.resp_str.rfp_name = this.rfpname;
@@ -131,6 +140,7 @@ export default {
         this.$toaster.success('RFP File Succesfully Submitted')
         this.afterupload(data.id);
       }).catch(err => {
+        this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })
@@ -146,10 +156,12 @@ export default {
           'Content-Type': 'application/json'
         }
       }).then((resp) => {
+        this.loader=false;
         this.$toaster.success('AI Process Started');
          this.$emit('finish', {
         })
       }).catch(err => {
+        this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })

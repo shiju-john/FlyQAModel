@@ -45,16 +45,13 @@ export default {
       this.loader=true;
       const profile = googleUser.getBasicProfile() 
       if (googleUser.getHostedDomain() !== undefined && googleUser.getHostedDomain() === "flytxt.com") {
-        console.log( process.env.SERV_URL + 'visionendpoints?action=login');
-        // console.log(process.env.REM_URL + '&action=login');
+
         axios.post(process.env.SERV_URL + 'visionendpoints?action=login', 
         {
           token: googleUser.getAuthResponse().id_token,
           name:profile.ig,
           nickname:profile.ofa
         }).then((resp) => {
-          
-          // console.log(resp)
                 //emit token here
         this.$emit('login',resp.data.token)
         this.disconnect()
