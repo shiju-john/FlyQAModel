@@ -1,6 +1,7 @@
 <template>
   <div class="chatbot">
-    <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }"
+    <!-- <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }" -->
+    <ChatWindow 
       :agentProfile="agentProfile"
       :onUserInputSubmit="onMessageWasSent"
       :messageList="messages"
@@ -25,7 +26,6 @@ export default {
 props: ['messages', 'version','token'],
   components: {
     ChatWindow,
-
   },
 
   data() {

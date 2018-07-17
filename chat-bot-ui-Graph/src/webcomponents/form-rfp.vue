@@ -27,7 +27,7 @@
         </div>
       </b-form>
     </div>
-    <SheetDetails v-if="showsheet==='true'" :token="token" :file_path="file_path" :file_id="file_id" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
+    <SheetDetails @finish="finish" v-if="showsheet==='true'" :token="token" :file_path="file_path" :file_id="file_id" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
   </div>
 </template>
 
@@ -76,6 +76,10 @@ export default {
     }
   },
   methods: {
+    finish(){
+      this.$emit('finish', {
+        })
+    },
     onSubmit(evt) {
       evt.preventDefault();
       this.showsheet = 'true'

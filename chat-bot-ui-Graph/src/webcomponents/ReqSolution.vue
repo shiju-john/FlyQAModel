@@ -55,7 +55,7 @@
         </td>
       </tr>
     </table>
-    <button style="margin-left: 30%;" type="button" v-on:click="sendreply()" class="btn btn-success">Request For Solution</button>
+    <button style="margin-left: 30%;" type="button" v-on:click="sendreply()" class="btn btn-success">Submit</button>
   </vue-modaltor>
 </div>
 </template>
@@ -148,7 +148,7 @@ export default {
         docLink: this.docversion,
         featureStatus: this.featureStatus
       }).then((resp) => {
-        this.$toaster.success('Solution request successfully processed!');
+        this.$toaster.success('Solution succesfully submitted!');
         this.open = false
         //for refreshing table
         this.reqsolution();

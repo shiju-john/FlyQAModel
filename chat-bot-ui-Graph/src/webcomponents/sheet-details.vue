@@ -147,6 +147,8 @@ export default {
         }
       }).then((resp) => {
         this.$toaster.success('AI Process Started');
+         this.$emit('finish', {
+        })
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);

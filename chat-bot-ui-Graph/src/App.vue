@@ -28,10 +28,10 @@
         <b-card style="margin-top:1%" v-if="chartEnabled!='landing'">
           <statistics v-if="chartEnabled==='ST'" :token="token"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' :token="token" @reqsent='onfeedback' />
-          <formrfp v-if="chartEnabled==='RFPU'" :token="token"></formrfp>
+          <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
         </b-card>
-        <ModelDialog :remarks='remarks' :token="token" :question='question' :version='version' />
+        <ModelDialog @submit="hide" :remarks='remarks' :token="token" :question='question' :version='version' />
       </div>
       <div>
         <chatbot :messages='messages' @messageSent='onMessageSent' :token="token" @remarkssent='onremarks' :version="selectedversion"></chatbot>

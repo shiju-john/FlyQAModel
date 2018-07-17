@@ -40,7 +40,9 @@ export default {
         productVersion: this.version,
         requestedSource:'Bot'
       }).then((resp) => {
-        this.$toaster.success('Solution request successfully sent!')
+        this.$toaster.success('Solution request successfully sent!');
+        this.$emit('submit', {
+        })
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
