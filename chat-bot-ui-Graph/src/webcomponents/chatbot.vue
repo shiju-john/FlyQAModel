@@ -1,8 +1,9 @@
 <template>
   <div class="chatbot">
-     <!-- <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }" -->
+         <!-- <ChatWindow   -->
+     <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }"
  
-     <ChatWindow  
+
    
 
       :agentProfile="agentProfile"
@@ -188,6 +189,7 @@ body{
     border-radius: 10px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
           -webkit-transition: opacity 1s ease-in-out, -webkit-transform 1s ease-in-out;
+          transform: scale(.5); 
 
 }
 
@@ -210,11 +212,14 @@ body{
     /* transition: 0.3s ease-in-out; */
     border-radius: 10px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-     -ms-transform: rotateY(360deg);
+     /* -ms-transform: rotateY(360deg); */
       /* IE 9 */
-      -webkit-transform: rotateY(360deg);
+      /* -webkit-transform: rotateY(360deg); */
       /* Chrome, Safari, Opera */
       transform: rotateY(360deg);
+      transform: scale(1); 
+     
+
 }
 
 
