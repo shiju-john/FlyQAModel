@@ -2,7 +2,7 @@
   <modal name="ModelDialog" height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
     <div class="head1" style="background-color: #0996b2;">Solutions</div>
     <div class="modal-content">
-      <AnswerSelect :src="model" :answer="remarks.answerarray"></AnswerSelect>
+      <answerSelect :src="model" :answer="remarks.answerarray"></answerSelect>
       <div style="padding: 1%;border-top: 1px solid #dee2e6;">
         <b-button style="margin-left: 58%;" variant="success" v-on:click="request">Request for Solution</b-button>
       </div>
@@ -13,13 +13,13 @@
 <script>
 // for api requests
 import axios from 'axios';
-import AnswerSelect from './AnswerSelect';
+import answerSelect from './answerSelect';
 
 
 export default {
 
   components: {
-    AnswerSelect
+    answerSelect
   },
 
   props: ['remarks', 'flag', 'question', 'version','token'],

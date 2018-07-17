@@ -110,7 +110,7 @@
           }
         ],
         items: [{
-            url: '../static/img/statistics.svg',
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/statistics.svg',
             name: 'Analytics',
             type: 'ST',
             card: true,
@@ -131,7 +131,7 @@
             }]
           },
           {
-            url: '../static/img/pending.svg',
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/pending.svg',
             name: 'Pending Solution',
             type: 'REQ',
             card: true,
@@ -139,7 +139,7 @@
             icon: 'fa fa-hourglass-start',
           },
           {
-            url: '../static/img/upload.svg',
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/upload.svg',
             name: ' RFP Uploader',
             type: 'RFPU',
             card: true,
@@ -147,7 +147,7 @@
             icon: 'fa fa-cloud-upload',
           },
           {
-            url: '../static/img/track.svg',
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/track.svg',
             name: ' RFP Status Tracker',
             type: 'RFPS',
             card: true,

@@ -23,7 +23,7 @@
           </table-component>
         </div>
         <div style="width:40%">
-          <AnswerSelect v-if="answerFlag" :answer="answers"></AnswerSelect>
+          <answerSelect v-if="answerFlag" :answer="answers"></answerSelect>
           <div v-if="emptyanswer" style="display: inline">
             <span class="noanswer">No answers available!</span>
             <!-- <img src="../../static/img/hi_robot.png"> -->
@@ -41,14 +41,14 @@
 <script>
 
 import axios from 'axios';
-import AnswerSelect from './AnswerSelect';
+import answerSelect from './answerSelect';
 import Loading from 'vue-loading-overlay';
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.min.css';
 export default {
 
 components: {
-    AnswerSelect,
+    answerSelect,
     Loading
   },
 
