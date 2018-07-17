@@ -54,8 +54,8 @@
             </td>
           </tr>
         </table>
-        <div style="padding: 1%;">
-          <b-button style="margin-left: 58%;" variant="success" v-on:click="sendreply()">Submit</b-button>
+        <div style="padding: 2%;">
+          <b-button style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
         </div>
       </div>
     </modal>

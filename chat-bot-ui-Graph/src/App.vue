@@ -1,7 +1,6 @@
 
 <template>
   <div id='app'>
-    <!-- <div  class="wrapper" style="overflow:auto;"> -->
     <div v-if="token" class="wrapper" style="overflow:auto;">
       <b-navbar toggleable="md" type="dark" variant="info" style="padding:0%">
         <div style="width:100%">
@@ -10,15 +9,12 @@
               <img style="width:143px;" src="../static/img/flytxt-logo-color.svg">
               <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;top: 9px;left: -24px;" v-on:click="home()" title="home"></i>
               <span v-if="chartEnabled!='landing'"  style="font-size: small;left: -21px;font-weight: bold;
-                top: 4px;"><i style="font-size:28px;top: 5px;    padding-right: 7px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>
-              <!-- <b-button>I am a Button</b-button> -->
-            </b-navbar-brand>
+                top: 4px;"><i style="font-size:28px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>            </b-navbar-brand>
           </div>
-          <div style="float:right;;padding-right:8%">
+          <div style="float:right;;padding-right:8%;top:21px;">
             <select style="cursor: pointer;font-size: smaller;" title="select version" v-model="selectedversion">
                 <option v-for="option of options">{{option.text}}</option>
               </select>
-            <i class="fa fa-power-off" v-on:click="logout" style="font-size:26px;top:5px; color:white;cursor:pointer;padding:12px;" title="sign-out"></i>
           </div>
         </div>
       </b-navbar>
@@ -53,8 +49,6 @@
   import formrfp from './webcomponents/form-rfp'
   import statusTracker from './webcomponents/statusTracker'
   import loginpage from './webcomponents/loginPage'
-  
-  
   
   import axios from 'axios'
   
@@ -154,6 +148,15 @@
             content: 'Know the current status',
             icon: 'fa fa-map-signs',
           },
+      
+          {
+            url: 'd',
+            name: '',
+            type: 'logout',
+            card: false,
+            content: 'd',
+            icon: 'fa fa-power-off',
+          },
           
         ],
       }
@@ -221,8 +224,9 @@
           })
         }
   
-        if (item.type === 'RFPU') {
-          this.chartEnabled = item.type;
+        if (item.type === 'logout') {
+          this.chartEnabled = 'landing';
+          this.token='';
         }
       }
     }

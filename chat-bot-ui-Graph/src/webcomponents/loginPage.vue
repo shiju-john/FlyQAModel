@@ -106,7 +106,7 @@ background-color:white;
     padding: 20px;
     width: 398px;
     margin: 0 auto;
-    height: 40%;
+    height: 277px;
     margin-top: 15%;
     box-shadow:1px 0px 3px 0px  grey;
     font-family: inherit;

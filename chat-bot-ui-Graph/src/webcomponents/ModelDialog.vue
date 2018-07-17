@@ -5,8 +5,8 @@
     </div>
     <div class="modal-content">
       <answerSelect :src="model" :answer="remarks.answerarray"></answerSelect>
-      <div style="padding: 1%;border-top: 1px solid #dee2e6;">
-        <b-button style="margin-left: 58%;" variant="success" v-on:click="request">Request for Solution</b-button>
+      <div style="padding: 2%;border-top: 1px solid #dee2e6;">
+        <b-button style="margin-left: 68%;" variant="success" v-on:click="request">Request for Solution</b-button>
       </div>
     </div>
   </modal>
