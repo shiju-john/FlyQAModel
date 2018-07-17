@@ -1,6 +1,6 @@
 <template>
   <div class="chatbot">
-    <ChatWindow
+    <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }"
       :agentProfile="agentProfile"
       :onUserInputSubmit="onMessageWasSent"
       :messageList="messages"
@@ -13,7 +13,7 @@
       :cutomFunction="onremark">
       </ChatWindow>
       <a href="#" class="float" @click.prevent="openChat()">
-<img class="chat" src="../../static/img/chat-icon.png">
+<img class="chat"  v-bind:class="{ 'chat': !isChatOpen,'chat1':isChatOpen }"  src="../../static/img/chat-icon.png">
 </a>
   </div>
 </template>
@@ -36,7 +36,6 @@ props: ['messages', 'version','token'],
       },
       newMessagesCount: 1,
       isChatOpen: false,
-      flag: true,
       loader:false
     }
   },
@@ -86,10 +85,10 @@ props: ['messages', 'version','token'],
     },
     openChat() {
       this.isChatOpen = !this.isChatOpen
-      this.newMessagesCount = 0
+      this.newMessagesCount = 0;
     },
     closeChat() {
-      this.isChatOpen = false
+      this.isChatOpen = false;
     }
   }
 }
@@ -129,9 +128,20 @@ body{
     height: calc(100% - 30%)!important;
     }
 
-    .chat{
+    .chat {
       padding: 26%;
+      -webkit-transition: opacity 1s ease-in-out, -webkit-transform 1s ease-in-out;
     }
+
+    .chat1 {
+      padding: 26%;
+      opacity: 0;
+      -ms-transform: rotate(180deg);
+      /* IE 9 */
+      -webkit-transform: rotate(180deg);
+      /* Chrome, Safari, Opera */
+      transform: rotate(180deg);
+}
 
     .sc-chat-window[data-v-2a21bba5] {
     width: 320px;
@@ -149,8 +159,36 @@ body{
     flex-direction: column;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    transition: 0.3s ease-in-out;
+    /* transition: 0.3s ease-in-out; */
     border-radius: 10px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          -webkit-transition: opacity 1s ease-in-out, -webkit-transform 1s ease-in-out;
+
+}
+
+    .sc-chat-window1[data-v-2a21bba5] {
+    width: 320px;
+    height: calc(100% - 120px);
+    max-height: 483px;
+    position: fixed;
+    right: 25px;
+    bottom: 76px!important;
+    box-sizing: border-box;
+    box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.3);
+    background: white;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    /* transition: 0.3s ease-in-out; */
+    border-radius: 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+     -ms-transform: rotate(360deg);
+      /* IE 9 */
+      -webkit-transform: rotate(360deg);
+      /* Chrome, Safari, Opera */
+      transform: rotate(360deg);
 }
 </style>
