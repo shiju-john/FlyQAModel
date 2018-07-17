@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
+
       this.loader=true;
       const profile = googleUser.getBasicProfile() 
       if (googleUser.getHostedDomain() !== undefined && googleUser.getHostedDomain() === "flytxt.com") {
@@ -52,27 +53,29 @@ export default {
           name:profile.ig,
           nickname:profile.ofa
         }).then((resp) => {
-          this.loader=false;
+          
           // console.log(resp)
                 //emit token here
         this.$emit('login',resp.data.token)
         this.disconnect()
         }).catch(err => {
-          this.loader=false;
+          
           const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-          // this.$toaster.error(message)
+           disconnect(message)
         })
       } else {
-          this.disconnect(msg);
+          this.disconnect("Invalid Login !. Please use flytxt E-mail for sign-in.");
       }
     },
 
     disconnect(msg){
+      this.loader=false;
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.disconnect();
         msg ?  this.$toaster.error(msg) :null
     },
     onSignInError(error) {
+      this.loader=false
       this.$toaster.error(error)
     }
   }
@@ -85,7 +88,7 @@ export default {
   padding: 10px;
   background-color: #e86824;
   color: #fff;
-  margin-top: 18%;
+  margin-top: 10%;
   cursor: pointer;
   width:30%;
 }
