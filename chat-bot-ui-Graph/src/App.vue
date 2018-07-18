@@ -21,7 +21,7 @@
       <div class="main">
         <quickMenu :menuUrlList="items" @process="onClick" />
         <landingpage v-if="chartEnabled==='landing'" :items='items' @onselect='onClick' class="landing"></landingpage>
-        <b-card style="margin-top:1%" v-if="chartEnabled!='landing'">
+        <b-card  v-if="chartEnabled!='landing'">
           <statistics v-if="chartEnabled==='ST'" :token="token"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home"></formrfp>

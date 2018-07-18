@@ -8,15 +8,15 @@
             <tr>
               <th>Feature Status:</th>
               <td v-if="!src">
-                <textarea id="textfield0" @click="selects"  v-if="text">{{a.featureStatus}}</textarea>
-                <select @change="edited" v-if="!text">
+                <textarea id="textfield0" @click="selects"  placeholder="No feature status available" v-if="text">{{a.featureStatus}}</textarea>
+                <select @change="edited" v-if="!text" >
                   <option value="" selected>Fully Compliance</option>
                   <option value="">Partially Compliance</option>
                   <option value="">Non Compliance</option>
                 </select>
               </td>
               <td v-if="src">
-                <textarea :readonly="src">{{a.featureStatus}}</textarea>
+                <textarea placeholder="No feature status available" :readonly="src">{{a.featureStatus}}</textarea>
               </td>
             </tr>
             <tr>
@@ -33,9 +33,9 @@
             </tr>
             <tr >
               <td v-if="!src" colspan="2">
-                <b-button variant="success">accept</b-button>
-                <b-button variant="danger" style="margin-left: 50px;">reject</b-button>
-                <b-button variant="info" v-if="updateFlag" style="margin-left: 50px;">Update</b-button>
+                <b-button variant="success" v-on:click="response('accept',index)">accept</b-button>
+                <b-button variant="danger" style="margin-left: 50px;" v-on:click="response('reject',index)">reject</b-button>
+                <b-button variant="info" v-if="updateFlag" style="margin-left: 50px;" v-on:click="response('update',index)">Update</b-button>
               </td>
             </tr>
           </table>
@@ -51,22 +51,23 @@
 import axios from 'axios';
 export default {
 
-  components: {},
-  props: ['answer', 'src'],
+components: {},
+  props: ['data', 'answer', 'src', 'token'],
 
 
   data() {
     return {
       updateFlag: false,
       text: true,
+      count: 0,
     }
   },
   created: function () {},
 
   watch: {
     'answer' () {
-      this.updateFlag=false;
-      this.text=true;
+      this.updateFlag = false;
+      this.text = true;
     }
   },
 
@@ -87,6 +88,50 @@ export default {
         this.updateFlag = true;
       }
     },
+
+    response(action, index) {
+      this.answer[index].status = action;
+      if (action == 'reject') {
+        this.count++;
+      }
+      if (this.count == this.answer.length) {
+        this.data[0].finalStatus = 'reject';
+      }
+      if (this.answer.length > 1) {
+        delete this.data[0].vueTableComponentInternalRowId;
+        var ans = [];
+        var data = [];
+        for (let i = 0; i < this.answer.length; i++) {
+          ans.push(this.answer[i])
+        }
+        this.data[0].answers = JSON.stringify(ans);
+        data.push(this.data[0]);
+        // console.log(JSON.stringify(this.data[0]));
+        // this.req(data)
+      } else {
+        this.answer.status = action;
+        this.data[0].answers = JSON.stringify(this.answer);
+        delete this.data[0].vueTableComponentInternalRowId;
+        var data = [];
+        data.push(this.data[0]);
+        // this.req(data);
+        // console.log(JSON.stringify(this.data[0]));
+      }
+
+
+    },
+
+    req(data) {
+      axios.put(process.env.SERV_URL + 'visionstatustrackerendpoints?token=' + this.token, {
+        postKey: 'saveQuestions',
+        questions: data
+      }).then((resp) => {
+        this.$toaster.success('request successfully sent!');
+      }).catch(err => {
+        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+        console.log(message);
+      })
+    }
   }
 }
 </script>

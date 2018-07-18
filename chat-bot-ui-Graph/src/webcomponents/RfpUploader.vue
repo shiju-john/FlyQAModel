@@ -1,6 +1,10 @@
 <template>
   <div class="RfpUploader">
     <div class="container">
+      <div v-if="loader">
+      <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+      </loading>
+    </div>
       <!--UPLOAD-->
       <form enctype="multipart/form-data">  
         <div class="dropbox">
@@ -30,12 +34,19 @@
 </template>
 <script>
     
-import axios from 'axios'
+import axios from 'axios';
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.min.css';
+
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,
   STATUS_SUCCESS = 2,
   STATUS_FAILED = 3;
 export default {
+    components: {
+      Loading
+  },
   props: ['token'],
   data() {
     return {
@@ -43,7 +54,8 @@ export default {
       sheetnames: [],
       uploadError: null,
       currentStatus: null,
-      uploadFieldName: 'rfpfile'
+      uploadFieldName: 'rfpfile',
+      loader: false,
     }
   },
 
@@ -75,18 +87,18 @@ export default {
     },
 
     upload(data) {
-      // const url = `http://192.168.127.17:8080/fileupload`;
+      this.loader=true;
       const url =process.env.SERV_URL+'uploaderendpoints?token='+this.token;
-      // const url='http://192.168.127.76:8000';
-
       axios.post(url, data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then((resp) => {
+        this.loader=false;
         this.$emit('sheetnames', resp.data)
         this.currentStatus = STATUS_SUCCESS;
       }).catch(err => {
+        this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })

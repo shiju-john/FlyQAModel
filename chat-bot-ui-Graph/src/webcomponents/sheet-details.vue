@@ -39,6 +39,12 @@
                 <b-form-checkbox-group>
                   <b-form-checkbox value="true"  v-model="doc.skippable">Skippable</b-form-checkbox>
                   <!-- <b-form-checkbox value="same" @change="sameSettings"  v-model="chk">Same for all</b-form-checkbox> -->
+                <b-form-checkbox id="checkbox1"
+                       value="accepted"
+                      v-on:change="sameSettings"
+                     unchecked-value="not_accepted">
+      Copy Settings
+    </b-form-checkbox>
                 </b-form-checkbox-group>             
               </b-form-group>
             </div>
@@ -58,7 +64,8 @@ import 'vue-loading-overlay/dist/vue-loading.min.css';
 
 export default {
   components: {
-    StepProgress
+    StepProgress,
+    Loading
   },
   props: ['docarray', 'index', 'productversion', 'rfpname', 'sheetarray', 'file_id', 'file_path','token'],
 
@@ -82,10 +89,10 @@ export default {
   methods: {
 
     sameSettings() {
-      // console.log('checked')
-      for (let i = 0; i < this.docarray.length; i++) {
-        this.docarray[i + 1] = this.docarray[0]
-      }
+      console.log('checked')
+      // for (let i = 0; i < this.docarray.length; i++) {
+      //   this.docarray[i + 1] = this.docarray[0]
+      // }
     },
 
     beforeTabSwitch(evt) {

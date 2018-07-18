@@ -23,10 +23,9 @@
           </table-component>
         </div>
         <div style="width:40%">
-          <answerSelect v-if="answerFlag" :answer="answers"></answerSelect>
+          <answerSelect v-if="answerFlag" :data="rowObj" :answer="answers" :token="token"></answerSelect>
           <div v-if="emptyanswer" style="display: inline">
             <span class="noanswer">No answers available!</span>
-            <!-- <img src="../../static/img/hi_robot.png"> -->
           </div>
         </div>
       </div>
@@ -67,7 +66,8 @@ components: {
       emptyanswer: false,
       answerFlag: false,
       temp: String,
-      updateflag: Boolean
+      updateflag: Boolean,
+      rowObj:[]
     }
   },
   mounted() {
@@ -84,7 +84,10 @@ components: {
     },
 
     clik(row) {
+      this.rowObj.length=0;
       var res = row.answers ? row.answers.replace(/NaN/g ,  "\"\"") : row.answers;
+      this.rowObj.push(row);
+    
       this.answers = JSON.parse(res);
       if (this.answers.length == 0) {
         this.emptyanswer = true
@@ -106,12 +109,14 @@ components: {
           'Content-Type': 'application/json'
         }
       }).then((resp) => {
+        this.rowObj.length=0;
         this.loader = false;
         this.tab_datas[sheetname] = resp.data;
         this.current_tab_data = resp.data;
         var res = [];
         res = resp.data[0].answers.replace("NaN", "\"\"");
         this.answers = JSON.parse(res);
+        this.rowObj.push(resp.data[0]);
         if (this.answers.length == 0) {
           this.emptyanswer = true
         } else {
@@ -145,7 +150,7 @@ components: {
     },
 
     sendreply(data) {
-      axios.post(process.env.REM_URL, {
+      axios.post(process.env.SERV_URL + 'visionendpoints?token='+this.token, {
         requestedSource: data.requestSource,
         questionId: data.id,
         templateRefId: data.templateRefId,
