@@ -4,6 +4,7 @@
       <table-column show="question" label="question"></table-column>
       <table-column show="productVersion" label="product Version"></table-column>
       <table-column show="requestUser" label="requested User"></table-column>
+      <table-column show="requestedSource" label="requested Source"></table-column>
       <table-column show="requestTime" label="requested Time"></table-column>
       <table-column :sortable="false" :filterable="false">
         <template slot-scope="row">
