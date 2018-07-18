@@ -7,7 +7,7 @@
       <table-column show="requestedSource" label="requested Source"></table-column>
       <table-column show="requestTime" label="requested Time"></table-column>
       <table-column :sortable="false" :filterable="false">
-        <template slot-scope="row">
+        <template slot-scope="row" >
           <button v-on:click="reply(row)" class="btn btn-primary">
             <i class="fa fa-reply"></i>
           </button>
@@ -43,14 +43,14 @@
             </td>
           </tr>
           <tr>
-            <th>Remarks:</th>
-            <td>
+            <th>Response:</th>
+            <td height="100">
               <textarea v-model="remarks" style="position: absolute;"></textarea>
             </td>
           </tr>
           <tr>
             <th>Document version:</th>
-            <td>
+            <td >
               <textarea v-model="docversion" style="position: absolute;"></textarea>
             </td>
           </tr>

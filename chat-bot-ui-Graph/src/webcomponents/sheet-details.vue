@@ -2,11 +2,11 @@
   <div class="SheetDetails">
     <div class="container">
       <div v-if="loader">
-      <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
-      </loading>
-    </div>
+        <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+        </loading>
+      </div>
       <form-wizard title='' subtitle='' color="#e86824" @on-complete="onSubmit()">
-        <tab-content v-for="doc in docarray" :title="doc.sheetname" >
+        <tab-content v-for="(doc,index) in docarray" :title="doc.sheetname">
           <div class="flex-container">
             <div>
               <b-form-group label="Header Row Index:">
@@ -35,18 +35,13 @@
                 </b-form-input>
               </b-form-group>
 
-              <b-form-group >
+              <b-form-group>
                 <b-form-checkbox-group>
-                  <b-form-checkbox value="true"  v-model="doc.skippable">Skippable</b-form-checkbox>
-                  <!-- <b-form-checkbox value="same" @change="sameSettings"  v-model="chk">Same for all</b-form-checkbox> -->
-                <b-form-checkbox id="checkbox1"
-                       value="accepted"
-                      v-on:change="sameSettings"
-                     unchecked-value="not_accepted">
-      Copy Settings
-    </b-form-checkbox>
-                </b-form-checkbox-group>             
+                  <b-form-checkbox value="true" v-model="doc.skippable">Skippable</b-form-checkbox>
+                  <b-form-checkbox value="trues" v-on:change="sameSettings(index)">Copy Settings</b-form-checkbox>
+                </b-form-checkbox-group>
               </b-form-group>
+
             </div>
           </div>
         </tab-content>
@@ -88,11 +83,16 @@ export default {
 
   methods: {
 
-    sameSettings() {
-      console.log('checked')
-      // for (let i = 0; i < this.docarray.length; i++) {
-      //   this.docarray[i + 1] = this.docarray[0]
-      // }
+    sameSettings(index) {
+      console.log(this.docarray);
+      	for (var j=index;j<this.docarray.length;j++){
+    		this.docarray[j].statusColumn = this.docarray[index].statusColumn
+    		this.docarray[j].headerIndex = this.docarray[index].headerIndex 
+    		this.docarray[j].questionColumn = this.docarray[index].questionColumn
+    		this.docarray[j].remarks = this.docarray[index].remarks
+    		this.docarray[j].documentReference = this.docarray[index].documentReference
+    		// this.docarray[j].documentReference = this.docarray[index].documentReference
+    	}
     },
 
     beforeTabSwitch(evt) {

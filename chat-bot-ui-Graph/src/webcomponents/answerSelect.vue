@@ -8,7 +8,7 @@
             <tr>
               <th>Feature Status:</th>
               <td v-if="!src">
-                <textarea id="textfield0" @click="selects"  placeholder="No feature status available" v-if="text">{{a.featureStatus}}</textarea>
+                <textarea id="textfield0" @click="selects" v-model="a.featureStatus" placeholder="No feature status available" v-if="text"></textarea>
                 <select @change="edited" v-if="!text" >
                   <option value="" selected>Fully Compliance</option>
                   <option value="">Partially Compliance</option>
@@ -16,7 +16,7 @@
                 </select>
               </td>
               <td v-if="src">
-                <textarea placeholder="No feature status available" :readonly="src">{{a.featureStatus}}</textarea>
+                <textarea placeholder="No feature status available" v-model="a.featureStatus" :readonly="src"></textarea>
               </td>
             </tr>
             <tr>
@@ -107,14 +107,14 @@ components: {},
         this.data[0].answers = JSON.stringify(ans);
         data.push(this.data[0]);
         // console.log(JSON.stringify(this.data[0]));
-        // this.req(data)
+        this.req(data)
       } else {
         this.answer.status = action;
         this.data[0].answers = JSON.stringify(this.answer);
         delete this.data[0].vueTableComponentInternalRowId;
         var data = [];
         data.push(this.data[0]);
-        // this.req(data);
+        this.req(data);
         // console.log(JSON.stringify(this.data[0]));
       }
 

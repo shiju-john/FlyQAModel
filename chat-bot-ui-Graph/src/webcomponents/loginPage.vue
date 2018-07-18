@@ -1,6 +1,6 @@
 <template>
-<div class="parent ">
-  <div>
+<div class="parent" style=" background-image: url('../../static/img/part.jpg');">
+  <div >
     <div>
       <img src="../../static/img/flytxt-logo-color.svg">
     </div>
