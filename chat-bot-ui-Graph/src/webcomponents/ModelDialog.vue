@@ -40,7 +40,7 @@ export default {
       axios.post(process.env.SERV_URL + 'visionendpoints?token='+this.token, {
         question: this.question,
         productVersion: this.version,
-        requestedSource:'Bot'
+        requestedSource:'Assistant'
       }).then((resp) => {
         this.$toaster.success('Solution request successfully sent!');
         this.$emit('submit', {
