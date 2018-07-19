@@ -18,7 +18,7 @@
       <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
       </loading>
     </div>
-    <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height: auto;">
+    <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height:auto;">
       <div class="head1" style="background-color: #0996b2;">Solution Response
         <span v-on:click="hide" style="margin-left: 71%;cursor:pointer;"><i class="fa fa-times"></i></span>
       </div>
@@ -50,7 +50,7 @@
           </tr>
           <tr>
             <th>Document version:</th>
-            <td >
+            <td>
               <textarea v-model="docversion" style="position: absolute;"></textarea>
             </td>
           </tr>
@@ -91,8 +91,6 @@ export default {
       remarks: '',
       docversion: '',
       featureStatus: '',
-      property: '',
-
     }
   },
   watch: {
@@ -136,7 +134,9 @@ export default {
     },
 
     sendreply() {
+      console.log(this.requestdata);
       axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
+        
         id: this.send_reply.id,
         question: this.send_reply.question,
         productVersion: this.send_reply.productVersion,
@@ -144,7 +144,11 @@ export default {
         requestTime: this.send_reply.requestTime,
         answer: this.remarks,
         docLink: this.docversion,
-        featureStatus: this.featureStatus
+        featureStatus: this.featureStatus,
+        requestedSource:this.send_reply.requestedSource,
+        questionId:this.send_reply.questionId
+        
+
       }).then((resp) => {
         this.$toaster.success('Solution succesfully submitted!');
         // this.open = false

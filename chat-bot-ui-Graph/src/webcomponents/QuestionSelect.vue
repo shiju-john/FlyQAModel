@@ -8,16 +8,11 @@
     <div id="sheet_sheet_name" class="tabcontent">
       <div class="flex-container">
         <div class="one" style="width:60%">
-          <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;">
-          <!-- <template > -->
-                         <!-- <i style="margin-right: 15px;"  class="fa fa-check"></i> -->
-                <!-- <i style="margin-right: 15px;" class="fa fa-times"></i> -->
-          <!-- </template> -->
-               
+          <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;">               
             <table-column show="question" label="question"></table-column>
             <table-column :sortable="false" :filterable="false">
               <template slot-scope="row">
-
+                 <!-- <i style="margin-right: 15px;" class="fa fa-times"></i>  -->
                 <b-button variant="primary" v-on:click="sendreply(row)" title="Request for solution">
                   <i class="fa fa-reply"></i>
                 </b-button>
@@ -156,6 +151,7 @@ components: {
     },
 
     sendreply(data) {
+      this.loader=true;
       axios.post(process.env.SERV_URL + 'visionendpoints?token='+this.token, {
         requestedSource: data.requestSource,
         questionId: data.id,
@@ -163,8 +159,10 @@ components: {
         question: data.question,
         productVersion: this.version,
       }).then((resp) => {
+        this.loader=false;
         this.$toaster.success('Solution request successfully processed!')
       }).catch(err => {
+        this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         this.$toaster.error(message)
         console.log(message);
