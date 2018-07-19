@@ -2,10 +2,6 @@
   <div class="chatbot">
          <!-- <ChatWindow   -->
      <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }"
- 
-
-   
-
       :agentProfile="agentProfile"
       :onUserInputSubmit="onMessageWasSent"
       :messageList="messages"

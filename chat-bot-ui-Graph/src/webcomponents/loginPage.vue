@@ -1,6 +1,6 @@
 <template>
-<div class="parent" style=" background-image: url('../../static/img/part.jpg');">
-  <div style="border-radius: 10px;">
+<div class="parent" style=" background-image: url('../../static/img/part.jpg');background-size: cover;">
+  <div style="border-radius: 10px;margin-right: 40px;">
     <div>
       <img src="../../static/img/flytxt-logo-color.svg">
     </div>

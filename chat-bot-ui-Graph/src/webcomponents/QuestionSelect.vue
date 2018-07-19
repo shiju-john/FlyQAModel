@@ -9,9 +9,15 @@
       <div class="flex-container">
         <div class="one" style="width:60%">
           <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;">
+          <!-- <template > -->
+                         <!-- <i style="margin-right: 15px;"  class="fa fa-check"></i> -->
+                <!-- <i style="margin-right: 15px;" class="fa fa-times"></i> -->
+          <!-- </template> -->
+               
             <table-column show="question" label="question"></table-column>
             <table-column :sortable="false" :filterable="false">
               <template slot-scope="row">
+
                 <b-button variant="primary" v-on:click="sendreply(row)" title="Request for solution">
                   <i class="fa fa-reply"></i>
                 </b-button>
@@ -248,6 +254,14 @@ td {
   display: none;
   border: 1px solid #ccc;
   border-top: none;
+}
+
+.accept {
+    color: green;
+}
+
+.reject {
+    color: red;
 }
 
 </style>
