@@ -9,10 +9,10 @@
               <th>Feature Status:</th>
               <td v-if="!src">
                 <textarea id="textfield0" @click="selects" v-model="a.featureStatus" placeholder="No feature status available" v-if="text"></textarea>
-                <select @change="edited" v-if="!text" >
-                  <option value="" selected>Fully Compliance</option>
-                  <option value="">Partially Compliance</option>
-                  <option value="">Non Compliance</option>
+                <select @change="edited" v-if="!text" v-model="drop">
+                 <option v-for="option in options" v-bind:value="option.text">
+                      {{ option.text }}
+                    </option>
                 </select>
               </td>
               <td v-if="src">
@@ -28,7 +28,7 @@
             <tr>
               <th>Answer:</th>
               <td height="200">
-                <textarea :readonly="src" v-model="a.answer" style="position: absolute;" @keyup="edited"></textarea>
+                <textarea :readonly="src" placeholder="No documents available" v-model="a.answer" style="position: absolute;" @keyup="edited"></textarea>
               </td>
             </tr>
             <tr >
@@ -60,6 +60,12 @@ components: {},
       updateFlag: false,
       text: true,
       count: 0,
+      drop:'Fully Compliance',
+      options: [
+      { text: 'Fully Compliance', },
+      { text: 'Partially Compliance', },
+      { text: 'Non Compliance', }
+    ]
     }
   },
   created: function () {},
@@ -90,7 +96,13 @@ components: {},
     },
 
     response(action, index) {
-      this.answer[index].status = action;
+      if (action == 'update') {
+      }else{
+        this.answer[index].status = action;
+      }
+
+  
+      this.answer[index].featureStatus = this.drop;
       if (action == 'reject') {
         this.count++;
       }
@@ -102,6 +114,7 @@ components: {},
         var ans = [];
         var data = [];
         for (let i = 0; i < this.answer.length; i++) {
+          // this.answer[i].featureStatus = this.drop;
           ans.push(this.answer[i])
         }
         this.data[0].answers = JSON.stringify(ans);
@@ -110,6 +123,7 @@ components: {},
         this.req(data)
       } else {
         this.answer.status = action;
+        this.answer.featureStatus = this.drop;
         this.data[0].answers = JSON.stringify(this.answer);
         delete this.data[0].vueTableComponentInternalRowId;
         var data = [];

@@ -9,18 +9,35 @@
       <div class="flex-container">
         <div class="one" style="width:60%">
           <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;">               
-            <table-column show="question" label="question"></table-column>
-            <table-column :sortable="false" :filterable="false">
+            
+            <table-column  >
               <template slot-scope="row">
-                 <!-- <i style="margin-right: 15px;" class="fa fa-times"></i>  -->
-                <b-button variant="primary" v-on:click="sendreply(row)" title="Request for solution">
-                  <i class="fa fa-reply"></i>
+               
+                <i v-if="row.finalStatus=='accept'||row.finalStatus=='solution'" style="color:green"  class="fa fa-check"></i>
+                 <i v-if="row.finalStatus=='reject'" style="color:red" class="fa fa-times"></i> 
+                 <i v-if="row.finalStatus=='solution_waiting'" style="color:red" class="fa fa-user-clock"></i> 
+                 <i v-if="row.finalStatus=='AI_ENGINE'" style="color:red" class="fa fa-robot"></i> 
+
+               
+                </template>
+                 </table-column>
+                <table-column show="question" label="question"></table-column>
+                <table-column :sortable="false" :filterable="false">
+                 
+                <template slot-scope="row">
+                 
+                 <b-button v-if="button(row)" variant="primary" v-on:click="sendreply(row)" title="Request for solution">
+                <i class="fa fa-reply"></i>
+                </b-button>
+                 <b-button v-else variant="primary" disabled title="Request for solution">
+                <i class="fa fa-reply"></i>
                 </b-button>
                 <b-button variant="success" v-on:click="clik(row)" title="answers">
                   <i class="fa fa-adn"></i>
                 </b-button>
+                  
               </template>
-            </table-column>
+          </table-column>
           </table-component>
         </div>
         <div style="width:40%">
@@ -52,7 +69,7 @@ components: {
     Loading
   },
 
-  props: ['rfpdata','version','token'],
+  props: ['rfpdata', 'version', 'token'],
 
 
   data() {
@@ -68,7 +85,8 @@ components: {
       answerFlag: false,
       temp: String,
       updateflag: Boolean,
-      rowObj:[]
+      disabled: false,
+      rowObj: []
     }
   },
   mounted() {
@@ -84,12 +102,26 @@ components: {
       })
     },
 
+    button(row) {
+      return row.finalStatus === 'solution_waiting' || row.finalStatus === 'accept' || row.finalStatus === 'solution' ? false : true;
+    },
+
     clik(row) {
-      this.rowObj.length=0;
-      var res = row.answers ? row.answers.replace(/NaN/g ,  "\"\"") : row.answers;
+      this.rowObj.length = 0;
+      var res = row.answers ? row.answers.replace(/NaN/g, "\"\"") : row.answers;
       this.rowObj.push(row);
-    
       this.answers = JSON.parse(res);
+
+      this.answers.sort(function (a, b) {
+        if (a.status!=undefined&&b.status!=undefined) {
+          returnval = a.status === 'solution' ? false : b.status === 'solution' ? true : null;
+          returnval = returnval == null ? a.status === 'solution_waiting' ? false : b.status === 'solution_waiting' ? true : null : returnval
+          return returnval == null ? a.status == 'accept' ? false : b.status == 'accept' ? true : true : returnval
+          }else{
+
+          } 
+      });
+      console.log(this.answers);
       if (this.answers.length == 0) {
         this.emptyanswer = true
       } else {
@@ -101,7 +133,7 @@ components: {
       this.loader = true;
       this.updateflag = false;
       this.answers = [];
-      const url = process.env.SERV_URL+'visionstatustrackerendpoints/?token='+this.token;
+      const url = process.env.SERV_URL + 'visionstatustrackerendpoints/?token=' + this.token;
       axios.post(url, {
         templateRefId: this.rfpdata.id,
         sheetName: sheetname
@@ -110,7 +142,7 @@ components: {
           'Content-Type': 'application/json'
         }
       }).then((resp) => {
-        this.rowObj.length=0;
+        this.rowObj.length = 0;
         this.loader = false;
         this.tab_datas[sheetname] = resp.data;
         this.current_tab_data = resp.data;
@@ -151,18 +183,18 @@ components: {
     },
 
     sendreply(data) {
-      this.loader=true;
-      axios.post(process.env.SERV_URL + 'visionendpoints?token='+this.token, {
+      this.loader = true;
+      axios.post(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
         requestedSource: data.requestSource,
         questionId: data.id,
         templateRefId: data.templateRefId,
         question: data.question,
         productVersion: this.version,
       }).then((resp) => {
-        this.loader=false;
+        this.loader = false;
         this.$toaster.success('Solution request successfully processed!')
       }).catch(err => {
-        this.loader=false;
+        this.loader = false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         this.$toaster.error(message)
         console.log(message);

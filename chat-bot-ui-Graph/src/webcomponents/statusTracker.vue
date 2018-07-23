@@ -9,6 +9,9 @@
         <table-column show="status" label="status"></table-column>
         <table-column :sortable="false" :filterable="false">
           <template slot-scope="row">
+            <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Download File" >
+              <i class="fa fa-download"></i>
+            </b-button>
             <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Request for solution" v-on:click="clik(row)">
               <i class="fa fa-chevron-right"></i>
             </b-button>
