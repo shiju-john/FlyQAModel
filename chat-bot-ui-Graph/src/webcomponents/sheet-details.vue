@@ -38,7 +38,11 @@
               <b-form-group>
                 <b-form-checkbox-group>
                   <b-form-checkbox value="true" v-model="doc.skippable">Skippable</b-form-checkbox>
-                  <b-form-checkbox value="copy" v-on:change="sameSettings(index)">Copy Settings</b-form-checkbox>
+                 
+                </b-form-checkbox-group>
+                <b-form-checkbox-group>
+                 
+                  <b-form-checkbox value="true" v-on:change="sameSettings(index)">Copy Settings</b-form-checkbox>
                 </b-form-checkbox-group>
               </b-form-group>
 
