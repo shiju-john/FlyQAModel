@@ -23,7 +23,7 @@
         <landingpage v-if="chartEnabled==='landing'" :items='items' @onselect='onClick' class="landing"></landingpage>
         <b-card  v-if="chartEnabled!='landing'">
           <statistics v-if="chartEnabled==='ST'" :token="token"></statistics>
-          <ReqSolution v-if="chartEnabled==='REQ'" :requestdata='requestdata' :token="token" @reqsent='onfeedback' />
+          <ReqSolution v-if="chartEnabled==='REQ'" :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
         </b-card>
@@ -209,18 +209,18 @@
         if (item.type === 'REQ') {
   
           this.chartEnabled = item.type;
-          var token=this.token;
-          axios.get(process.env.SERV_URL + "visionendpoints?status=OPEN&token="+token, {
-          },
-          {
-        headers: {
-          'Content-Type': 'application/json'
-        }}
-          ).then((resp) => {
-            this.requestdata = resp.data;
-          }).catch(err => {
-            const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-          })
+        //   var token=this.token;
+        //   axios.get(process.env.SERV_URL + "visionendpoints?status=OPEN&token="+token, {
+        //   },
+        //   {
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // }}
+        //   ).then((resp) => {
+        //     this.requestdata = resp.data;
+        //   }).catch(err => {
+        //     const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+        //   })
         }
   
         if (item.type === 'logout') {

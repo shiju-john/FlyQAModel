@@ -1,6 +1,6 @@
 <template>
   <div class="ReqSolution">
-    <table-component caption="heading" :data="requestdatas" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
+    <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
       <table-column show="question" label="question"></table-column>
       <table-column show="productVersion" label="product Version"></table-column>
       <table-column show="requestUser" label="requested User"></table-column>
@@ -77,14 +77,13 @@ export default {
     Loading
   },
 
-  props: ['requestdata', 'token'],
+  props: ['token'],
 
   data() {
     return {
       modifiers: {},
       req_obj: {},
       flag: 'none',
-      requestdatas:this.requestdata,
       send_reply: [],
       question: String,
       loader: true,
@@ -93,33 +92,33 @@ export default {
       remarks: '',
       docversion: '',
       featureStatus: '',
-      enable:true
+      enable:true,
+      requestdata:[]
     }
   },
-  watch: {
-    'requestdata' () {
-      this.loader=false;
-    }
+
+  mounted(){
+    this.reqsolution();
   },
   created: function () {
     window.addEventListener('keydown', (e) => {
       if (e.key == 'Escape') {
         this.hide()
         this.remarks = '',
-          this.docversion = ''
+        this.docversion = ''
       }
     });
   },
 
   beforeDestroy() {
-    // console.log('destroyed')
+    console.log('destroyed')
   },
 
   methods: {
     reqsolution() {
       axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=OPEN', {}).then((resp) => {
         this.loader = false;
-        this.requestdatas = resp.data;
+        this.requestdata = resp.data;
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         this.loader = false;
@@ -146,7 +145,6 @@ export default {
     sendreply() {
       // console.log(this.requestdata);
       axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
-        
         id: this.send_reply.id,
         question: this.send_reply.question,
         productVersion: this.send_reply.productVersion,
