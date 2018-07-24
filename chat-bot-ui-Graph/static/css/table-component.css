@@ -74,12 +74,12 @@
   padding: .75em .75em;
   vertical-align: top;
   text-align: left;
-  border-top: 1px solid #c6c1c1;
+  border-top: 1px solid #d6d3d2;
 }
 
 .table-component__table th {
-  background-color: #e0e0e0;
-  color: black;
+  background-color: #e86824b8;
+  color: white;
   text-transform: uppercase;
   white-space: nowrap;
   font-size: .85em;

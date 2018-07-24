@@ -12,13 +12,14 @@
             <table-column>
 
               <template slot-scope="row">
-                <i v-if="row.finalStatus=='accept'||row.finalStatus=='solution'" style="color:green"  class="fa fa-check"></i>
+                <i v-if="row.finalStatus=='accept'" style="color:green"  class="fa fa-check"></i>
                  <i v-if="row.finalStatus=='reject'" style="color:red" class="fa fa-times"></i> 
-                 <i v-if="row.finalStatus=='solution_waiting'" style="color:red" class="fa fa-user-clock"></i> 
-                 <i v-if="row.finalStatus=='AI_ENGINE'" style="color:red" class="fa fa-robot"></i> 
+                 <i v-if="row.finalStatus=='solution_waiting'"  style="color:green" class="fa fa-user-clock"></i> 
+                 <i v-if="row.finalStatus=='AI_ENGINE'" style="color:green" class="fa fa-robot"></i> 
+                 <i v-if="row.finalStatus=='solution'" style="color:green" class="fas fa-user-alt"></i> 
                 </template>
 
-                 </table-column>
+              </table-column>
 
                 <table-column show="question" label="question"></table-column>
                 <table-column :sortable="false" :filterable="false">   
@@ -31,7 +32,7 @@
                 <i class="fa fa-reply"></i>
                 </b-button>
                 <b-button variant="success" v-on:click="clik(row)" title="answers">
-                  <i class="fa fa-adn"></i>
+                  <i class="fab fa-adn"></i>
                 </b-button>                
               </template>
               
@@ -123,7 +124,6 @@ components: {
           var returnval = a.status === 'solution' ? false : b.status === 'solution' ? true : null;
           returnval = returnval == null ? a.status === 'solution_waiting' ? false : b.status === 'solution_waiting' ? true : null : returnval
           returnval= returnval == null ? a.status == 'accept' ? false : b.status == 'accept' ? true : true : returnval;
-          console.log( returnval );
           return returnval;
       },
     openTab(e, sheetname) {
@@ -189,6 +189,7 @@ components: {
         question: data.question,
         productVersion: this.version,
       }).then((resp) => {
+        data.finalStatus='solution_waiting';
         this.loader = false;
         this.$toaster.success('Solution request successfully processed!')
       }).catch(err => {

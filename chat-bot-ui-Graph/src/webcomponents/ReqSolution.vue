@@ -1,6 +1,6 @@
 <template>
   <div class="ReqSolution">
-    <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
+    <table-component caption="heading" :data="requestdatas" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
       <table-column show="question" label="question"></table-column>
       <table-column show="productVersion" label="product Version"></table-column>
       <table-column show="requestUser" label="requested User"></table-column>
@@ -24,7 +24,7 @@
       </div>
       <div class="modal-content">
         <table class="table">
-          <col width="60">
+          <col width="100">
           <tr>
             <th>Question:</th>
             <td>
@@ -32,7 +32,7 @@
             </td>
           </tr>
           <tr>
-            <th>Feature Status:</th>
+            <th>Feature Status <span style="color:red;">*</span>:</th>
             <td>
               <select v-model="featureStatus">
                 <option disabled value="">Please select one</option>
@@ -43,9 +43,9 @@
             </td>
           </tr>
           <tr>
-            <th>Response:</th>
+            <th>Response <span style="color:red;">*</span>:</th>
             <td height="100">
-              <textarea v-model="remarks" style="position: absolute;"></textarea>
+              <textarea v-model="remarks" style="position: absolute;" @keyup="enablebutton"></textarea>
             </td>
           </tr>
           <tr>
@@ -56,7 +56,9 @@
           </tr>
         </table>
         <div style="padding: 2%;">
-          <b-button style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
+          <b-button v-if="enable" style="margin-left: 85%;" disabled variant="success" v-on:click="sendreply()">Submit</b-button>
+
+          <b-button  v-else style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
         </div>
       </div>
     </modal>
@@ -82,7 +84,7 @@ export default {
       modifiers: {},
       req_obj: {},
       flag: 'none',
-      // requestdata: [],
+      requestdatas:this.requestdata,
       send_reply: [],
       question: String,
       loader: true,
@@ -91,6 +93,7 @@ export default {
       remarks: '',
       docversion: '',
       featureStatus: '',
+      enable:true
     }
   },
   watch: {
@@ -109,23 +112,25 @@ export default {
   },
 
   beforeDestroy() {
-    console.log('destroyed')
+    // console.log('destroyed')
   },
 
   methods: {
     reqsolution() {
       axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=OPEN', {}).then((resp) => {
         this.loader = false;
-        this.requestdata = resp.data;
+        this.requestdatas = resp.data;
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         this.loader = false;
         this.$toaster.error(message)
       })
     },
+    enablebutton(){
+      this.enable=false;
+    },
 
     reply(data) {
-      // this.open = true
       this.$modal.show('Model');
       this.send_reply = data;
       this.property = data.question
@@ -133,10 +138,13 @@ export default {
 
     hide(){
        this.$modal.hide('Model');
+       this.enable=true;
+       this.docversion='';
+       this.featureStatus=''
     },
 
     sendreply() {
-      console.log(this.requestdata);
+      // console.log(this.requestdata);
       axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
         
         id: this.send_reply.id,

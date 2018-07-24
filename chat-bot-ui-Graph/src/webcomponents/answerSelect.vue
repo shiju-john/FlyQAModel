@@ -1,6 +1,6 @@
 <template>
   <div class="AnsweSelect">
-    <div v-bind:style="[src ? {'padding-top':'0%'} : {'padding-top':'9%'}]">
+    <div v-bind:style="[src ? {'padding-top':'0%'} : {'padding-top':'7%'}]">
       <b-tabs pills card>
         <b-tab :title="'Answer ' + (index +1)" v-for="(a, index) in answer" v-on:click="toggle">
           <table class="table">
@@ -34,7 +34,7 @@
             <tr >
               <td v-if="!src" colspan="2">
                 <b-button variant="success" v-on:click="response('accept',index)">accept</b-button>
-                <b-button variant="danger" style="margin-left: 50px;" v-on:click="response('reject',index)">reject</b-button>
+                <!-- <b-button variant="danger" style="margin-left: 50px;" v-on:click="response('reject',index)">reject</b-button> -->
                 <b-button variant="info" v-if="updateFlag" style="margin-left: 50px;" v-on:click="response('update',index)">Update</b-button>
               </td>
             </tr>
@@ -101,14 +101,16 @@ components: {},
         this.answer[index].status = action;
       }
 
-  
       this.answer[index].featureStatus = this.drop;
-      if (action == 'reject') {
-        this.count++;
+      if (action == 'accept') {
+        this.data[0].finalStatus = 'accept';
       }
-      if (this.count == this.answer.length) {
-        this.data[0].finalStatus = 'reject';
-      }
+      // if (action == 'reject') {
+      //   this.count++;
+      // }
+      // if (this.count == this.answer.length &&this.data[0].finalStatus!=='solution_waiting') {
+      //   this.data[0].finalStatus = 'reject';
+      // }
       if (this.answer.length > 1) {
         delete this.data[0].vueTableComponentInternalRowId;
         var ans = [];
@@ -183,11 +185,6 @@ textarea {
   border: none;
 }
 
-/* td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-} */
 
 </style>
 

@@ -7,9 +7,9 @@
           <div style="float:left">
             <b-navbar-brand>
               <img style="width:143px;" src="../static/img/flytxt-logo-color.svg">
-              <i class="fa fa-home" style="font-size:28px; color:white; cursor:pointer; padding:10px;top: 9px;left: -24px;" v-on:click="home()" title="home"></i>
+              <i class="fa fa-home" style="font-size:22px; color:white; cursor:pointer; padding:10px;top: 9px;left: -24px;" v-on:click="home()" title="home"></i>
               <span v-if="chartEnabled!='landing'"  style="font-size: small;left: -21px;font-weight: bold;
-                top: 4px;"><i style="font-size:28px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>            </b-navbar-brand>
+                top: 4px;"><i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>            </b-navbar-brand>
           </div>
           <div style="float:right;;padding-right:8%;top:21px;">
             <select style="cursor: pointer;font-size: smaller;" title="select version" v-model="selectedversion">
@@ -126,7 +126,7 @@
             type: 'RFPU',
             card: true,
             content: 'Upload a RFP File',
-            icon: 'fa fa-cloud-upload',
+            icon: 'fas fa-cloud-upload-alt',
           },
          {
             url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/statistics.svg',
@@ -134,13 +134,13 @@
             type: 'ST',
             card: true,
             content: 'Graphical representation of product compliance and solutions',
-            icon: 'fa fa-bar-chart',
+            icon: 'fas fa-chart-bar',
             submenu: [{
               url: '../static/img/rfp.svg',
               name: 'RFP Based',
               type: 'RFC',
               card: false,
-              icon: 'fa fa-bar-chart',
+              icon: 'fas fa-chart-bar',
             }, {
               url: '../static/img/tree.svg',
               name: 'Product Based',
@@ -452,6 +452,10 @@
     font-size: 0rem!important;
     line-height: inherit;
     white-space: nowrap;
+}
+.nav-pills .nav-link.active{
+    color: #fff;
+    background-color: #ee9261!important;
 }
 </style>
 
