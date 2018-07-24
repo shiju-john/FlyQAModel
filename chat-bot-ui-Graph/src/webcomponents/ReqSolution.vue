@@ -108,7 +108,9 @@ export default {
     });
   },
 
-  beforeDestroy() {},
+  beforeDestroy() {
+    console.log('destroyed')
+  },
 
   methods: {
     reqsolution() {

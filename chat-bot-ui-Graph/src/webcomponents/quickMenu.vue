@@ -43,6 +43,10 @@ name:'quickMenu',
       default:'top-right'
     }
   },
+
+  mounted(){
+    // console.log(this.menuUrlList);
+  },
   computed:{
     openNewTab(){
       return this.isOpenNewTab?'_blank':'_self'

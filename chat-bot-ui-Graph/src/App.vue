@@ -103,7 +103,32 @@
             value: 'Neon 1.0'
           }
         ],
-        items: [{
+        items: [
+           {
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/track.svg',
+            name: ' RFP Status Tracker',
+            type: 'RFPS',
+            card: true,
+            content: 'Know the current status',
+            icon: 'fa fa-map-signs',
+          },
+          {
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/pending.svg',
+            name: 'Pending Solution',
+            type: 'REQ',
+            card: true,
+            content: ' Solution requirements with pending response.',
+            icon: 'fa fa-hourglass-start',
+          },
+          {
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/upload.svg',
+            name: ' RFP Uploader',
+            type: 'RFPU',
+            card: true,
+            content: 'Upload a RFP File',
+            icon: 'fa fa-cloud-upload',
+          },
+         {
             url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/statistics.svg',
             name: 'Analytics',
             type: 'ST',
@@ -123,30 +148,6 @@
               card: false,
               icon: 'fa fa-bar-chart',
             }]
-          },
-          {
-            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/pending.svg',
-            name: 'Pending Solution',
-            type: 'REQ',
-            card: true,
-            content: ' Solution requirements with pending response.',
-            icon: 'fa fa-hourglass-start',
-          },
-          {
-            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/upload.svg',
-            name: ' RFP Uploader',
-            type: 'RFPU',
-            card: true,
-            content: 'Upload a RFP File',
-            icon: 'fa fa-cloud-upload',
-          },
-          {
-            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/track.svg',
-            name: ' RFP Status Tracker',
-            type: 'RFPS',
-            card: true,
-            content: 'Know the current status',
-            icon: 'fa fa-map-signs',
           },
       
           {
@@ -208,9 +209,7 @@
         if (item.type === 'REQ') {
   
           this.chartEnabled = item.type;
-                      console.log(process.env.SERV_URL + 'visionendpoints?token='+this.token+'&status=OPEN')
           var token=this.token;
-          console.log(token);
           axios.get(process.env.SERV_URL + "visionendpoints?status=OPEN&token="+token, {
           },
           {

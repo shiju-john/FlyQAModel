@@ -9,23 +9,21 @@
       <div class="flex-container">
         <div class="one" style="width:60%">
           <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;">               
-            
-            <table-column  >
+            <table-column>
+
               <template slot-scope="row">
-               
                 <i v-if="row.finalStatus=='accept'||row.finalStatus=='solution'" style="color:green"  class="fa fa-check"></i>
                  <i v-if="row.finalStatus=='reject'" style="color:red" class="fa fa-times"></i> 
                  <i v-if="row.finalStatus=='solution_waiting'" style="color:red" class="fa fa-user-clock"></i> 
                  <i v-if="row.finalStatus=='AI_ENGINE'" style="color:red" class="fa fa-robot"></i> 
-
-               
                 </template>
+
                  </table-column>
+
                 <table-column show="question" label="question"></table-column>
-                <table-column :sortable="false" :filterable="false">
-                 
-                <template slot-scope="row">
-                 
+                <table-column :sortable="false" :filterable="false">   
+
+                <template slot-scope="row">                
                  <b-button v-if="button(row)" variant="primary" v-on:click="sendreply(row)" title="Request for solution">
                 <i class="fa fa-reply"></i>
                 </b-button>
@@ -34,9 +32,9 @@
                 </b-button>
                 <b-button variant="success" v-on:click="clik(row)" title="answers">
                   <i class="fa fa-adn"></i>
-                </b-button>
-                  
+                </b-button>                
               </template>
+              
           </table-column>
           </table-component>
         </div>
@@ -112,15 +110,7 @@ components: {
       this.rowObj.push(row);
       this.answers = JSON.parse(res);
 
-      this.answers.sort(function (a, b) {
-        if (a.status!=undefined&&b.status!=undefined) {
-          returnval = a.status === 'solution' ? false : b.status === 'solution' ? true : null;
-          returnval = returnval == null ? a.status === 'solution_waiting' ? false : b.status === 'solution_waiting' ? true : null : returnval
-          return returnval == null ? a.status == 'accept' ? false : b.status == 'accept' ? true : true : returnval
-          }else{
-
-          } 
-      });
+      this.answers.sort(this.sortfunction);
       console.log(this.answers);
       if (this.answers.length == 0) {
         this.emptyanswer = true
@@ -129,6 +119,13 @@ components: {
       }
       this.answerFlag = true;
     },
+    sortfunction (a, b) {
+          var returnval = a.status === 'solution' ? false : b.status === 'solution' ? true : null;
+          returnval = returnval == null ? a.status === 'solution_waiting' ? false : b.status === 'solution_waiting' ? true : null : returnval
+          returnval= returnval == null ? a.status == 'accept' ? false : b.status == 'accept' ? true : true : returnval;
+          console.log( returnval );
+          return returnval;
+      },
     openTab(e, sheetname) {
       this.loader = true;
       this.updateflag = false;
@@ -149,6 +146,7 @@ components: {
         var res = [];
         res = resp.data[0].answers.replace("NaN", "\"\"");
         this.answers = JSON.parse(res);
+        this.answers.sort(this.sortfunction);
         this.rowObj.push(resp.data[0]);
         if (this.answers.length == 0) {
           this.emptyanswer = true
@@ -293,6 +291,7 @@ td {
 .reject {
     color: red;
 }
+
 
 </style>
 
