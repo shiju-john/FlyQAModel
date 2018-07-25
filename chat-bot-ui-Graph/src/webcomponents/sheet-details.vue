@@ -12,6 +12,7 @@
               <b-form-group label="Header Row Index:">
                 <b-form-input type="text" v-model="doc.headerIndex" required placeholder="Enter header row index">
                 </b-form-input>
+                <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
               </b-form-group>
 
               <b-form-group label="Question Column:">
@@ -22,6 +23,7 @@
               <b-form-group label="Remarks/Response Column:">
                 <b-form-input type="text" v-model="doc.remarks" required placeholder="Enter remarks column">
                 </b-form-input>
+                 <span v-if="response" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
               </b-form-group>
             </div>
             <div>
@@ -49,6 +51,17 @@
             </div>
           </div>
         </tab-content>
+
+        <template slot="footer" slot-scope="props">
+       <div class=wizard-footer-left>
+           <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Previous</wizard-button>
+        </div>
+        <div class="wizard-footer-right">
+          <wizard-button v-if="!props.isLastStep" @click.native="nextTab(props.activeTabIndex,props)" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
+
+          <wizard-button v-else @click.native="alert('Done')" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
+        </div>
+      </template>
       </form-wizard>
     </div>
   </div>
@@ -66,7 +79,7 @@ export default {
     StepProgress,
     Loading
   },
-  props: ['docarray', 'index', 'productversion', 'rfpname', 'sheetarray', 'file_id', 'file_path','token'],
+  props: ['docarray', 'index', 'productversion', 'rfpname', 'sheetarray', 'file_id', 'file_path', 'token'],
 
   data() {
     return {
@@ -80,33 +93,41 @@ export default {
         product_version: '',
         sheets: []
       },
-      chk:'',
+      chk: '',
       loader: false,
+      header: false,
+      response: false,
     }
   },
 
   methods: {
 
     sameSettings(index) {
-      console.log(this.docarray);
-      	for (var j=index;j<this.docarray.length;j++){
-    		this.docarray[j].statusColumn = this.docarray[index].statusColumn
-    		this.docarray[j].headerIndex = this.docarray[index].headerIndex 
-    		this.docarray[j].questionColumn = this.docarray[index].questionColumn
-    		this.docarray[j].remarks = this.docarray[index].remarks
-    		this.docarray[j].documentReference = this.docarray[index].documentReference
-    		// this.docarray[j].documentReference = this.docarray[index].documentReference
-    	}
+      for (var j = index; j < this.docarray.length; j++) {
+        this.docarray[j].statusColumn = this.docarray[index].statusColumn
+        this.docarray[j].headerIndex = this.docarray[index].headerIndex
+        this.docarray[j].questionColumn = this.docarray[index].questionColumn
+        this.docarray[j].remarks = this.docarray[index].remarks
+        this.docarray[j].documentReference = this.docarray[index].documentReference
+      }
     },
+    nextTab: function (index, props) {
+      console.log(this.docarray[index]);
+      if (this.docarray[index].headerIndex == '') {
+        this.header = true;
+      } else if (this.docarray[index].remarks == '') {
+        this.response = true;
+      } else {
+        console.log("This is called before switchind tabs")
+        this.header = false;
+        this.response = false;
+        props.nextTab();
+      }
 
-    beforeTabSwitch(evt) {
-      evt.preventDefault();
-      // console.log("This is called before switchind tabs");
-      return true;
     },
 
     onSubmit(evt) {
-      this.loader=true;
+      this.loader = true;
       this.resp_str.id = this.file_id;
       this.resp_str.filepath = this.file_path;
       this.resp_str.rfp_name = this.rfpname;
@@ -142,7 +163,7 @@ export default {
     },
 
     upload(data) {
-      const url = process.env.SERV_URL+'uploaderendpoints?token='+this.token;;
+      const url = process.env.SERV_URL + 'uploaderendpoints?token=' + this.token;;
       axios.put(url, data, {
         headers: {
           'Content-Type': 'application/json'
@@ -151,14 +172,14 @@ export default {
         this.$toaster.success('RFP File Succesfully Submitted')
         this.afterupload(data.id);
       }).catch(err => {
-        this.loader=false;
+        this.loader = false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })
     },
 
     afterupload(id) {
-      const url = process.env.AI_URL+'ai';
+      const url = process.env.AI_URL + 'ai';
       axios.post(url, {
         "token": this.token,
         "template_ref_id": id,
@@ -167,12 +188,11 @@ export default {
           'Content-Type': 'application/json'
         }
       }).then((resp) => {
-        this.loader=false;
+        this.loader = false;
         this.$toaster.success('AI Process Started');
-         this.$emit('finish', {
-        })
+        this.$emit('finish', {})
       }).catch(err => {
-        this.loader=false;
+        this.loader = false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })

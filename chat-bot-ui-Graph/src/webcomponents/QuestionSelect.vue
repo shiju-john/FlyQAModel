@@ -13,7 +13,6 @@
 
               <template slot-scope="row">
                 <i v-if="row.finalStatus=='accept'" style="color:green"  class="fa fa-check"></i>
-                 <i v-if="row.finalStatus=='reject'" style="color:red" class="fa fa-times"></i> 
                  <i v-if="row.finalStatus=='solution_waiting'"  style="color:green" class="fa fa-user-clock"></i> 
                  <i v-if="row.finalStatus=='AI_ENGINE'" style="color:green" class="fa fa-robot"></i> 
                  <i v-if="row.finalStatus=='solution'" style="color:green" class="fas fa-user-alt"></i> 
@@ -38,6 +37,12 @@
               
           </table-column>
           </table-component>
+          <span>
+            <i style="color:green;margin-left: 34px;"  class="fa fa-check"></i> : Solution Accepted
+                 <i style="color:green;margin-left: 30px;" class="fa fa-user-clock"></i> : Waiting for Solution 
+                 <i style="color:green;margin-left: 30px;" class="fa fa-robot"></i> : Solution Provided by AI Engine
+                 <i style="color:green;margin-left: 30px;" class="fas fa-user-alt"></i> : Solution Provided by Solution Team
+          </span>
         </div>
         <div style="width:40%">
           <answerSelect v-if="answerFlag" :data="rowObj" :answer="answers" :token="token"></answerSelect>

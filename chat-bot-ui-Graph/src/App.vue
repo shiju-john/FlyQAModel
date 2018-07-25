@@ -13,7 +13,7 @@
           </div>
           <div style="float:right;;padding-right:8%;top:21px;">
             <select style="cursor: pointer;font-size: smaller;" title="select version" v-model="selectedversion">
-                <option v-for="option of options">{{option.text}}</option>
+                <option v-for="option of options">{{option}}</option>
               </select>
           </div>
         </div>
@@ -76,7 +76,7 @@
         cardtitle: '',
         requestdata: [],
         feedbackdata: [],
-        selectedversion: 'Neon 3.5',
+        selectedversion: '',
         messages: [{
           author: 'bot',
           text: 'Let us discuss about Neon!',
@@ -85,24 +85,25 @@
           timestamp: new Date().toLocaleString()
         }],
         chartEnabled: 'landing',
-        selected: 'Neon 3.5',
-        options: [{
-            text: 'Neon 3.5',
-            value: 'Neon 3.5'
-          },
-          {
-            text: 'Neon 3.0',
-            value: 'Neon 3.0'
-          },
-          {
-            text: 'Neon 2.0',
-            value: 'Neon 2.0'
-          },
-          {
-            text: 'Neon 1.0',
-            value: 'Neon 1.0'
-          }
-        ],
+        // selected: 'please Select version',
+        options:[],
+        // options: [{
+        //     text: 'Neon 3.5',
+        //     value: 'Neon 3.5'
+        //   },
+        //   {
+        //     text: 'Neon 3.0',
+        //     value: 'Neon 3.0'
+        //   },
+        //   {
+        //     text: 'Neon 2.0',
+        //     value: 'Neon 2.0'
+        //   },
+        //   {
+        //     text: 'Neon 1.0',
+        //     value: 'Neon 1.0'
+        //   }
+        // ],
         items: [
            {
             url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/track.svg',
@@ -162,6 +163,23 @@
         ],
       }
     },
+    
+    mounted(){
+          axios.get(process.env.AI_URL + "versions?status=OPEN&token="+this.token, {
+          },
+          {
+        headers: {
+          'Content-Type': 'application/json'
+        }}
+          ).then((resp) => {
+            this.selectedversion=resp.data.product_versions[0]
+            this.options=resp.data.product_versions;
+            
+          }).catch(err => {
+            const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          })
+
+    },
   
     methods: {
       logout(){
@@ -209,18 +227,7 @@
         if (item.type === 'REQ') {
   
           this.chartEnabled = item.type;
-        //   var token=this.token;
-        //   axios.get(process.env.SERV_URL + "visionendpoints?status=OPEN&token="+token, {
-        //   },
-        //   {
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // }}
-        //   ).then((resp) => {
-        //     this.requestdata = resp.data;
-        //   }).catch(err => {
-        //     const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-        //   })
+       
         }
   
         if (item.type === 'logout') {

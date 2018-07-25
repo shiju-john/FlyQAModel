@@ -27,14 +27,14 @@
           <col width="100">
           <tr>
             <th>Question:</th>
-            <td>
-              <textarea :readonly="true"> {{this.property}}</textarea>
+            <td height="100">
+              <textarea style="margin-left: -13px;" :readonly="true"> {{this.property}}</textarea>
             </td>
           </tr>
           <tr>
             <th>Feature Status <span style="color:red;">*</span>:</th>
             <td>
-              <select v-model="featureStatus">
+              <select style="margin-left: -15px;" v-model="featureStatus">
                 <option disabled value="">Please select one</option>
                 <option>Fully Compliance</option>
                 <option>Partially Compliance</option>
@@ -57,7 +57,6 @@
         </table>
         <div style="padding: 2%;">
           <b-button v-if="enable" style="margin-left: 85%;" disabled variant="success" v-on:click="sendreply()">Submit</b-button>
-
           <b-button  v-else style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
         </div>
       </div>
@@ -111,7 +110,7 @@ export default {
   },
 
   beforeDestroy() {
-    console.log('destroyed')
+    // console.log('destroyed')
   },
 
   methods: {
@@ -126,7 +125,10 @@ export default {
       })
     },
     enablebutton(){
-      this.enable=false;
+      if (this.remarks!==''&& this.featureStatus!=='') {
+        this.enable=false;
+      }
+      
     },
 
     reply(data) {
@@ -140,10 +142,10 @@ export default {
        this.enable=true;
        this.docversion='';
        this.featureStatus=''
+       this.remarks=''
     },
 
     sendreply() {
-      // console.log(this.requestdata);
       axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
         id: this.send_reply.id,
         question: this.send_reply.question,
@@ -155,15 +157,12 @@ export default {
         featureStatus: this.featureStatus,
         requestedSource:this.send_reply.requestedSource,
         questionId:this.send_reply.questionId
-        
 
       }).then((resp) => {
         this.$toaster.success('Solution succesfully submitted!');
-        // this.open = false
         this.$modal.hide('Model');
         this.remarks = '',
         this.docversion = ''
-        //for refreshing table
         this.reqsolution();
         this.remarks = '',
           this.docversion = ''
@@ -248,6 +247,15 @@ select {
     max-width: 100%;
     margin-bottom: 0rem!important;
     background-color: transparent;
+}
+
+.table-component__filter__field {
+    padding: 0 1.25em 0 .75em;
+    height: 2.5em;
+    border: solid 2px #e0e0e0;
+    border-radius: 2em;
+    font-size: inherit;
+    margin-right: 108px!important;
 }
 </style>
 
