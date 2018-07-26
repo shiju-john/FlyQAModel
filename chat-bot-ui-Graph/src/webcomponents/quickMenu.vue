@@ -28,7 +28,7 @@ name:'quickMenu',
     },
     backgroundColor:{
       type:String,
-      default:'#20babb'
+      default:'#858585'
     },
     color:{
       type:String,

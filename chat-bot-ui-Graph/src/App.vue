@@ -26,6 +26,7 @@
           <ReqSolution v-if="chartEnabled==='REQ'" :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
+          <manualentry v-if="chartEnabled==='MAN'"  :version="options" :token="token"></manualentry>
         </b-card>
         <ModelDialog @submit="hide" :remarks='remarks' :token="token" :question='question' :version='version' />
       </div>
@@ -49,6 +50,8 @@
   import formrfp from './webcomponents/form-rfp'
   import statusTracker from './webcomponents/statusTracker'
   import loginpage from './webcomponents/loginPage'
+  import manualentry from './webcomponents/manualQuestions'
+
   
   import axios from 'axios'
   
@@ -63,7 +66,8 @@
       RfpUploader,
       formrfp,
       statusTracker,
-      loginpage
+      loginpage,
+      manualentry
   
     },
     data() {
@@ -85,25 +89,7 @@
           timestamp: new Date().toLocaleString()
         }],
         chartEnabled: 'landing',
-        // selected: 'please Select version',
         options:[],
-        // options: [{
-        //     text: 'Neon 3.5',
-        //     value: 'Neon 3.5'
-        //   },
-        //   {
-        //     text: 'Neon 3.0',
-        //     value: 'Neon 3.0'
-        //   },
-        //   {
-        //     text: 'Neon 2.0',
-        //     value: 'Neon 2.0'
-        //   },
-        //   {
-        //     text: 'Neon 1.0',
-        //     value: 'Neon 1.0'
-        //   }
-        // ],
         items: [
            {
             url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/track.svg',
@@ -159,28 +145,32 @@
             content: 'd',
             icon: 'fa fa-power-off',
           },
+          {
+            url: '../static/img/manual.svg',
+            name: 'Manual Entry',
+            type: 'MAN',
+            card: true,
+            content: 'Enter Questions Manualy',
+            icon: '',
+          },
           
         ],
       }
     },
     
-    mounted(){
-          axios.get(process.env.AI_URL + "versions?status=OPEN&token="+this.token, {
-          },
-          {
+    mounted() {
+      axios.get(process.env.AI_URL + "versions?status=OPEN&token=" + this.token, {}, {
         headers: {
           'Content-Type': 'application/json'
-        }}
-          ).then((resp) => {
-            this.selectedversion=resp.data.product_versions[0]
-            this.options=resp.data.product_versions;
-            
-          }).catch(err => {
-            const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-          })
+        }
+      }).then((resp) => {
+        this.selectedversion = resp.data.product_versions[0]
+        this.options = resp.data.product_versions;
 
+      }).catch(err => {
+        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+      })
     },
-  
     methods: {
       logout(){
         this.token='';
@@ -462,7 +452,7 @@
 }
 .nav-pills .nav-link.active{
     color: #fff;
-    background-color: #ee9261!important;
+    background-color: #858585!important;
 }
 </style>
 

@@ -7,11 +7,11 @@
     </div>
     <div id="sheet_sheet_name" class="tabcontent">
       <div class="flex-container">
-        <div class="one" style="width:60%">
-          <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;">               
+        <div style="width:60%">
+          <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;    margin-bottom: 38px;">               
             <table-column>
 
-              <template slot-scope="row">
+              <template slot-scope="row" >
                 <i v-if="row.finalStatus=='accept'" style="color:green"  class="fa fa-check"></i>
                  <i v-if="row.finalStatus=='solution_waiting'"  style="color:green" class="fa fa-user-clock"></i> 
                  <i v-if="row.finalStatus=='AI_ENGINE'" style="color:green" class="fa fa-robot"></i> 
@@ -37,8 +37,8 @@
               
           </table-column>
           </table-component>
-          <span>
-            <i style="color:green;margin-left: 34px;"  class="fa fa-check"></i> : Solution Accepted
+          <span style="margin-left: 1%;">
+            <i style="color:green;margin-left: 7 px;"  class="fa fa-check"></i> : Solution Accepted
                  <i style="color:green;margin-left: 30px;" class="fa fa-user-clock"></i> : Waiting for Solution 
                  <i style="color:green;margin-left: 30px;" class="fa fa-robot"></i> : Solution Provided by AI Engine
                  <i style="color:green;margin-left: 30px;" class="fas fa-user-alt"></i> : Solution Provided by Solution Team
@@ -100,6 +100,9 @@ components: {
   beforeDestroy() {},
 
   methods: {
+    rowclick(){
+      console.log('hi');
+    },
     filterItems: function (items) {
       return items.filter(function (item) {
         return item.skippable != 'true';
@@ -117,7 +120,7 @@ components: {
       this.answers = JSON.parse(res);
 
       this.answers.sort(this.sortfunction);
-      console.log(this.answers);
+      // console.log(this.answers);
       if (this.answers.length == 0) {
         this.emptyanswer = true
       } else {
@@ -279,15 +282,21 @@ td {
 /* Create an active/current tablink class */
 
 .tab button.active {
-  background-color: #ccc;
+  background-color: #858585;
+  color: white;
 }
 
 /* Style the tab content */
 
 .tabcontent {
   display: none;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-top: none;
+}
+
+.tab[data-v-160544c2] {
+    overflow: hidden;
+    background-color: #E9E2C6;
 }
 
 .accept {
@@ -298,6 +307,17 @@ td {
     color: red;
 }
 
+.btn-primary {
+    color: #fff;
+    background-color: #858585!important;
+    border-color: #858585!important;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #17a2b8!important;
+    border-color: #17a2b8!important;
+}
 
 </style>
 

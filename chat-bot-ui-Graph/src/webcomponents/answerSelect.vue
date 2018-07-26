@@ -8,15 +8,15 @@
             <tr>
               <th>Feature Status:</th>
               <td v-if="!src">
-                <textarea id="textfield0" @click="selects" v-model="a.featureStatus" placeholder="No feature status available" v-if="text"></textarea>
-                <select @change="edited" v-if="!text" v-model="drop">
+                <textarea style="margin-left:-9px;" id="textfield0" @click="selects" v-model="a.featureStatus" placeholder="No feature status available" v-if="text"></textarea>
+                <select @change="edited" v-if="!text" v-model="drop"  style="margin-left:-9px;">
                  <option v-for="option in options" v-bind:value="option.text">
                       {{ option.text }}
                     </option>
                 </select>
               </td>
               <td v-if="src">
-                <textarea placeholder="No feature status available" v-model="a.featureStatus" :readonly="src"></textarea>
+                <textarea style="margin-left:-9px;" placeholder="No feature status available" v-model="a.featureStatus" :readonly="src"></textarea>
               </td>
             </tr>
             <tr>
@@ -33,9 +33,11 @@
             </tr>
             <tr >
               <td v-if="!src" colspan="2">
-                <b-button variant="success" v-on:click="response('accept',index)">accept</b-button>
+                <div >
+                  <b-button variant="success" style="background-color:green;" v-on:click="response('accept',index)">accept</b-button>
                 <!-- <b-button variant="danger" style="margin-left: 50px;" v-on:click="response('reject',index)">reject</b-button> -->
-                <b-button variant="info" v-if="updateFlag" style="margin-left: 50px;" v-on:click="response('update',index)">Update</b-button>
+                <b-button variant="info" v-if="updateFlag" style="margin-left: 13px;" v-on:click="response('update',index)">Update</b-button>
+                </div>
               </td>
             </tr>
           </table>

@@ -71,7 +71,7 @@ export default {
         }).catch(err => {
           const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
           // alert(message);
-          this.$toaster.error('This service willbe activated soon')
+          this.$toaster.error('This feature will be activated soon!')
         })
       } else if (cityName === 'PDT') {
         axios.post(process.env.API_URL + '/product_chart', {
@@ -84,7 +84,7 @@ export default {
         }).catch(err => {
           const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
           // alert(message);
-          this.$toaster.error('This service willbe activated soon')
+          this.$toaster.error('This feature will be activated soon!')
         })
       }
 
