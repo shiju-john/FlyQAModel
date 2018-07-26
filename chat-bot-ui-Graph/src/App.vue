@@ -11,8 +11,10 @@
               <span v-if="chartEnabled!='landing'"  style="font-size: small;left: -21px;font-weight: bold;
                 top: 4px;"><i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>            </b-navbar-brand>
           </div>
-          <div style="float:right;;padding-right:8%;top:21px;">
-            <select style="cursor: pointer;font-size: smaller;" title="select version" v-model="selectedversion">
+          <div style="float:right;;padding-right:8%;top:18px;">
+            <select style="cursor: pointer;font-size: smaller;    padding: 2px;
+    width: 90px;
+    border-radius: 4px;" title="select version" v-model="selectedversion">
                 <option v-for="option of options">{{option}}</option>
               </select>
           </div>
@@ -139,7 +141,7 @@
       
           {
             url: 'd',
-            name: '',
+            name: 'logout',
             type: 'logout',
             card: false,
             content: 'd',
