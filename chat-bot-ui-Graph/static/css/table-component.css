@@ -15,7 +15,9 @@
 }
 
 .table-component__filter {
-  align-self: flex-end;
+  /* align-self: flex-end; */
+  align-self: auto;
+  margin-left: 80%;
 }
 
 .table-component__filter__field {

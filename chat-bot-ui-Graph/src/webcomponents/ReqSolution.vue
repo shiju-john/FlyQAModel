@@ -249,14 +249,19 @@ select {
     background-color: transparent;
 }
 
-.table-component__filter__field {
+/* .table-component__filter__field {
     padding: 0 1.25em 0 .75em;
     height: 2.5em;
     border: solid 2px #e0e0e0;
     border-radius: 2em;
     font-size: inherit;
     margin-right: 108px!important;
-}
+}*/
+
+.table-component__filter {
+    align-self: flex-end;
+    margin-right: 101px!important;
+} 
 
 
 </style>
