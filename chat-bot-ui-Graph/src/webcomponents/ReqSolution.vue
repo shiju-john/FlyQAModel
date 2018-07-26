@@ -1,6 +1,6 @@
 <template>
   <div class="ReqSolution">
-    <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px; height: 515px; overflow: hidden;">
+    <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px;height:515px;overflow:hidden;">
       <table-column show="question" label="question"></table-column>
       <table-column show="productVersion" label="product Version"></table-column>
       <table-column show="requestUser" label="requested User"></table-column>
@@ -43,10 +43,11 @@
             </td>
           </tr>
           <tr>
-            <th>Response <span style="color:red;">*</span>:</th>
+            <th>Response<span style="color:red;">*</span>:</th>
             <td height="100">
               <textarea v-model="remarks" style="position: absolute;" @keyup="enablebutton"></textarea>
             </td>
+            
           </tr>
           <tr>
             <th>Document version:</th>
@@ -56,8 +57,8 @@
           </tr>
         </table>
         <div style="padding: 2%;">
-          <b-button v-if="enable" style="margin-left: 85%;" disabled variant="success" v-on:click="sendreply()">Submit</b-button>
-          <b-button  v-else style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
+          <!-- <b-button v-if="enable" style="margin-left: 85%;" disabled variant="success" >Submit</b-button> -->
+          <b-button   style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
         </div>
       </div>
     </modal>
@@ -125,9 +126,9 @@ export default {
       })
     },
     enablebutton(){
-      if (this.remarks!==''&& this.featureStatus!=='') {
-        this.enable=false;
-      }
+      // if (this.remarks!=='' && this.featureStatus!=='') {
+      //  this.enable=false;
+      // }
       
     },
 
@@ -146,30 +147,37 @@ export default {
     },
 
     sendreply() {
-      axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
-        id: this.send_reply.id,
-        question: this.send_reply.question,
-        productVersion: this.send_reply.productVersion,
-        requestUser: this.send_reply.requestUser,
-        requestTime: this.send_reply.requestTime,
-        answer: this.remarks,
-        docLink: this.docversion,
-        featureStatus: this.featureStatus,
-        requestedSource:this.send_reply.requestedSource,
-        questionId:this.send_reply.questionId
+      if (this.remarks=='' || this.featureStatus=='') {
+      //  do nothing
+       this.$toaster.warning('Please fill fields marked as important!');
+      }else{
+        this.enable=false;
+        axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
+            id: this.send_reply.id,
+            question: this.send_reply.question,
+            productVersion: this.send_reply.productVersion,
+            requestUser: this.send_reply.requestUser,
+            requestTime: this.send_reply.requestTime,
+            answer: this.remarks,
+            docLink: this.docversion,
+            featureStatus: this.featureStatus,
+            requestedSource:this.send_reply.requestedSource,
+            questionId:this.send_reply.questionId
 
-      }).then((resp) => {
-        this.$toaster.success('Solution succesfully submitted!');
-        this.$modal.hide('Model');
-        this.remarks = '',
-        this.docversion = ''
-        this.reqsolution();
-        this.remarks = '',
-          this.docversion = ''
-      }).catch(err => {
-        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-        console.log(message);
-      })
+          }).then((resp) => {
+            this.$toaster.success('Solution succesfully submitted!');
+            this.$modal.hide('Model');
+            this.remarks = '',
+            this.docversion = ''
+            this.reqsolution();
+            this.remarks = '',
+            this.docversion = ''
+          }).catch(err => {
+            const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+            console.log(message);
+          })
+      }
+ 
     },
   }
 }
