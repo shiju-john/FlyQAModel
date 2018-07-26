@@ -1,6 +1,6 @@
 <template>
   <div class="manualQuestions">
-    <div class="flex-container">
+    <div class="flex">
       <div style="width:48%" v-if="manual">
         <table-component caption="heading" :data="productversion" style="font-size: 13px; height: 515px; overflow: hidden;">
           <table-column show="productname" label="product name"></table-column>
@@ -191,13 +191,14 @@ export default {
 
 <style scoped>
 
-.flex-container>div {
+.flex>div {
   margin: 0px;
   padding-right: 1%;
   padding: 0%;
+  margin-top: 2%;
 }
 
-.flex-container {
+.flex {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
