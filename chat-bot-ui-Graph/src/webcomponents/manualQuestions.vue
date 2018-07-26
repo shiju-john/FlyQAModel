@@ -19,17 +19,14 @@
       </div>
 
       <div style="width:46%">
-
         <!-- adding new product version -->
         <div style="margin-top:4%;margin-left:11%;" v-if="manual">
-          <!-- <b-form @submit="onSubmit" @reset="onReset"> -->
-
-            <b-form-group label="Product Name">
+            <b-form-group label="Product Name:">
               <b-form-input type="text" v-model="name" required placeholder="Enter Product Name">
               </b-form-input>
             </b-form-group>
 
-            <b-form-group label="Product Version">
+            <b-form-group label="Product Version:">
               <b-form-input type="text" v-model="prod_version" required placeholder="Enter Product Version">
               </b-form-input>
             </b-form-group>
@@ -51,8 +48,6 @@
             <b-form-checkbox-group v-model="inherit">
               <b-form-checkbox value="yes">Inherit from Parent Product</b-form-checkbox>
             </b-form-checkbox-group>
-          <!-- </b-form> -->
-
           <div style="margin-top:3%;margin-left: 63%;">
             <b-button type="reset" variant="danger" v-on:click="reset()">Reset</b-button>
             <b-button type="submit" variant="primary" v-on:click="addproduct()">Add New Version</b-button>

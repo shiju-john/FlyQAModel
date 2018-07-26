@@ -139,7 +139,7 @@
       
           {
             url: 'd',
-            name: 'logout',
+            name: 'Sign-out',
             type: 'logout',
             card: false,
             content: 'd',
