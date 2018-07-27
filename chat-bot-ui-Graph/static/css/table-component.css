@@ -73,7 +73,7 @@
 
 .table-component__table th,
 .table-component__table td {
-  padding: .75em .75em;
+  padding: .5em .4em;
   vertical-align: top;
   text-align: left;
   border-top: 1px solid #d6d3d2;

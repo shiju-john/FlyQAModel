@@ -74,7 +74,7 @@
       return {
         remarks: [],
         question: String,
-        token:'1fccd19d207874326a0be51efaea17d5a54a88bdc9e6d36b7bbb757092906d7b8a1693cc9eca8b',
+        token:'',
         version: String,
         flag: 'false',
         cardtitle: '',
