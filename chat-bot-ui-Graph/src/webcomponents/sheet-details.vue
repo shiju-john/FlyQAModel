@@ -9,19 +9,19 @@
         <tab-content v-for="(doc,index) in docarray" :title="doc.sheetname">
           <div class="flex-container">
             <div>
-              <b-form-group label="Header Row Index:">
+              <b-form-group label="Header Row Index: <font color=red>*</font>">
                 <b-form-input type="text" v-model="doc.headerIndex" required placeholder="Enter header row index">
                 </b-form-input>
                 <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
               </b-form-group>
 
-              <b-form-group label="Question Column:">
+              <b-form-group label="Question Column: <font color=red>*</font>">
                 <b-form-input type="text" v-model="doc.questionColumn" required placeholder="Enter question column">
                 </b-form-input>
                 <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
               </b-form-group>
 
-              <b-form-group label="Remarks/Response Column:">
+              <b-form-group label="Remarks/Response Column: <font color=red>*</font>">
                 <b-form-input type="text" v-model="doc.remarks" required placeholder="Enter remarks column">
                 </b-form-input>
                  <span v-if="response" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
