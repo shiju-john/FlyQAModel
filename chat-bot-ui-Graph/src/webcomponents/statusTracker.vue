@@ -12,10 +12,10 @@
             <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Download File" >
               <i class="fa fa-download"></i>
             </b-button>
-            <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Request for solution" v-on:click="clik(row)">
+            <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Status Details" v-on:click="clik(row)">
               <i class="fa fa-chevron-right"></i>
             </b-button>
-            <b-button v-if="row.status=='TEMP'" variant="primary"   title="Request for solution" v-on:click="clik(row)">
+            <b-button v-if="row.status=='TEMP'" variant="primary"  v-on:click="clik(row)">
               <i class="fa fa-trash-o"></i>
             </b-button>
           </template>
@@ -92,7 +92,23 @@ export default {
 </script>
 
 <style scoped>
-
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    /* font-size: 1rem; */
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 
 </style>
 
