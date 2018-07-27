@@ -78,6 +78,7 @@ components: {},
     'answer' () {
       this.updateFlag = false;
       this.text = true;
+      this.disabled=true;
     }
   },
 
@@ -90,6 +91,8 @@ components: {},
     toggle() {
       this.updateFlag = false;
       this.text = true;
+      
+
     },
     edited() {
       if (this.src) {
