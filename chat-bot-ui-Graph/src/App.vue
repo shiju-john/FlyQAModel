@@ -26,7 +26,7 @@
           <ReqSolution v-if="chartEnabled==='REQ'" :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
-          <manualentry v-if="chartEnabled==='MAN'"  :version="options" :token="token"></manualentry>
+          <!-- <manualentry v-if="chartEnabled==='MAN'"  :version="options" :token="token"></manualentry> -->
         </b-card>
         <ModelDialog @submit="hide" :remarks='remarks' :token="token" :question='question' :version='version' />
       </div>
@@ -144,15 +144,15 @@
             card: false,
             content: 'd',
             icon: 'fa fa-power-off',
-          },
-          {
-            url: '../static/img/manual.svg',
-            name: 'Manual Entry',
-            type: 'MAN',
-            card: true,
-            content: 'Enter Questions Manualy',
-            icon: '',
-          },
+          }
+          // {
+          //   url: '../static/img/manual.svg',
+          //   name: 'Manual Entry',
+          //   type: 'MAN',
+          //   card: true,
+          //   content: 'Enter Questions Manualy',
+          //   icon: '',
+          // },
           
         ],
       }
