@@ -5,7 +5,7 @@
         <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
         </loading>
       </div>
-      <form-wizard title='' subtitle='' color="#e86824" @on-complete="onSubmit()">
+      <form-wizard title='' subtitle='' color="#e86824">
         <tab-content v-for="(doc,index) in docarray" :title="doc.sheetname">
           <div class="flex-container">
             <div>
@@ -18,6 +18,7 @@
               <b-form-group label="Question Column:">
                 <b-form-input type="text" v-model="doc.questionColumn" required placeholder="Enter question column">
                 </b-form-input>
+                <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
               </b-form-group>
 
               <b-form-group label="Remarks/Response Column:">
@@ -59,7 +60,7 @@
         <div class="wizard-footer-right">
           <wizard-button v-if="!props.isLastStep" @click.native="nextTab(props.activeTabIndex,props)" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
 
-          <wizard-button v-else @click.native="onSubmit()"  class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
+          <wizard-button v-else @click.native="onSubmit(props.activeTabIndex)"  class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
         </div>
       </template>
       </form-wizard>
@@ -112,21 +113,29 @@ export default {
       }
     },
     nextTab: function (index, props) {
-      console.log(this.docarray[index]);
-      if (this.docarray[index].headerIndex == '') {
-        this.header = true;
-      } else if (this.docarray[index].remarks == '') {
-        this.response = true;
-      } else {
-        console.log("This is called before switchind tabs")
-        this.header = false;
-        this.response = false;
-        props.nextTab();
-      }
+     this.validate(index)? props.nextTab():null;
 
     },
 
-    onSubmit(evt) {
+    validate(index){
+      if (this.docarray[index].headerIndex == '') {
+              this.header = true;
+            } else if (this.docarray[index].remarks == '') {
+              this.response = true;
+              
+            } else {
+              
+              console.log("This is called before switchind tabs")
+              this.header = false;
+              this.response = false;
+              return true;
+             
+            }
+            return false;
+    },
+
+    onSubmit(index) {
+      if(this.validate(index)){
       this.loader = true;
       this.resp_str.id = this.file_id;
       this.resp_str.filepath = this.file_path;
@@ -160,6 +169,8 @@ export default {
 
       }
       this.upload(this.resp_str)
+      }
+    
     },
 
     upload(data) {
