@@ -59,7 +59,7 @@
         <div class="wizard-footer-right">
           <wizard-button v-if="!props.isLastStep" @click.native="nextTab(props.activeTabIndex,props)" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
 
-          <wizard-button v-else @click.native="alert('Done')" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
+          <wizard-button v-else @click.native="onSubmit()"  class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
         </div>
       </template>
       </form-wizard>

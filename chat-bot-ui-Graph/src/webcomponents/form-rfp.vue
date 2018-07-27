@@ -37,7 +37,7 @@ import RfpUploader from '../webcomponents/RfpUploader'
 import SheetDetails from '../webcomponents/sheet-details'
 
 export default {
-  props: ['token'],
+  props: ['token','version'],
   components: {
     RfpUploader,
     SheetDetails
@@ -54,24 +54,8 @@ export default {
       file_name: '',
       file_id:'',
       file_path:'',
-      selectedversion: 'Neon 3.5',
-      foods: [{
-          text: 'Neon 3.5',
-          value: 'Neon 3.5'
-        },
-        {
-          text: 'Neon 3.0',
-          value: 'Neon 3.0'
-        },
-        {
-          text: 'Neon 2.0',
-          value: 'Neon 2.0'
-        },
-        {
-          text: 'Neon 1.0',
-          value: 'Neon 1.0'
-        }
-      ],
+      selectedversion: this.version[0],
+      foods:this.version,
       show: true
     }
   },

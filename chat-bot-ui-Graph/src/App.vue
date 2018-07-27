@@ -24,7 +24,7 @@
         <b-card  v-if="chartEnabled!='landing'">
           <statistics v-if="chartEnabled==='ST'" :token="token"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :token="token" @reqsent='onfeedback' />
-          <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home"></formrfp>
+          <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home" :version="options"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
           <!-- <manualentry v-if="chartEnabled==='MAN'"  :version="options" :token="token"></manualentry> -->
         </b-card>
