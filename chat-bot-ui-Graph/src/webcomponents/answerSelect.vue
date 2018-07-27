@@ -35,6 +35,7 @@
               <td v-if="!src" colspan="2">
                 <div style="margin-left:69%;">
                   <b-button variant="info" v-if="updateFlag"  v-on:click="response('update',index)">Update</b-button>
+                  <b-button variant="info" v-if="disabled"  disabled >Update</b-button>
                   <b-button variant="success" style="background-color:green" v-on:click="response('accept',index)">accept</b-button>
                 <!-- <b-button variant="danger" style="margin-left: 50px;" v-on:click="response('reject',index)">reject</b-button> -->
                 </div>
@@ -61,6 +62,7 @@ components: {},
     return {
       updateFlag: false,
       text: true,
+      disabled:true,
       count: 0,
       drop:'Fully Compliance',
       options: [
@@ -94,6 +96,7 @@ components: {},
         this.updateFlag = false;
       } else {
         this.updateFlag = true;
+        this.disabled=false;
       }
     },
 
