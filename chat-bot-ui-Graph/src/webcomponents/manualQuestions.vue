@@ -52,11 +52,13 @@
           <b-form-input id="exampleInput2" type="text" v-model="docversion" placeholder="Enter Document Reference">
           </b-form-input>
         </b-form-group>
-
-        <b-form-group label="Feature status:<font color=red>*</font>">
-          <b-form-select id="exampleInput3" :options="status" required v-model="featureStatus">
-          </b-form-select>
-        </b-form-group>
+        
+        <select class="select"  v-model="featureStatus">
+                <option disabled value="">Please select one</option>
+                <option>Fully Compliance</option>
+                <option>Partially Compliance</option>
+                <option>Non Compliance</option>
+              </select>
       </b-form>
       <div style="padding: 2%;">
         <div v-if="updateflag">
@@ -99,10 +101,6 @@ Loading
         manualquestion:[],
         id:'',
         loader:false,
-        status: [
-        { text: 'Select One', value: null },
-        'Fully Compliance', 'Partially Compliance', 'Non Compliance',
-      ],
       }
     },
 
@@ -238,11 +236,6 @@ Loading
 textarea {
     resize: none;
 }
-/* 
-select {
-    border: 0;
-    width: 100%;
-} */
 
 .modal-vue-wrapper .modal-vue-panel .modal-vue-content {
     display: flex;
@@ -312,17 +305,8 @@ select {
     background-size: 8px 10px;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-    /* -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;*/
+    font-size: 16px;
 } 
 
-/* .col-form-label {
-    padding-top: calc(0.375rem + 1px);
-    padding-bottom: calc(0.375rem + 1px);
-    margin-bottom: 0;
-    font-size: inherit;
-    line-height: 1.5;
-    font-weight: bolder!important;
-} */
+
 </style>

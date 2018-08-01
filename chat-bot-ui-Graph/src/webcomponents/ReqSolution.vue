@@ -23,7 +23,7 @@
         <span v-on:click="hide" style="margin-left: 71%;cursor:pointer;"><i class="fa fa-times"></i></span>
       </div>
       <div class="modal-content">
-        <table class="table">
+        <!-- <table class="table">
           <col width="100">
           <tr>
             <th>Question:</th>
@@ -55,9 +55,38 @@
               <textarea v-model="docversion" style="position: absolute;"></textarea>
             </td>
           </tr>
-        </table>
+        </table> -->
+
+              <b-form style="padding: 2%;font-weight: 600;">
+        <!-- <b-form-group label="Product version:">
+          <select class="select" v-model="selectedversion" title="select version">
+            <option v-for="option of version">{{option}}</option>
+          </select>
+        </b-form-group> -->
+
+        <b-form-group label="Question:<font color=red>*</font>">
+           <textarea  :readonly="true"> {{this.property}}</textarea>
+        </b-form-group>
+
+        <b-form-group label="Response:<font color=red>*</font>">
+          <b-form-textarea placeholder="Enter Response" :rows="3" v-model="remarks" :max-rows="3">
+          </b-form-textarea>
+        </b-form-group>
+
+        <b-form-group label="Document Reference:">
+          <b-form-input id="exampleInput2" type="text" v-model="docversion" placeholder="Enter Document Reference">
+          </b-form-input>
+        </b-form-group>
+         <b-form-group label="Feature Status:">
+        <select class="select"  v-model="featureStatus">
+                <option disabled value="">Please select one</option>
+                <option>Fully Compliance</option>
+                <option>Partially Compliance</option>
+                <option>Non Compliance</option>
+              </select>
+               </b-form-group>
+      </b-form>
         <div style="padding: 2%;">
-          <!-- <b-button v-if="enable" style="margin-left: 85%;" disabled variant="success" >Submit</b-button> -->
           <b-button   style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
         </div>
       </div>
@@ -156,7 +185,7 @@ export default {
             docLink: this.docversion,
             featureStatus: this.featureStatus,
             requestedSource:this.send_reply.requestedSource,
-            questionId:this.send_reply.questionId
+            questionId:this.send_reply.id
 
           }).then((resp) => {
             this.$toaster.success('Solution succesfully submitted!');
@@ -265,6 +294,19 @@ select {
     margin-right: 101px!important;
 } 
 
+.select {
+    display: inline-block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    font-size: 16px;
+} 
 
 </style>
 
