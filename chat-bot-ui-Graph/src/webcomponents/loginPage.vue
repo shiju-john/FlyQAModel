@@ -6,8 +6,9 @@
     </div>
     <div>
       <g-signin-button :params="googleSignInParams" @success="onSignInSuccess" @error="onSignInError">
-        sign in
         <Spinner v-if="loader" size="small"></Spinner>
+        <span v-else>sign in</span>
+        
       </g-signin-button>
     </div>
     <div style="font-size: 11px;padding: 3%;">Please sign in using your Flytxt Mail Id</div>

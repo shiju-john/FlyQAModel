@@ -1,92 +1,80 @@
 <template>
-  <div class="ManualQuestions">
-    <div style="margin-top:1%;">
-      <b-button style="margin-left:1%;z-index: 46;" title="Add Training Data" variant="danger lg" v-on:click="addtrainingdata()">
-        <span>
-          <i class="fas fa-plus"></i> Training Data</span>
-      </b-button>
-      <table-component caption="heading" :data="manualquestion" sort-by="requestTime" style="font-size: 13px;height:560px;overflow:hidden;margin-top: -35px;">
-        <table-column show="question" label="questions"></table-column>
-        <table-column show="answer" label="answers"></table-column>
-        <table-column show="featureStatus" label="feature status"></table-column>
-        <table-column show="docLink" label="document reference"></table-column>
-        <table-column show="productVersion" label="Product version"></table-column>
-        <table-column :sortable="false" :filterable="false">
-          <template slot-scope="row">
-            <button v-on:click="update(row)" class="btn btn-primary" title="Edit question">
-              <i class="fas fa-pen"></i>
-            </button>
-          </template>
-        </table-column>
-      </table-component>
-    </div>
+<div class="ManualQuestions">
+  <div style="margin-top:1%;">
+    <b-button style="margin-left:1%;z-index: 46;" title="Add Training Data" variant="danger lg" v-on:click="addtrainingdata()">
+      <span>
+        <i class="fas fa-plus"></i> Training Data</span>
+    </b-button>
+    <table-component caption="heading" :data="manualquestion" sort-by="requestTime" style="font-size: 13px;height:560px;overflow:hidden;margin-top: -35px;">
+      <table-column show="question" label="questions"></table-column>
+      <table-column show="answer" label="answers"></table-column>
+      <table-column show="featureStatus" label="feature status"></table-column>
+      <table-column show="docLink" label="document reference"></table-column>
+      <table-column show="productVersion" label="Product version"></table-column>
+      <table-column :sortable="false" :filterable="false">
+        <template slot-scope="row">
+          <button v-on:click="update(row)" class="btn btn-primary" title="Edit question">
+            <i class="fas fa-pen"></i>
+          </button>
+        </template>
+      </table-column>
+    </table-component>
+  </div>
 
-    <!-- add manual questions starts -->
-    <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height:auto;">
-      <div class="head1" style="background-color: #0996b2;">
-        <span v-if="updateflag">Edit Training Data</span>
-        <span v-else>Add Training Data</span>
-        <span v-on:click="hide" style="margin-left: 71%;cursor:pointer;">
-          <i class="fa fa-times"></i>
-        </span>
-      </div>
-      <div class="modal-content">
-        <table class="table">
-          <col width="5">
-          <col width="350">
-          <tr>
-            <th>Product Version
-              <span style="color:red;">*</span>:</th>
-            <td>
-              <select style="margin-left: -15px;" v-model="selectedversion" title="select version">
-                <option v-for="option of version">{{option}}</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>Question
-              <span style="color:red;">*</span>:</th>
-            <td height="100">
-              <textarea v-model="question" style="position: absolute;"></textarea>
-            </td>
-          </tr>
-          <tr>
-            <th>Answer
-              <span style="color:red;">*</span>:</th>
-            <td height="100">
-              <textarea v-model="answer" style="position: absolute;"></textarea>
-            </td>
-          </tr>
-          <tr>
-            <th>Feature Status
-              <span style="color:red;">*</span>:</th>
-            <td>
-              <select style="margin-left: -15px;" v-model="featureStatus">
-                <option disabled value="">Please select one</option>
-                <option>Fully Compliance</option>
-                <option>Partially Compliance</option>
-                <option>Non Compliance</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>Document Reference:</th>
-            <td>
-              <textarea v-model="docversion" style="position: absolute;"></textarea>
-            </td>
-          </tr>
-        </table>
-        <div style="padding: 2%;">
-          <b-button v-if="updateflag" style="margin-left: 85%;" variant="success" v-on:click="updateclicked()">update</b-button>
-          <b-button v-else style="margin-left: 85%;" variant="success" v-on:click="submittrainingdata()">Add</b-button>
+  <!-- add manual questions starts -->
+  <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height:auto;">
+    <div class="head1" style="background-color: #0996b2;">
+      <span v-if="updateflag">Edit Training Data</span>
+      <span v-else>Add Training Data</span>
+      <span v-on:click="hide" style="margin-left: 71%;cursor:pointer;">
+        <i class="fa fa-times"></i>
+      </span>
+    </div>
+    <div class="modal-content">
+      <b-form style="padding: 2%;font-weight: 600;">
+        <b-form-group label="Product version:">
+          <select class="select" v-model="selectedversion" title="select version">
+            <option v-for="option of version">{{option}}</option>
+          </select>
+        </b-form-group>
+
+        <b-form-group label="Question:<font color=red>*</font>">
+          <b-form-textarea placeholder="Enter Question" :rows="3" v-model="question" :max-rows="3">
+          </b-form-textarea>
+        </b-form-group>
+
+        <b-form-group label="Answer:<font color=red>*</font>">
+          <b-form-textarea placeholder="Enter Answer" :rows="3" v-model="answer" :max-rows="3">
+          </b-form-textarea>
+        </b-form-group>
+
+        <b-form-group label="Document Reference:">
+          <b-form-input id="exampleInput2" type="text" v-model="docversion" placeholder="Enter Document Reference">
+          </b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Feature status:<font color=red>*</font>">
+          <b-form-select id="exampleInput3" :options="status" required v-model="featureStatus">
+          </b-form-select>
+        </b-form-group>
+      </b-form>
+      <div style="padding: 2%;">
+        <div v-if="updateflag">
+          <b-button style="margin-left: 74%;" variant="warning" v-on:click="reset()">Reset</b-button>
+          <b-button variant="success" v-on:click="updateclicked()">update</b-button>
+        </div>
+        <div v-else>
+          <b-button style="margin-left: 78%;" variant="warning" v-on:click="reset()">Reset</b-button>
+          <b-button variant="success" v-on:click="submittrainingdata()">Add</b-button>
         </div>
       </div>
-    </modal>
-    <!-- add manual questions ends -->
-    <div v-if="loader">
-      <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
-      </loading>
     </div>
+  </modal>
+  <!-- add manual questions ends -->
+  <div v-if="loader">
+    <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+    </loading>
+  </div>
   </div>
 </template>
 <script>
@@ -110,7 +98,11 @@ Loading
         updateflag: false,
         manualquestion:[],
         id:'',
-        loader:false
+        loader:false,
+        status: [
+        { text: 'Select One', value: null },
+        'Fully Compliance', 'Partially Compliance', 'Non Compliance',
+      ],
       }
     },
 
@@ -122,6 +114,14 @@ Loading
         this.getQuestions();
     },
     methods: {
+      reset(){
+            this.question=  '', 
+            this.productVersion='' ,
+            this.answer= '',
+            this.docversion= '',
+            this.featureStatus= ''
+
+      },
       update(row) {
         this.updateflag = true
         this.$modal.show('Model');
@@ -130,13 +130,14 @@ Loading
             this.productVersion= row.productVersion,
             this.answer= row.answer,
             this.docversion= row.docLink,
-            this.featureStatus= row.featureStatus,
-            this.id=row.id           
+            this.featureStatus= row.featureStatus
       },
 
       updateclicked(){
-          this.loader=true;
-           this.$modal.hide('Model');
+           
+           if(this.featureStatus!=null &&this.answer && this.question!==''){
+             this.$modal.hide('Model');
+             this.loader=true;
            axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
             question:  this.question,
             id:this.id,
@@ -155,6 +156,13 @@ Loading
             const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
             console.log(message);
           })
+             
+           }else{
+             this.loader=false
+             this.$toaster.warning('Please fill fields marked as important!');
+             
+           }
+
       },
 
       addtrainingdata() {
@@ -168,12 +176,10 @@ Loading
       },
 
       submittrainingdata() {
-           this.$modal.hide('Model');
-        if (this.answer == '' || this.featureStatus == '' || this.question == '') {
+        if (this.featureStatus!='' &&this.answer && this.question!=='') {
           //  do nothing
-          this.$toaster.warning('Please fill fields marked as important!');
-        } else {
-            this.loader=true;
+         this.$modal.hide('Model');
+          this.loader=true;
           this.enable = false;
           axios.post(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
             question: this.question,
@@ -198,6 +204,9 @@ Loading
               const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
               console.log(message);
           })
+        } else {
+             this.$toaster.warning('Please fill fields marked as important!');
+
         }
       },
 
@@ -227,19 +236,13 @@ Loading
 
 <style scoped>
 textarea {
-  width: 94%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  resize: none; 
-  border: none;
+    resize: none;
 }
-
+/* 
 select {
     border: 0;
     width: 100%;
-}
+} */
 
 .modal-vue-wrapper .modal-vue-panel .modal-vue-content {
     display: flex;
@@ -291,4 +294,35 @@ select {
     background-color: #e25003!important;
     border-color: #e86824!important;
 }
+
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 0px solid #dee2e6;
+}
+
+.select {
+    display: inline-block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    /* -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;*/
+} 
+
+/* .col-form-label {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.5;
+    font-weight: bolder!important;
+} */
 </style>
