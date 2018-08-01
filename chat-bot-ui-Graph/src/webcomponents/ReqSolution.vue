@@ -1,71 +1,33 @@
 <template>
-  <div class="ReqSolution">
-    <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px;height:515px;overflow:hidden;">
-      <table-column show="question" label="question"></table-column>
-      <table-column show="productVersion" label="product Version"></table-column>
-      <table-column show="requestUser" label="requested User"></table-column>
-      <table-column show="requestedSource" label="requested Source"></table-column>
-      <table-column show="requestTime" label="requested Time"></table-column>
-      <table-column :sortable="false" :filterable="false">
-        <template slot-scope="row" >
-          <button v-on:click="reply(row)" class="btn btn-primary">
-            <i class="fa fa-reply"></i>
-          </button>
-        </template>
-      </table-column>
-    </table-component>
-    <div v-if="loader">
-      <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
-      </loading>
+<div class="ReqSolution">
+  <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px;height:515px;overflow:hidden;">
+    <table-column show="question" label="question"></table-column>
+    <table-column show="productVersion" label="product Version"></table-column>
+    <table-column show="requestUser" label="requested User"></table-column>
+    <table-column show="requestedSource" label="requested Source"></table-column>
+    <table-column show="requestTime" label="requested Time"></table-column>
+    <table-column :sortable="false" :filterable="false">
+      <template slot-scope="row">
+        <button v-on:click="reply(row)" class="btn btn-primary">
+          <i class="fa fa-reply"></i>
+        </button>
+      </template>
+    </table-column>
+  </table-component>
+  <div v-if="loader">
+    <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+    </loading>
+  </div>
+  <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height:auto;">
+    <div class="head1" style="background-color: #0996b2;">Solution Response
+      <span v-on:click="hide" style="margin-left: 71%;cursor:pointer;">
+        <i class="fa fa-times"></i>
+      </span>
     </div>
-    <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height:auto;">
-      <div class="head1" style="background-color: #0996b2;">Solution Response
-        <span v-on:click="hide" style="margin-left: 71%;cursor:pointer;"><i class="fa fa-times"></i></span>
-      </div>
-      <div class="modal-content">
-        <!-- <table class="table">
-          <col width="100">
-          <tr>
-            <th>Question:</th>
-            <td height="100">
-              <textarea  :readonly="true"> {{this.property}}</textarea>
-            </td>
-          </tr>
-          <tr>
-            <th>Feature Status <span style="color:red;">*</span>:</th>
-            <td>
-              <select style="margin-left: -15px;" v-model="featureStatus">
-                <option disabled value="">Please select one</option>
-                <option>Fully Compliance</option>
-                <option>Partially Compliance</option>
-                <option>Non Compliance</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>Response<span style="color:red;">*</span>:</th>
-            <td height="100">
-              <textarea v-model="remarks" style="position: absolute;" ></textarea>
-            </td>
-            
-          </tr>
-          <tr>
-            <th>Document version:</th>
-            <td>
-              <textarea v-model="docversion" style="position: absolute;"></textarea>
-            </td>
-          </tr>
-        </table> -->
-
-              <b-form style="padding: 2%;font-weight: 600;">
-        <!-- <b-form-group label="Product version:">
-          <select class="select" v-model="selectedversion" title="select version">
-            <option v-for="option of version">{{option}}</option>
-          </select>
-        </b-form-group> -->
-
+    <div class="modal-content">
+      <b-form style="padding: 2%;font-weight: 600;">
         <b-form-group label="Question:<font color=red>*</font>">
-           <textarea  :readonly="true"> {{this.property}}</textarea>
+          <textarea :readonly="true"> {{this.property}}</textarea>
         </b-form-group>
 
         <b-form-group label="Response:<font color=red>*</font>">
@@ -77,21 +39,22 @@
           <b-form-input id="exampleInput2" type="text" v-model="docversion" placeholder="Enter Document Reference">
           </b-form-input>
         </b-form-group>
-         <b-form-group label="Feature Status:">
-        <select class="select"  v-model="featureStatus">
-                <option disabled value="">Please select one</option>
-                <option>Fully Compliance</option>
-                <option>Partially Compliance</option>
-                <option>Non Compliance</option>
-              </select>
-               </b-form-group>
+        <b-form-group label="Feature Status:">
+          <select class="select" v-model="featureStatus">
+            <option disabled value="">Please select one</option>
+            <option>Fully Compliance</option>
+            <option>Partially Compliance</option>
+            <option>Non Compliance</option>
+          </select>
+        </b-form-group>
       </b-form>
-        <div style="padding: 2%;">
-          <b-button   style="margin-left: 85%;" variant="success" v-on:click="sendreply()">Submit</b-button>
-        </div>
+      <div style="padding: 2%;">
+        <b-button style="margin-left: 74%;" variant="warning" v-on:click="reset()">Reset</b-button>    
+        <b-button variant="success" v-on:click="sendreply()">Submit</b-button>
       </div>
-    </modal>
-  </div>
+    </div>
+  </modal>
+</div>
 </template>
 
 <script>
@@ -135,6 +98,7 @@ export default {
         this.hide()
         this.remarks = '',
         this.docversion = ''
+        this.featureStatus = ''
       }
     });
   },
@@ -144,6 +108,10 @@ export default {
   },
 
   methods: {
+    reset(){
+        this.remarks = '',
+        this.docversion = ''
+    },
     reqsolution() {
       axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=OPEN', {}).then((resp) => {
         this.loader = false;

@@ -52,7 +52,7 @@
           <b-form-input id="exampleInput2" type="text" v-model="docversion" placeholder="Enter Document Reference">
           </b-form-input>
         </b-form-group>
-        
+
         <select class="select"  v-model="featureStatus">
                 <option disabled value="">Please select one</option>
                 <option>Fully Compliance</option>
@@ -288,11 +288,7 @@ textarea {
     border-color: #e86824!important;
 }
 
-.table th, .table td {
-    padding: 0.75rem;
-    vertical-align: top;
-    border-top: 0px solid #dee2e6;
-}
+
 
 .select {
     display: inline-block;
