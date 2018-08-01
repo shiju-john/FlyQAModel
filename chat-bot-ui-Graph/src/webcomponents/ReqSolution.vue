@@ -28,7 +28,7 @@
           <tr>
             <th>Question:</th>
             <td height="100">
-              <textarea style="margin-left: -13px;" :readonly="true"> {{this.property}}</textarea>
+              <textarea  :readonly="true"> {{this.property}}</textarea>
             </td>
           </tr>
           <tr>
@@ -45,7 +45,7 @@
           <tr>
             <th>Response<span style="color:red;">*</span>:</th>
             <td height="100">
-              <textarea v-model="remarks" style="position: absolute;" @keyup="enablebutton"></textarea>
+              <textarea v-model="remarks" style="position: absolute;" ></textarea>
             </td>
             
           </tr>
@@ -125,12 +125,6 @@ export default {
         this.$toaster.error(message)
       })
     },
-    enablebutton(){
-      // if (this.remarks!=='' && this.featureStatus!=='') {
-      //  this.enable=false;
-      // }
-      
-    },
 
     reply(data) {
       this.$modal.show('Model');
@@ -196,7 +190,7 @@ td, th {
     }
 
 textarea {
-  width: 100%;
+  width: 94%;
   top: 0;
   left: 0;
   right: 0;

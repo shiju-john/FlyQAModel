@@ -26,7 +26,8 @@
           <ReqSolution v-if="chartEnabled==='REQ'" :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home" :version="options"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
-          <!-- <manualentry v-if="chartEnabled==='MAN'"  :version="options" :token="token"></manualentry> -->
+          <!-- <manualproduct v-if="chartEnabled==='PCM'"  :version="options" :token="token"></manualproduct> -->
+          <manualquestion v-if="chartEnabled==='ME'"  :version="options" :token="token"></manualquestion>
         </b-card>
         <ModelDialog @submit="hide" :remarks='remarks' :token="token" :question='question' :version='version' />
       </div>
@@ -50,7 +51,9 @@
   import formrfp from './webcomponents/form-rfp'
   import statusTracker from './webcomponents/statusTracker'
   import loginpage from './webcomponents/loginPage'
-  import manualentry from './webcomponents/manualQuestions'
+  import manualproduct from './webcomponents/manualProduct'
+  import manualquestion from './webcomponents/manualQuestions'
+
 
   
   import axios from 'axios'
@@ -67,14 +70,15 @@
       formrfp,
       statusTracker,
       loginpage,
-      manualentry
+      manualproduct,
+      manualquestion
   
     },
     data() {
       return {
         remarks: [],
         question: String,
-        token:'',
+        token:'1fccd19d207874326a0be51efaea17d5a54a88bdc9e6d36b7bbb757092906d7b8a1693cc9eca8b',
         version: String,
         flag: 'false',
         cardtitle: '',
@@ -115,7 +119,33 @@
             content: 'Upload a RFP File',
             icon: 'fas fa-cloud-upload-alt',
           },
-         {
+            {
+            url: '../static/img/manual.svg',
+            name: 'Manual Entry',
+            type: 'ME',
+            card: true,
+            content: 'Create Questions Manualy',
+            icon: 'fas fa-edit',
+          },
+      
+          {
+            url: 'd',
+            name: 'Sign-out',
+            type: 'logout',
+            card: false,
+            content: 'd',
+            icon: 'fa fa-power-off',
+          },
+          // {
+          //   url: '../static/img/manual.svg',
+          //   name: 'Product Creation',
+          //   type: 'PCM',
+          //   card: true,
+          //   content: 'Create Product Manualy',
+          //   icon: '',
+          // },
+      
+           {
             url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/statistics.svg',
             name: 'Analytics',
             type: 'ST',
@@ -136,23 +166,6 @@
               icon: 'fa fa-bar-chart',
             }]
           },
-      
-          {
-            url: 'd',
-            name: 'Sign-out',
-            type: 'logout',
-            card: false,
-            content: 'd',
-            icon: 'fa fa-power-off',
-          }
-          // {
-          //   url: '../static/img/manual.svg',
-          //   name: 'Manual Entry',
-          //   type: 'MAN',
-          //   card: true,
-          //   content: 'Enter Questions Manualy',
-          //   icon: '',
-          // },
           
         ],
       }
@@ -453,6 +466,24 @@
 .nav-pills .nav-link.active{
     color: #fff;
     background-color: #858585!important;
+}
+
+/* .btn-primary {
+    color: #fff;
+    background-color: #858585!important;
+    border-color: #858585!important;
+} */
+
+.btn-success {
+    color: #fff;
+    background-color: #17a2b8!important;
+    border-color: #17a2b8!important;
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #04899e!important;
+    border-color: #04899e!important;
 }
 </style>
 

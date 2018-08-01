@@ -307,7 +307,7 @@ td {
     color: red;
 }
 
-.btn-primary {
+/* .btn-primary {
     color: #fff;
     background-color: #858585!important;
     border-color: #858585!important;
@@ -317,7 +317,7 @@ td {
     color: #fff;
     background-color: #17a2b8!important;
     border-color: #17a2b8!important;
-}
+} */
 
 </style>
 

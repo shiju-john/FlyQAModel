@@ -9,7 +9,7 @@
         <table-column show="status" label="status"></table-column>
         <table-column :sortable="false" :filterable="false">
           <template slot-scope="row">
-            <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Download File" >
+            <b-button variant="warning" v-if="row.status=='PROCESSED'"    title="Download File" >
               <i class="fa fa-download"></i>
             </b-button>
             <b-button v-if="row.status=='PROCESSED'" variant="primary"   title="Status Details" v-on:click="clik(row)">
