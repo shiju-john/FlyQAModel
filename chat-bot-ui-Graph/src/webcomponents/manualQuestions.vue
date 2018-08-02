@@ -1,7 +1,7 @@
 <template>
 <div class="ManualQuestions">
   <div style="margin-top:1%;">
-    <b-button style="margin-left:1%;z-index: 46;" title="Add Training Data" variant="danger lg" v-on:click="addtrainingdata()">
+    <b-button style="margin-left:1%;z-index: 46;" title="Add Training Data" variant="warning lg" v-on:click="addtrainingdata()">
       <span>
         <i class="fas fa-plus"></i> Training Data</span>
     </b-button>
@@ -60,13 +60,13 @@
                 <option>Non Compliance</option>
               </select>
       </b-form>
-      <div style="padding: 2%;">
+      <div style="padding: 2%;text-align: right;">
         <div v-if="updateflag">
-          <b-button style="margin-left: 74%;" variant="warning" v-on:click="reset()">Reset</b-button>
+          <b-button variant="warning" v-on:click="reset()">Reset</b-button>
           <b-button variant="success" v-on:click="updateclicked()">update</b-button>
         </div>
         <div v-else>
-          <b-button style="margin-left: 78%;" variant="warning" v-on:click="reset()">Reset</b-button>
+          <b-button variant="warning" v-on:click="reset()">Reset</b-button>
           <b-button variant="success" v-on:click="submittrainingdata()">Add</b-button>
         </div>
       </div>
@@ -303,6 +303,15 @@ textarea {
     border-radius: 0.25rem;
     font-size: 16px;
 } 
+
+.table-component__filter__field {
+    padding: 0 1.25em 0 .75em;
+    height: 2.5em;
+    border: solid 2px #e0e0e0;
+    border-radius: 2em;
+    font-size: inherit;
+    margin-left: 81%;
+}
 
 
 </style>

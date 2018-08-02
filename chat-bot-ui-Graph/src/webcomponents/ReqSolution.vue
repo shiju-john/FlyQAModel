@@ -27,7 +27,8 @@
     <div class="modal-content">
       <b-form style="padding: 2%;font-weight: 600;">
         <b-form-group label="Question:<font color=red>*</font>">
-          <textarea :readonly="true"> {{this.property}}</textarea>
+          <b-form-textarea placeholder="Enter Response" :rows="3" v-model="property" :max-rows="3" disabled>
+          </b-form-textarea>
         </b-form-group>
 
         <b-form-group label="Response:<font color=red>*</font>">
@@ -48,8 +49,8 @@
           </select>
         </b-form-group>
       </b-form>
-      <div style="padding: 2%;">
-        <b-button style="margin-left: 74%;" variant="warning" v-on:click="reset()">Reset</b-button>    
+      <div style="padding: 2%;text-align: right;">
+        <b-button  variant="warning" v-on:click="reset()">Reset</b-button>    
         <b-button variant="success" v-on:click="sendreply()">Submit</b-button>
       </div>
     </div>
@@ -186,7 +187,7 @@ td, th {
   font-weight: normal;
     }
 
-textarea {
+/* textarea {
   width: 94%;
   top: 0;
   left: 0;
@@ -199,6 +200,10 @@ textarea {
 select {
     border: 0;
     width: 100%;
+} */
+
+textarea {
+    resize: none;
 }
 
 .modal-vue-wrapper .modal-vue-panel .modal-vue-content {

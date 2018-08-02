@@ -307,17 +307,6 @@ td {
     color: red;
 }
 
-/* .btn-primary {
-    color: #fff;
-    background-color: #858585!important;
-    border-color: #858585!important;
-}
-
-.btn-success {
-    color: #fff;
-    background-color: #17a2b8!important;
-    border-color: #17a2b8!important;
-} */
 
 </style>
 
