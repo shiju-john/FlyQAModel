@@ -40,12 +40,12 @@
 
               <b-form-group>
                 <b-form-checkbox-group>
-                  <b-form-checkbox value="true" v-model="doc.skippable">Skippable</b-form-checkbox>
+                  <b-form-checkbox value="true" v-if="skipflag"  v-model="doc.skippable">Skippable</b-form-checkbox>
                  
                 </b-form-checkbox-group>
                 <b-form-checkbox-group>
                  
-                  <b-form-checkbox value="true" v-on:change="sameSettings(index)">Copy Settings</b-form-checkbox>
+                  <b-form-checkbox value="true" v-if="skipflag" v-on:change="sameSettings(index)">Copy Settings</b-form-checkbox>
                 </b-form-checkbox-group>
               </b-form-group>
 
@@ -98,9 +98,17 @@ export default {
       loader: false,
       header: false,
       response: false,
+      skipflag:true
     }
   },
 
+
+
+    mounted: function () {
+      if(this.docarray.length<2){
+        this.skipflag=false;
+      } 
+    },
   methods: {
 
     sameSettings(index) {

@@ -15,10 +15,10 @@
                 </b-form-input>
               </b-form-group>
               <b-form-group label="Product Version">
-                <b-form-select :options="foods" required v-model="selectedversion">
+                <b-form-select :options="version" required v-model="selectedversion">
                 </b-form-select>
               </b-form-group>
-              <div style="margin-left: 73%;}">
+              <div style="text-align: right;">
                 <b-button type="reset" variant="danger">Reset</b-button>
                 <b-button type="submit" variant="primary">Next</b-button>
               </div>
@@ -27,7 +27,7 @@
         </div>
       </b-form>
     </div>
-    <SheetDetails @finish="finish" v-if="showsheet==='true'" :token="token" :file_path="file_path" :file_id="file_id" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
+    <SheetDetails @finish="finish" v-if="showsheet==='true'"  :token="token" :file_path="file_path" :file_id="file_id" :index=0 :rfpname="file_name" :docarray="doc_arr" :sheetarray="sheetarray" :productversion="selectedversion"></SheetDetails>
   </div>
 </template>
 
@@ -55,8 +55,8 @@ export default {
       file_id:'',
       file_path:'',
       selectedversion: this.version[0],
-      foods:this.version,
-      show: true
+      show: true,
+      
     }
   },
   methods: {
@@ -96,7 +96,9 @@ export default {
           documentReference:'',
           skippable:''
         })
+
       }
+
     }
   }
 }
