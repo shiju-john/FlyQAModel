@@ -62,6 +62,14 @@ export default {
     transform: scale(1.02); 
 }
 
+.text-center {
+    /* animation: mymove 2s; */
+}
+@keyframes mymove {
+    from {top: 200px;}
+    to {top: 0px;}
+}
+
 .bg-primary {
     background-color: #016896 !important;
 }

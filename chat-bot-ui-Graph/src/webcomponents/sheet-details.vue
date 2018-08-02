@@ -118,6 +118,7 @@ export default {
     },
 
     validate(index){
+      if(this.docarray[index].skippable[0]!=="true"){
       if (this.docarray[index].headerIndex == '') {
               this.header = true;
             } else if (this.docarray[index].remarks == '') {
@@ -131,6 +132,10 @@ export default {
               return true;
              
             }
+      }else{
+        return true;
+      }
+
             return false;
     },
 
