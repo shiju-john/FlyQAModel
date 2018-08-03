@@ -33,7 +33,7 @@
             </tr>
             <tr >
               <td v-if="!src" colspan="2">
-                <div style="margin-left:69%;">
+                <div style="text-align:right;">
                   <b-button variant="info" v-if="updateFlag"  v-on:click="response('update',index)">Update</b-button>
                   <b-button variant="info" v-if="disabled"  disabled >Update</b-button>
                   <b-button variant="success" style="background-color:green" v-on:click="response('accept',index)">accept</b-button>
