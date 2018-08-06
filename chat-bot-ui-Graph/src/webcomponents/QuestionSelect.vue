@@ -8,7 +8,7 @@
     <div id="sheet_sheet_name" class="tabcontent">
       <div class="flex-container">
         <div style="width:60%">
-          <table-component caption="heading" :data="current_tab_data" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;    margin-bottom: 38px;">               
+          <table-component caption="heading" :data="current_tab_data" cache-key="t3" sort-by="requestTime" style="font-size: 13px; height: 474px; overflow: hidden;    margin-bottom: 38px;">               
             <table-column>
 
               <template slot-scope="row" >
@@ -101,7 +101,6 @@ components: {
 
   methods: {
     rowclick(){
-      console.log('hi');
     },
     filterItems: function (items) {
       return items.filter(function (item) {
@@ -115,7 +114,8 @@ components: {
 
     clik(row) {
       this.rowObj.length = 0;
-      var res = row.answers ? row.answers.replace(/NaN/g, "\"\"") : row.answers;
+      if(row.answers!=undefined){
+   var res = row.answers ? row.answers.replace(/NaN/g, "\"\"") : row.answers;
       this.rowObj.push(row);
       this.answers = JSON.parse(res);
 
@@ -127,6 +127,11 @@ components: {
         this.emptyanswer = false
       }
       this.answerFlag = true;
+      }else{
+        this.answerFlag = false;
+        this.emptyanswer = true;
+      }
+   
     },
     sortfunction (a, b) {
           var returnval = a.status === 'solution' ? false : b.status === 'solution' ? true : null;

@@ -5,7 +5,8 @@
       <span>
         <i class="fas fa-plus"></i> Training Data</span>
     </b-button>
-    <table-component caption="heading" :data="manualquestion" sort-by="requestTime" style="font-size: 13px;height:560px;overflow:hidden;margin-top: -35px;">
+    <div style="height:100%;"> 
+      <table-component caption="heading" :data="manualquestion" cache-key="t2" sort-by="requestTime" style="font-size: 13px;height: 83vh;overflow:hidden;margin-top: -35px;">
       <table-column show="question" label="questions"></table-column>
       <table-column show="answer" label="answers"></table-column>
       <table-column show="featureStatus" label="feature status"></table-column>
@@ -19,6 +20,8 @@
         </template>
       </table-column>
     </table-component>
+    </div>
+
   </div>
 
   <!-- add manual questions starts -->
@@ -52,13 +55,14 @@
           <b-form-input id="exampleInput2" type="text" v-model="docversion" placeholder="Enter Document Reference">
           </b-form-input>
         </b-form-group>
-
-        <select class="select"  v-model="featureStatus">
-                <option disabled value="">Please select one</option>
-                <option>Fully Compliance</option>
-                <option>Partially Compliance</option>
-                <option>Non Compliance</option>
-              </select>
+        <b-form-group label="Feature Status:">
+          <select class="select" v-model="featureStatus">
+            <option disabled value="">Please select one</option>
+            <option>Fully Compliance</option>
+            <option>Partially Compliance</option>
+            <option>Non Compliance</option>
+          </select>
+        </b-form-group>
       </b-form>
       <div style="padding: 2%;text-align: right;">
         <div v-if="updateflag">
@@ -77,7 +81,7 @@
     <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
     </loading>
   </div>
-  </div>
+</div>
 </template>
 <script>
     

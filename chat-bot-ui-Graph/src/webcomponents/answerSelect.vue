@@ -21,7 +21,7 @@
             </tr>
             <tr>
               <th>Document Reference:</th>
-              <td height="10">
+              <td >
                 <textarea style="margin-left:-9px;" :readonly="src" v-model="a.doc_ref" placeholder="No documents available" @keyup="edited"></textarea>
               </td>
             </tr>
@@ -37,7 +37,6 @@
                   <b-button variant="info" v-if="updateFlag"  v-on:click="response('update',index)">Update</b-button>
                   <b-button variant="info" v-if="disabled"  disabled >Update</b-button>
                   <b-button variant="success" style="background-color:green" v-on:click="response('accept',index)">accept</b-button>
-                <!-- <b-button variant="danger" style="margin-left: 50px;" v-on:click="response('reject',index)">reject</b-button> -->
                 </div>
               </td>
             </tr>
