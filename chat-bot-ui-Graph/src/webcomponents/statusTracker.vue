@@ -36,10 +36,6 @@
 import axios from 'axios';
 import QuestionSelect from './QuestionSelect';
 import Loading from 'vue-loading-overlay';
-// import fs from 'fs';
-// import Excel from 'exceljs';
-// import async from 'async';
-// Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.min.css';
 export default {
 
@@ -100,6 +96,7 @@ export default {
     getstatusdatas() {
       axios.get(process.env.SERV_URL+'uploaderendpoints?token='+this.token, {
       }).then((resp) => {
+        console.log(resp.data)
          this.loader=false;
         this.statusdata=resp.data;
       }).catch(err => {

@@ -43,6 +43,12 @@
           </table>
         </b-tab>
       </b-tabs>
+          <div v-if="loader" >
+         <loading :active.sync="loader" 
+        :can-cancel="false" 
+        :is-full-page="true">
+        </loading>
+    </div>
     </div>
     <div>
     </div>
@@ -51,15 +57,18 @@
 
 <script>
 import axios from 'axios';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.min.css';
 export default {
 
-components: {},
+components: {Loading},
   props: ['data', 'answer', 'src', 'token'],
 
 
   data() {
     return {
       updateFlag: false,
+      loader:false,
       text: true,
       disabled:true,
       count: 0,
@@ -103,6 +112,7 @@ components: {},
     },
 
     response(action, index) {
+      this.loader=true;
       if (action == 'update') {
       }else{
         this.answer[index].status = action;
@@ -149,8 +159,10 @@ components: {},
         postKey: 'saveQuestions',
         questions: data
       }).then((resp) => {
+        this.loader=false;
         this.$toaster.success('request successfully sent!');
       }).catch(err => {
+        this.loader=false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
         console.log(message);
       })
