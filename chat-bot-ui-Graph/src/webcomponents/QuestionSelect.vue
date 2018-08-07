@@ -44,7 +44,7 @@
                  <i style="color:green;margin-left: 30px;" class="fas fa-user-alt"></i> : Solution Provided by Solution Team
           </span>
         </div>
-        <div style="width:40%">
+        <div style="width:39%">
           <answerSelect v-if="answerFlag" :data="rowObj" :answer="answers" :token="token"></answerSelect>
           <div v-if="emptyanswer" style="display: inline">
             <span class="noanswer">No answers available!</span>

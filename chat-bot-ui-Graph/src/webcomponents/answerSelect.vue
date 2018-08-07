@@ -1,58 +1,55 @@
 <template>
-  <div class="AnsweSelect">
-    <div v-bind:style="[src ? {'padding-top':'0%'} : {'padding-top':'7%'}]">
-      <b-tabs pills card>
-        <b-tab :title="'Answer ' + (index +1)" v-for="(a, index) in answer" v-on:click="toggle">
-          <table class="table">
-              <col width="60">
-            <tr>
-              <th>Feature Status:</th>
-              <td v-if="!src">
-                <textarea style="margin-left:-9px;" id="textfield0" @click="selects" v-model="a.featureStatus" placeholder="No feature status available" v-if="text"></textarea>
-                <select @change="edited" v-if="!text" v-model="drop"  style="margin-left:-9px;">
+<div class="AnsweSelect">
+  <div >
+    <b-tabs pills card>
+      <b-tab :title="'Answer ' + (index +1)" v-for="(a, index) in answer" v-on:click="toggle">
+        <b-form style="padding: 2%;font-weight: 600;">
+          <b-form-group label="Feature Status:">
+            <div v-if="!src">
+              <b-form-textarea   @click.native.native="selects" class="text" v-model="a.featureStatus" placeholder="No feature status available" v-if="text"></b-form-textarea >
+              </div>
+                <select @change="edited" class="select" v-if="!text" v-model="drop"  style="margin-left:-9px;">
                  <option v-for="option in options" v-bind:value="option.text">
                       {{ option.text }}
                     </option>
                 </select>
-              </td>
-              <td v-if="src">
-                <textarea style="margin-left:-9px;" placeholder="No feature status available" v-model="a.featureStatus" :readonly="src"></textarea>
-              </td>
-            </tr>
-            <tr>
-              <th>Document Reference:</th>
-              <td >
-                <textarea style="margin-left:-9px;" :readonly="src" v-model="a.doc_ref" placeholder="No documents available" @keyup="edited"></textarea>
-              </td>
-            </tr>
-            <tr>
-              <th>Answer:</th>
-              <td height="200">
-                <textarea :readonly="src" placeholder="No documents available" v-model="a.answer" style="position: absolute;" @keyup="edited"></textarea>
-              </td>
-            </tr>
-            <tr >
-              <td v-if="!src" colspan="2">
-                <div style="text-align:right;">
-                  <b-button variant="info" v-if="updateFlag"  v-on:click="response('update',index)">Update</b-button>
-                  <b-button variant="info" v-if="disabled"  disabled >Update</b-button>
-                  <b-button variant="success" style="background-color:green" v-on:click="response('accept',index)">accept</b-button>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </b-tab>
-      </b-tabs>
-          <div v-if="loader" >
-         <loading :active.sync="loader" 
-        :can-cancel="false" 
-        :is-full-page="true">
-        </loading>
-    </div>
-    </div>
-    <div>
+            <div v-if="src">
+              <b-form-textarea :rows="3"  :max-rows="3" placeholder="No feature status available" v-model="a.featureStatus" disabled>
+              </b-form-textarea>
+            </div>
+          </b-form-group>
+
+          <b-form-group label="Document Reference:">
+            <b-form-textarea v-if="src"   type="text" v-model="a.doc_ref" placeholder="No documents available" @keyup.native="edited" disabled>
+            </b-form-textarea>
+                  <b-form-textarea v-else  type="text" v-model="a.doc_ref" placeholder="No documents available" >
+            </b-form-textarea>
+          </b-form-group>
+
+
+          <b-form-group label="Answer:">
+            <b-form-textarea v-if="src" :rows="5" disabled :max-rows="5" @keyup.native="edited" placeholder="No documents available" v-model="a.answer">
+              </b-form-textarea>
+               <b-form-textarea v-else :rows="5" :max-rows="5"  placeholder="No documents available" v-model="a.answer">
+              </b-form-textarea>
+          </b-form-group>
+        </b-form>
+
+        <div v-if="!src" style="text-align:right;">
+          <b-button variant="info" v-if="updateFlag" v-on:click="response('update',index)">Update</b-button>
+          <b-button variant="info" v-if="disabled" disabled>Update</b-button>
+          <b-button variant="success" style="background-color:green" v-on:click="response('accept',index)">accept</b-button>
+        </div>
+      </b-tab>
+    </b-tabs>
+    <div v-if="loader">
+      <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+      </loading>
     </div>
   </div>
+  <div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -203,6 +200,31 @@ textarea {
   resize: none; 
   border: none;
 }
+
+text {
+  width: 95%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  resize: none; 
+  border: none;
+}
+
+.select {
+    display: inline-block;
+    width: 94%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    font-size: 16px;
+    left: 11px;
+} 
 
 
 </style>

@@ -96,7 +96,7 @@ export default {
     getstatusdatas() {
       axios.get(process.env.SERV_URL+'uploaderendpoints?token='+this.token, {
       }).then((resp) => {
-        console.log(resp.data)
+        // console.log(resp.data)
          this.loader=false;
         this.statusdata=resp.data;
       }).catch(err => {

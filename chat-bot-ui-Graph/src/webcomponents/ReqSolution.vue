@@ -146,7 +146,9 @@ export default {
         this.enable=false;
         axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
             id: this.send_reply.id,
+            templateRefId:this.send_reply.templateRefId,
             question: this.send_reply.question,
+            questionId:this.send_reply.questionId,
             productVersion: this.send_reply.productVersion,
             requestUser: this.send_reply.requestUser,
             requestTime: this.send_reply.requestTime,
@@ -154,7 +156,7 @@ export default {
             docLink: this.docversion,
             featureStatus: this.featureStatus,
             requestedSource:this.send_reply.requestedSource,
-            questionId:this.send_reply.id
+            
 
           }).then((resp) => {
             this.$toaster.success('Solution succesfully submitted!');
