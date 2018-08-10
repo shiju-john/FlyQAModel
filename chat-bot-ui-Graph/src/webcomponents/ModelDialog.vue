@@ -37,6 +37,7 @@ export default {
   methods: {
 
     request() {
+      this.$modal.hide('ModelDialog');
       axios.post(process.env.SERV_URL + 'visionendpoints?token='+this.token, {
         question: this.question,
         productVersion: this.version,

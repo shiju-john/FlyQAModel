@@ -143,6 +143,7 @@ export default {
       //  do nothing
        this.$toaster.warning('Please fill fields marked as important!');
       }else{
+        this.$modal.hide('Model');
         this.enable=false;
         axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
             id: this.send_reply.id,
@@ -156,11 +157,8 @@ export default {
             docLink: this.docversion,
             featureStatus: this.featureStatus,
             requestedSource:this.send_reply.requestedSource,
-            
-
           }).then((resp) => {
             this.$toaster.success('Solution succesfully submitted!');
-            this.$modal.hide('Model');
             this.remarks = '',
             this.docversion = ''
             this.reqsolution();
@@ -189,20 +187,6 @@ td, th {
   font-weight: normal;
     }
 
-/* textarea {
-  width: 94%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  resize: none; 
-  border: none;
-}
-
-select {
-    border: 0;
-    width: 100%;
-} */
 
 textarea {
     resize: none;
@@ -254,15 +238,6 @@ textarea {
     margin-bottom: 0rem!important;
     background-color: transparent;
 }
-
-/* .table-component__filter__field {
-    padding: 0 1.25em 0 .75em;
-    height: 2.5em;
-    border: solid 2px #e0e0e0;
-    border-radius: 2em;
-    font-size: inherit;
-    margin-right: 108px!important;
-}*/
 
 .table-component__filter {
     align-self: flex-end;

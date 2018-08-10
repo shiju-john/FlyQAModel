@@ -47,7 +47,7 @@
         <div style="width:39%">
           <answerSelect v-if="answerFlag" :data="rowObj" :answer="answers" :token="token"></answerSelect>
           <div v-if="emptyanswer" style="display: inline">
-            <span class="noanswer">No answers available!</span>
+            <span class="noanswer">No Answers Available!</span>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.min.css';
 export default {
 
-components: {
+  components: {
     answerSelect,
     Loading
   },
@@ -100,8 +100,7 @@ components: {
   beforeDestroy() {},
 
   methods: {
-    rowclick(){
-    },
+    rowclick() {},
     filterItems: function (items) {
       return items.filter(function (item) {
         return item.skippable != 'true';
@@ -114,31 +113,32 @@ components: {
 
     clik(row) {
       this.rowObj.length = 0;
-      if(row.answers!=undefined){
-   var res = row.answers ? row.answers.replace(/NaN/g, "\"\"") : row.answers;
-      this.rowObj.push(row);
-      this.answers = JSON.parse(res);
+      if (row.answers != undefined) {
+        var res = row.answers ? row.answers.replace(/NaN/g, "\"\"") : row.answers;
+        this.rowObj.push(row);
+        this.answers = JSON.parse(res);
 
-      this.answers.sort(this.sortfunction);
-      // console.log(this.answers);
-      if (this.answers.length == 0) {
-        this.emptyanswer = true
+        this.answers.sort(this.sortfunction);
+        // console.log(this.answers);
+        if (this.answers.length == 0) {
+          this.emptyanswer = true
+        } else {
+          this.emptyanswer = false
+        }
+        this.answerFlag = true;
       } else {
-        this.emptyanswer = false
-      }
-      this.answerFlag = true;
-      }else{
         this.answerFlag = false;
         this.emptyanswer = true;
       }
-   
+
     },
-    sortfunction (a, b) {
-          var returnval = a.status === 'solution' ? false : b.status === 'solution' ? true : null;
-          returnval = returnval == null ? a.status === 'solution_waiting' ? false : b.status === 'solution_waiting' ? true : null : returnval
-          returnval= returnval == null ? a.status == 'accept' ? false : b.status == 'accept' ? true : true : returnval;
-          return returnval;
-      },
+    // sorting accept,sloution,solution_wait
+    sortfunction(a, b) {
+      var returnval = a.status === 'solution' ? false : b.status === 'solution' ? true : null;
+      returnval = returnval == null ? a.status === 'solution_waiting' ? false : b.status === 'solution_waiting' ? true : null : returnval
+      returnval = returnval == null ? a.status == 'accept' ? false : b.status == 'accept' ? true : true : returnval;
+      return returnval;
+    },
     openTab(e, sheetname) {
       this.loader = true;
       this.updateflag = false;
@@ -202,7 +202,7 @@ components: {
         question: data.question,
         productVersion: this.version,
       }).then((resp) => {
-        data.finalStatus='solution_waiting';
+        data.finalStatus = 'solution_waiting';
         this.loader = false;
         this.$toaster.success('Solution request successfully processed!')
       }).catch(err => {

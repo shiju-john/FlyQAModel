@@ -25,7 +25,7 @@
   </div>
 
   <!-- add manual questions starts -->
-  <modal name="Model" height="auto" :scrollable="true" style=" overflow: hidden; height:auto;">
+  <modal name="Model" height="auto" :scrollable="true" style="overflow: hidden; height:auto;">
     <div class="head1" style="background-color: #0996b2;">
       <span v-if="updateflag">Edit Training Data</span>
       <span v-else>Add Training Data</span>
@@ -91,149 +91,144 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.min.css';
 export default {
   components: {
-Loading
+    Loading
   },
-  props: ['version','token'],
+  props: ['version', 'token'],
   data() {
-      return {
-        question: '',
-        featureStatus: '',
-        answer: '',
-        docversion: '',
-        selectedversion: this.version[0],
-        updateflag: false,
-        manualquestion:[],
-        id:'',
-        loader:false,
-      }
-    },
+    return {
+      question: '',
+      featureStatus: '',
+      answer: '',
+      docversion: '',
+      selectedversion: this.version[0],
+      updateflag: false,
+      manualquestion: [],
+      id: '',
+      loader: false,
+    }
+  },
 
-    computed: {
+  computed: {
 
-    },
+  },
 
-    mounted() {
-        this.getQuestions();
-    },
-    methods: {
-      reset(){
-            this.question=  '', 
-            this.productVersion='' ,
-            this.answer= '',
-            this.docversion= '',
-            this.featureStatus= ''
-
-      },
-      update(row) {
-        this.updateflag = true
-        this.$modal.show('Model');
-          this.question=  row.question,
-            this.id=row.id,
-            this.productVersion= row.productVersion,
-            this.answer= row.answer,
-            this.docversion= row.docLink,
-            this.featureStatus= row.featureStatus
-      },
-
-      updateclicked(){
-           
-           if(this.featureStatus!=null &&this.answer && this.question!==''){
-             this.$modal.hide('Model');
-             this.loader=true;
-           axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
-            question:  this.question,
-            id:this.id,
-            productVersion:this.productVersion,
-            answer: this.answer,
-            docLink: this.docversion,
-            featureStatus: this.featureStatus,
-            requestStatus: 'MANUAL_ENTRY',
-            requestedSource: 'MANUAL_ENTRY'
-          }).then((resp) => {
-              this.loader=false;
-              this.getQuestions();
-            this.$toaster.success('Training data succesfully updated!');
-          }).catch(err => {
-                this.loader=false;
-            const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-            console.log(message);
-          })
-             
-           }else{
-             this.loader=false
-             this.$toaster.warning('Please fill fields marked as important!');
-             
-           }
-
-      },
-
-      addtrainingdata() {
-        this.question = '',
-        this.productVersion = ''
+  mounted() {
+    this.getQuestions();
+  },
+  methods: {
+    reset() {
+      this.question = '',
+        this.productVersion = '',
         this.answer = '',
         this.docversion = '',
         this.featureStatus = ''
-        this.$modal.show('Model');
-        this.updateflag = false;
-      },
-
-      submittrainingdata() {
-        if (this.featureStatus!='' &&this.answer && this.question!=='') {
-          //  do nothing
-         this.$modal.hide('Model');
-          this.loader=true;
-          this.enable = false;
-          axios.post(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
-            question: this.question,
-            productVersion: this.selectedversion,
-            answer: this.answer,
-            docLink: this.docversion,
-            featureStatus: this.featureStatus,
-            requestStatus: 'MANUAL_ENTRY',
-            requestedSource: 'MANUAL_ENTRY'
-
-          }).then((resp) => {
-              this.getQuestions();
-              this.loader=false;
-              this.$toaster.success('Training data succesfully submitted!');
-              this.question = '',
-              this.productVersion = ''
-              this.answer = '',
-              this.docversion = '',
-              this.featureStatus = ''
-          }).catch(err => {
-              this.loader=false;
-              const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-              console.log(message);
-          })
-        } else {
-             this.$toaster.warning('Please fill fields marked as important!');
-
-        }
-      },
-
-      getQuestions(){
-          this.loader=true;
-            axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
-            status:'MANUL_ENTRY'
-          }).then((resp) => {
-              this.loader=false;
-              this.manualquestion=resp.data;
-           console.log(resp)
-          }).catch(err => {
-              this.loader=false;
-              const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-              console.log(message);
-          })
-      },
-
-      hide() {
-        this.$modal.hide('Model');
-      },
 
     },
+    update(row) {
+      this.updateflag = true
+      this.$modal.show('Model');
+      this.question = row.question,
+        this.id = row.id,
+        this.productVersion = row.productVersion,
+        this.answer = row.answer,
+        this.docversion = row.docLink,
+        this.featureStatus = row.featureStatus
+    },
 
-  }
+    updateclicked() {
+      if (this.featureStatus != null && this.answer && this.question !== '') {
+        this.$modal.hide('Model');
+        this.loader = true;
+        axios.put(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
+          question: this.question,
+          id: this.id,
+          productVersion: this.productVersion,
+          answer: this.answer,
+          docLink: this.docversion,
+          featureStatus: this.featureStatus,
+          requestStatus: 'MANUAL_ENTRY',
+          requestedSource: 'MANUAL_ENTRY'
+        }).then((resp) => {
+          this.loader = false;
+          this.getQuestions();
+          this.$toaster.success('Training data succesfully updated!');
+        }).catch(err => {
+          this.loader = false;
+          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          console.log(message);
+        })
+      } else {
+        this.loader = false
+        this.$toaster.warning('Please fill fields marked as important!');
+
+      }
+    },
+
+    addtrainingdata() {
+      this.question = '',
+        this.productVersion = ''
+      this.answer = '',
+        this.docversion = '',
+        this.featureStatus = ''
+      this.$modal.show('Model');
+      this.updateflag = false;
+    },
+
+    submittrainingdata() {
+      if (this.featureStatus != '' && this.answer && this.question !== '') {
+        //  do nothing
+        this.$modal.hide('Model');
+        this.loader = true;
+        this.enable = false;
+        axios.post(process.env.SERV_URL + 'visionendpoints?token=' + this.token, {
+          question: this.question,
+          productVersion: this.selectedversion,
+          answer: this.answer,
+          docLink: this.docversion,
+          featureStatus: this.featureStatus,
+          requestStatus: 'MANUAL_ENTRY',
+          requestedSource: 'MANUAL_ENTRY'
+
+        }).then((resp) => {
+          this.getQuestions();
+          this.loader = false;
+          this.$toaster.success('Training data succesfully submitted!');
+          this.question = '',
+            this.productVersion = ''
+          this.answer = '',
+            this.docversion = '',
+            this.featureStatus = ''
+        }).catch(err => {
+          this.loader = false;
+          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          console.log(message);
+        })
+      } else {
+        this.$toaster.warning('Please fill fields marked as important!');
+      }
+    },
+
+    getQuestions() {
+      this.loader = true;
+      axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token+'&status='+'MANUAL_ENTRY'
+      ).then((resp) => {
+        this.loader = false;
+        this.manualquestion = resp.data;
+        console.log(resp)
+      }).catch(err => {
+        this.loader = false;
+        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+        this.$toaster.warning('Please try again!');
+      })
+    },
+
+    hide() {
+      this.$modal.hide('Model');
+    },
+
+  },
+
+}
 </script>
 
 <style scoped>

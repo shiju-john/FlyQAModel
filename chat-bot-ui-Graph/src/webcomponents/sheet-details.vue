@@ -98,17 +98,16 @@ export default {
       loader: false,
       header: false,
       response: false,
-      skipflag:true
+      skipflag: true
     }
   },
 
+  mounted: function () {
+    if (this.docarray.length < 2) {
+      this.skipflag = false;
+    }
+  },
 
-
-    mounted: function () {
-      if(this.docarray.length<2){
-        this.skipflag=false;
-      } 
-    },
   methods: {
 
     sameSettings(index) {
@@ -120,70 +119,66 @@ export default {
         this.docarray[j].documentReference = this.docarray[index].documentReference
       }
     },
-    nextTab: function (index, props) {
-     this.validate(index)? props.nextTab():null;
 
+    nextTab: function (index, props) {
+      this.validate(index) ? props.nextTab() : null;
     },
 
-    validate(index){
-      if(this.docarray[index].skippable[0]!=="true"){
-      if (this.docarray[index].headerIndex == '') {
-              this.header = true;
-            } else if (this.docarray[index].remarks == '') {
-              this.response = true;
-              
-            } else {
-              
-              console.log("This is called before switchind tabs")
-              this.header = false;
-              this.response = false;
-              return true;
-             
-            }
-      }else{
+    validate(index) {
+      if (this.docarray[index].skippable[0] !== "true") {
+        if (this.docarray[index].headerIndex == '') {
+          this.header = true;
+        } else if (this.docarray[index].remarks == '') {
+          this.response = true;
+        } else {
+          this.header = false;
+          this.response = false;
+          return true;
+        }
+      } else {
         return true;
       }
 
-            return false;
+      return false;
     },
 
     onSubmit(index) {
-      if(this.validate(index)){
-      this.loader = true;
-      this.resp_str.id = this.file_id;
-      this.resp_str.filepath = this.file_path;
-      this.resp_str.rfp_name = this.rfpname;
-      this.resp_str.product_version = this.productversion;
-      for (let i = 0; i < this.docarray.length; i++) {
-        var sheet_obj = {
-          sheet_name: '',
-          skippable: '',
-          header_index: '',
-          columns: {
-            question: '',
-            feature_status: '',
-            remark: '',
-            doc_ref: ''
+      if (this.validate(index)) {
+        this.loader = true;
+        this.resp_str.id = this.file_id;
+        this.resp_str.filepath = this.file_path;
+        this.resp_str.rfp_name = this.rfpname;
+        this.resp_str.product_version = this.productversion;
+        for (let i = 0; i < this.docarray.length; i++) {
+          var sheet_obj = {
+            sheet_name: '',
+            skippable: '',
+            header_index: '',
+            columns: {
+              question: '',
+              feature_status: '',
+              remark: '',
+              doc_ref: ''
+            }
           }
-        }
-        sheet_obj.sheet_name = this.docarray[i].sheetname;
-        if (this.docarray[i].skippable == "") {
-          sheet_obj.skippable = "false"
-        } else {
-          sheet_obj.skippable = this.docarray[i].skippable[0];
-        }
+          sheet_obj.sheet_name = this.docarray[i].sheetname;
+          if (this.docarray[i].skippable == "") {
+            sheet_obj.skippable = "false"
+          } else {
+            sheet_obj.skippable = this.docarray[i].skippable[0];
+          }
 
-        sheet_obj.header_index = this.docarray[i].headerIndex;
-        sheet_obj.columns.question = this.docarray[i].questionColumn;
-        sheet_obj.columns.feature_status = this.docarray[i].statusColumn;
-        sheet_obj.columns.remark = this.docarray[i].remarks;
-        sheet_obj.columns.doc_ref = this.docarray[i].documentReference;
-        this.resp_str.sheets.push(sheet_obj);
+          sheet_obj.header_index = this.docarray[i].headerIndex;
+          sheet_obj.columns.question = this.docarray[i].questionColumn;
+          sheet_obj.columns.feature_status = this.docarray[i].statusColumn;
+          sheet_obj.columns.remark = this.docarray[i].remarks;
+          sheet_obj.columns.doc_ref = this.docarray[i].documentReference;
+          this.resp_str.sheets.push(sheet_obj);
 
+        }
+        this.upload(this.resp_str)
       }
-      this.upload(this.resp_str)
-      }
-    
+
     },
 
     upload(data) {

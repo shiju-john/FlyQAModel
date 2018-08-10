@@ -53,9 +53,6 @@
   import loginpage from './webcomponents/loginPage'
   import manualproduct from './webcomponents/manualProduct'
   import manualquestion from './webcomponents/manualQuestions'
-
-
-  
   import axios from 'axios'
   
   export default {
@@ -227,10 +224,8 @@
         this.chartEnabled = item.type;
         this.showsheet = ''
   
-        if (item.type === 'REQ') {
-  
+        if (item.type === 'REQ') { 
           this.chartEnabled = item.type;
-       
         }
   
         if (item.type === 'logout') {

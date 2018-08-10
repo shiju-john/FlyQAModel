@@ -89,7 +89,7 @@
             </b-form-input>
           </b-form-group>
 
-          <div style="margin-left: 77%;}">
+          <div style="text-align:right;">
             <b-button type="reset" variant="danger">Reset</b-button>
             <b-button type="submit" variant="primary">Submit</b-button>
           </div>
