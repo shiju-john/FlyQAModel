@@ -178,12 +178,12 @@ body {
   flex-direction: column;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  transition: 0.4s ease-in-out;
+  /* transition: 0.4s ease-in-out; */
   border-radius: 10px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  /* -webkit-transition: opacity .5s ease-in-out, -webkit-transform .5s ease-in-out; */
-  	-webkit-transform: translate(-100px,-100px);
-  transform: scale(-.5);
+  -webkit-transition: opacity .5s ease-in-out, -webkit-transform .5s ease-in-out;
+  	/* -webkit-transform: translate(-100px,-100px); */
+  transform: scale(1);
 }
 
 .sc-chat-window1[data-v-2a21bba5] {
@@ -205,8 +205,9 @@ body {
   transition: 0.4s ease-in-out;
   border-radius: 10px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
   transform: scale(1);
-    	-webkit-transform: translate(-40px,-40px);
+    	/* -webkit-transform: translate(-40px,-40px); */
 }
 
 </style>
