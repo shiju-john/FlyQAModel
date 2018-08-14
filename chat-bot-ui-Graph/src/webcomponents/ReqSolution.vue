@@ -1,6 +1,6 @@
 <template>
 <div class="ReqSolution">
-  <table-component caption="heading" :data="requestdata" sort-by="requestTime" style="font-size: 13px;height:515px;overflow:hidden;">
+  <table-component caption="heading"  :data="requestdata" sort-by="requestTime" style="font-size: 13px;height:515px;overflow:hidden;">
     <table-column show="question" label="question"></table-column>
     <table-column show="productVersion" label="product Version"></table-column>
     <table-column show="requestUser" label="requested User"></table-column>

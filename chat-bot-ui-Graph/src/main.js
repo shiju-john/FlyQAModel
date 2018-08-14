@@ -8,6 +8,13 @@ import Chart from 'chart.js'
 
 import vmodal from 'vue-js-modal'
 import TableComponent from 'vue-table-component';
+TableComponent.settings({
+  tableClass: '',
+  theadClass: '',
+  tbodyClass: '',
+  filterPlaceholder: 'Filter table…',
+  filterNoResults: 'There are no matching Records ',
+});
 // import Chat from 'vue-beautiful-chat'
 import CircleMenu from 'vue-circle-menu'
 // import Vue from 'vue'

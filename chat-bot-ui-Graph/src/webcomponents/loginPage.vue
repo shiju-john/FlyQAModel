@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
-
+  
       this.loader=true;
       const profile = googleUser.getBasicProfile() 
       if (googleUser.getHostedDomain() !== undefined && googleUser.getHostedDomain() === "flytxt.com") {
@@ -53,8 +53,13 @@ export default {
           name:profile.ig,
           nickname:profile.ofa
         }).then((resp) => {
+              var obj={};
+       obj.dp=googleUser.w3.Paa;
+          obj.token=resp.data.token;
+          obj.username=googleUser.w3.ig;
+          
                 //emit token here
-        this.$emit('login',resp.data.token)
+        this.$emit('login',obj)
         this.disconnect()
         }).catch(err => {
           

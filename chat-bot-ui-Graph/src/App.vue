@@ -12,6 +12,7 @@
                 top: 4px;"><i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>            </b-navbar-brand>
           </div>
           <div style="float:right;;padding-right:8%;top:18px;">
+            <img :src="dp" alt="Avatar" :title="name" class="avatar">
             <select style="cursor: pointer;font-size: smaller;padding: 2px;width: 90px;border-radius: 4px;" title="select version" v-model="selectedversion">
                 <option v-for="option of options">{{option}}</option>
             </select>
@@ -73,6 +74,8 @@
     },
     data() {
       return {
+        dp:String,
+        name:String,
         remarks: [],
         question: String,
         token:'',
@@ -186,8 +189,10 @@
         this.token='';
       },
 
-      loginsuccess(token){
-        this.token=token;
+      loginsuccess(obj){
+        this.token=obj.token;
+        this.dp=obj.dp;
+        this.name=obj.username;
       },
       home() {
         this.chartEnabled = 'landing';
@@ -479,6 +484,13 @@
     color: #fff;
     background-color: #04899e!important;
     border-color: #04899e!important;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 </style>
 
