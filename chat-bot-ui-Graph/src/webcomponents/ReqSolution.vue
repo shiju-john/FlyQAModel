@@ -114,8 +114,13 @@ export default {
         this.docversion = ''
     },
     reqsolution() {
-      axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=OPEN', {}).then((resp) => {
+      axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=OPEN', {}
+      ).then((resp) => {
         this.loader = false;
+        if (resp.data.length==0) {
+           this.$toaster.info('No Solution Requests Pending');
+        }
+        
         this.requestdata = resp.data;
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
@@ -139,6 +144,7 @@ export default {
     },
 
     sendreply() {
+      this.loader=true;
       if (this.remarks=='' || this.featureStatus=='' ||this.property=='') {
       //  do nothing
        this.$toaster.warning('Please fill fields marked as important!');
@@ -158,6 +164,7 @@ export default {
             featureStatus: this.featureStatus,
             requestedSource:this.send_reply.requestedSource,
           }).then((resp) => {
+            
             this.$toaster.success('Solution succesfully submitted!');
             this.remarks = '',
             this.docversion = ''

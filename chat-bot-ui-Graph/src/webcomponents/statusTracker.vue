@@ -103,7 +103,10 @@ download(row){
     }).then((resp) => {
       // console.log(resp.data)
       this.loader=false;
-      console.log(resp.data);
+      // console.log(resp.data);
+        if (resp.data.length==0) {
+           this.$toaster.info('No RFP Files Uploaded');
+        }
       
       this.statusdata=resp.data;
     }).catch(err => {

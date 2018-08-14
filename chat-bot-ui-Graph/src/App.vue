@@ -6,7 +6,7 @@
         <div style="width:100%">
           <div style="float:left">
             <b-navbar-brand>
-              <img style="width:143px;" src="../static/img/flytxt-logo-color.svg">
+              <img style="width:143px;" src="../static/img/flytxt-logo-color.svg" onerror="this.src='../static/img/avatar.png'">
               <i class="fa fa-home" style="font-size:22px; color:white; cursor:pointer; padding:10px;top: 9px;left: -24px;" v-on:click="home()" title="home"></i>
               <span v-if="chartEnabled!='landing'"  style="font-size: small;left: -21px;font-weight: bold;
                 top: 4px;"><i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>            </b-navbar-brand>

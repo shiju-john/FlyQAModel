@@ -47,7 +47,7 @@
         <div style="width:39%">
           <answerSelect v-if="answerFlag" :data="rowObj" :answer="answers" :token="token"></answerSelect>
           <div v-if="emptyanswer" style="display: inline">
-            <span class="noanswer">No Answers Available!</span>
+            <span class="noanswer">No Answers Available! Please Request For a Solution.</span>
           </div>
         </div>
       </div>
