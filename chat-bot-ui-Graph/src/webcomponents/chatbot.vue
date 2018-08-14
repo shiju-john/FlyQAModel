@@ -168,7 +168,7 @@ body {
   max-height: 483px;
   position: fixed;
   right: 25px;
-  bottom: 76px !important;
+  bottom: 25px !important;
   box-sizing: border-box;
   box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.3);
   background: white;
@@ -182,7 +182,7 @@ body {
   border-radius: 10px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* -webkit-transition: opacity .5s ease-in-out, -webkit-transform .5s ease-in-out; */
-  	-webkit-transform: translate(-350px,-350px);
+  	-webkit-transform: translate(-100px,-100px);
   transform: scale(-.5);
 }
 
@@ -192,7 +192,7 @@ body {
   max-height: 483px;
   position: fixed;
   right: 25px;
-  bottom: 76px !important;
+  bottom: 25px !important;
   box-sizing: border-box;
   box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.3);
   background: white;

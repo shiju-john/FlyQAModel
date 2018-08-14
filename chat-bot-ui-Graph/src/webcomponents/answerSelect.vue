@@ -199,6 +199,7 @@ textarea {
   bottom: 0;
   resize: none; 
   border: none;
+  font-size: 14px;
 }
 
 text {

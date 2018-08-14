@@ -191,7 +191,7 @@ export default {
 
         }).then((resp) => {
           this.getQuestions();
-          this.loader = false;
+          
           this.$toaster.success('Training data succesfully submitted!');
           this.question = '',
             this.productVersion = ''

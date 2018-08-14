@@ -75,7 +75,7 @@
       return {
         remarks: [],
         question: String,
-        token:'1fccd19d207874326a0be51efaea17d5a54a88bdc9e6d36b7bbb757092906d7b8a1693cc9eca8b',
+        token:'',
         version: String,
         flag: 'false',
         cardtitle: '',
@@ -97,7 +97,7 @@
             name: ' RFP Status Tracker',
             type: 'RFPS',
             card: true,
-            content: 'Know the current status',
+            content: 'Know the Current Status of Uploaded RFP Files',
             icon: 'fa fa-map-signs',
           },
           {
@@ -105,7 +105,7 @@
             name: 'Pending Solution',
             type: 'REQ',
             card: true,
-            content: ' Solution requirements with pending response.',
+            content: ' Solution Requirements with Pending Response.',
             icon: 'fa fa-hourglass-start',
           },
           {
@@ -113,7 +113,7 @@
             name: ' RFP Uploader',
             type: 'RFPU',
             card: true,
-            content: 'Upload a RFP File',
+            content: 'Upload an RFP File and Configure Templates',
             icon: 'fas fa-cloud-upload-alt',
           },
             {
@@ -121,7 +121,7 @@
             name: 'Manual Entry',
             type: 'ME',
             card: true,
-            content: 'Create Questions Manualy',
+            content: 'Create/Update Training Data Manualy',
             icon: 'fas fa-edit',
           },
       

@@ -40,7 +40,7 @@
           <b-form-input id="exampleInput2" type="text" v-model="docversion" placeholder="Enter Document Reference">
           </b-form-input>
         </b-form-group>
-        <b-form-group label="Feature Status:">
+        <b-form-group label="Feature Status:<font color=red>*</font>">
           <select class="select" v-model="featureStatus">
             <option disabled value="">Please select one</option>
             <option>Fully Compliance</option>
@@ -139,7 +139,7 @@ export default {
     },
 
     sendreply() {
-      if (this.remarks=='' || this.featureStatus=='') {
+      if (this.remarks=='' || this.featureStatus=='' ||this.property=='') {
       //  do nothing
        this.$toaster.warning('Please fill fields marked as important!');
       }else{
