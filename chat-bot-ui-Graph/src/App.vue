@@ -6,13 +6,20 @@
         <div style="width:100%">
           <div style="float:left">
             <b-navbar-brand>
-              <img style="width:143px;" src="../static/img/flytxt-logo-color.svg" onerror="this.src='../static/img/avatar.png'">
-              <i class="fa fa-home" style="font-size:22px; color:white; cursor:pointer; padding:10px;top: 9px;left: -24px;" v-on:click="home()" title="home"></i>
-              <span v-if="chartEnabled!='landing'"  style="font-size: small;left: -21px;font-weight: bold;
-                top: 4px;"><i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>            </b-navbar-brand>
+              <div class="company">
+              <img style="width:143px;" src="../static/img/flytxt-logo-color.svg" >
+ <img :src="dp" onerror="this.src='../static/img/avatar.png'" style="cursor: pointer;" :title="name" class="avatar">
+              </div>
+              <i class="fa fa-home" style="font-size:22px; color:white; cursor:pointer; padding:10px;top: 9px;" v-on:click="home()" title="home">
+              </i>
+              <span v-if="chartEnabled!='landing'"  style="font-size: small;font-weight: bold;
+                top: 4px;"><i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>          
+            </b-navbar-brand>
           </div>
-          <div style="float:right;;padding-right:8%;top:18px;">
-            <img :src="dp" alt="Avatar" :title="name" class="avatar">
+          <div style="float:right;padding-right:8%;top:18px;">
+            <i class="fas fa-bell" style="color:white;padding-right: 14px;font-size:22px;" title="Pending solutions">
+              <b-badge variant="danger">{{msg}}</b-badge>
+              </i>
             <select style="cursor: pointer;font-size: smaller;padding: 2px;width: 90px;border-radius: 4px;" title="select version" v-model="selectedversion">
                 <option v-for="option of options">{{option}}</option>
             </select>
@@ -24,7 +31,7 @@
         <landingpage v-if="chartEnabled==='landing'" :items='items' @onselect='onClick' class="landing"></landingpage>
         <b-card  v-if="chartEnabled!='landing'">
           <statistics v-if="chartEnabled==='ST'" :token="token"></statistics>
-          <ReqSolution v-if="chartEnabled==='REQ'" :token="token" @reqsent='onfeedback' />
+          <ReqSolution v-if="chartEnabled==='REQ'" :children-request="letParentResponse" :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home" :version="options"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
           <!-- <manualproduct v-if="chartEnabled==='PCM'"  :version="options" :token="token"></manualproduct> -->
@@ -74,6 +81,7 @@
     },
     data() {
       return {
+        msg: '',
         dp:String,
         name:String,
         remarks: [],
@@ -172,7 +180,14 @@
     },
     
     mounted() {
-      axios.get(process.env.AI_URL + "versions?status=OPEN&token=" + this.token, {}, {
+     
+      
+     
+      
+    },
+    methods: {
+      checkversion(){
+         axios.get(process.env.AI_URL + "versions?status=OPEN&token=" + this.token, {}, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -183,8 +198,22 @@
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
       })
+      },
+
+    reqsolution() {
+      axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=OPEN', {}
+      ).then((resp) => {
+       this.msg=resp.data.length;
+      }).catch(err => {
+        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+      })
+      console.log('req solution');
+      
     },
-    methods: {
+
+      letParentResponse(request){
+      this.msg = request;
+    },
       logout(){
         this.token='';
       },
@@ -193,10 +222,13 @@
         this.token=obj.token;
         this.dp=obj.dp;
         this.name=obj.username;
+        this.checkversion();
+        this.reqsolution();
       },
       home() {
         this.chartEnabled = 'landing';
         this.cardtitle=''
+        this.reqsolution();
       },
   
       onMessageSent(message) {
@@ -468,11 +500,6 @@
     background-color: #858585!important;
 }
 
-/* .btn-primary {
-    color: #fff;
-    background-color: #858585!important;
-    border-color: #858585!important;
-} */
 
 .btn-success {
     color: #fff;
@@ -491,6 +518,35 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    left: -19px;
+}
+
+.company{
+      /* background-color: rgba(255,255,255,0.88); */
+
+    display: inline-block;
+    overflow: hidden;
+    padding: 0;
+    vertical-align: middle;
+    /* border: 1px solid #dadce0; */
+    outline: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    /* box-shadow: 0px 0px 1px 0px #0f434b;  */
+}
+
+.badge {
+    padding: 0.25em 0.4em;
+    font-size: 52%!important;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    bottom: 13px;
+    border-radius: 0.25rem;
 }
 </style>
 

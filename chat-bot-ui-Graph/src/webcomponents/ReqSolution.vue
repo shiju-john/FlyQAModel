@@ -70,7 +70,7 @@ export default {
     Loading
   },
 
-  props: ['token'],
+  props: ['token','childrenRequest'],
 
   data() {
     return {
@@ -119,8 +119,9 @@ export default {
         this.loader = false;
         if (resp.data.length==0) {
            this.$toaster.info('No Solution Requests Pending');
+           
         }
-        
+        this.childrenRequest(resp.data.length);
         this.requestdata = resp.data;
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
