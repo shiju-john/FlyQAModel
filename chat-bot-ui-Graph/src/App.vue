@@ -120,7 +120,7 @@
             icon: 'fas fa-cloud-upload-alt',
           },
             {
-            url: '../static/img/manual.svg',
+            url: 'https://storage.googleapis.com/complete-land-188108.appspot.com/vision/images/manual.svg',
             name: 'Manual Entry',
             type: 'ME',
             card: true,
