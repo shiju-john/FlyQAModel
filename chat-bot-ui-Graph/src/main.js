@@ -13,7 +13,7 @@ TableComponent.settings({
   theadClass: '',
   tbodyClass: '',
   filterPlaceholder: 'Filter table…',
-  filterNoResults: 'There are no matching Records ',
+  filterNoResults: 'There are no matching Records',
 });
 // import Chat from 'vue-beautiful-chat'
 import CircleMenu from 'vue-circle-menu'
