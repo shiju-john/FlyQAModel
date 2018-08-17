@@ -17,9 +17,13 @@
             </b-navbar-brand>
           </div>
           <div style="float:right;padding-right:8%;top:18px;">
-            <i class="fas fa-bell" style="color:white;padding-right: 14px;font-size:22px;" title="Pending solutions">
+            <i  class="fas fa-bell  faa-ring animated" v-on:click="notify()"  style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;" title="Pending solutions">
               <b-badge variant="danger">{{msg}}</b-badge>
               </i>
+
+              <!-- <i  class="fas fa-bell  faa-ring animated" v-on:click="notify()"  style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;" title="Pending solutions">
+              <b-badge variant="danger">{{msg}}</b-badge>
+              </i> -->
             <select style="cursor: pointer;font-size: smaller;padding: 2px;width: 90px;border-radius: 4px;" title="select version" v-model="selectedversion">
                 <option v-for="option of options">{{option}}</option>
             </select>
@@ -186,6 +190,10 @@
       
     },
     methods: {
+      notify(){
+        this.chartEnabled = 'REQ';
+        this.cardtitle="Pending Solution"
+      },
       checkversion(){
          axios.get(process.env.AI_URL + "versions?status=OPEN&token=" + this.token, {}, {
         headers: {
@@ -548,5 +556,6 @@
     bottom: 13px;
     border-radius: 0.25rem;
 }
+
 </style>
 
