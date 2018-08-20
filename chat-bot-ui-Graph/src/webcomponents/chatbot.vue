@@ -1,6 +1,6 @@
 <template>
   <div class="chatbot">
-     <ChatWindow  v-bind:class="{ 'sc-chat-window': !isChatOpen,'sc-chat-window1':isChatOpen }"
+     <ChatWindow  v-bind:class="{ 'animated zoomOut': !isChatOpen,'animated  zoomIn':isChatOpen }"
       :agentProfile="agentProfile"
       :onUserInputSubmit="onMessageWasSent"
       :messageList="messages"

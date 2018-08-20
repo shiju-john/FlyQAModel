@@ -7,25 +7,27 @@
           <div style="float:left">
             <b-navbar-brand>
               <div class="company">
-              <img style="width:143px;" src="../static/img/flytxt-logo-color.svg" >
- <img :src="dp" onerror="this.src='../static/img/avatar.png'" style="cursor: pointer;" :title="name" class="avatar">
+                <img style="width:143px;" src="../static/img/flytxt-logo-color.svg">
+                <img :src="dp" onerror="this.src='../static/img/avatar.png'" style="cursor: pointer;" :title="name" class="avatar">
               </div>
               <i class="fa fa-home" style="font-size:22px; color:white; cursor:pointer; padding:10px;top: 9px;" v-on:click="home()" title="home">
               </i>
-              <span v-if="chartEnabled!='landing'"  style="font-size: small;font-weight: bold;
-                top: 4px;"><i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>          
+              <span v-if="chartEnabled!='landing'" style="font-size: small;font-weight: bold;
+                top: 4px;">
+                <i style="font-size:22px;top: 5px;    padding-right: 4px;" class="fa fa-angle-double-right"></i>{{cardtitle}}</span>
             </b-navbar-brand>
           </div>
           <div style="float:right;padding-right:8%;top:18px;">
-            <i  class="fas fa-bell  faa-ring animated" v-on:click="notify()"  style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;" title="Pending solutions">
+            <i class="fas fa-bell  faa-ring animated" v-on:click="notify()" style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;"
+              title="Pending solutions">
               <b-badge variant="danger">{{msg}}</b-badge>
-              </i>
+            </i>
 
-              <!-- <i  class="fas fa-bell  faa-ring animated" v-on:click="notify()"  style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;" title="Pending solutions">
+            <!-- <i  class="fas fa-bell  faa-ring animated" v-on:click="notify()"  style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;" title="Pending solutions">
               <b-badge variant="danger">{{msg}}</b-badge>
               </i> -->
             <select style="cursor: pointer;font-size: smaller;padding: 2px;width: 90px;border-radius: 4px;" title="select version" v-model="selectedversion">
-                <option v-for="option of options">{{option}}</option>
+              <option v-for="option of options">{{option}}</option>
             </select>
           </div>
         </div>
@@ -33,13 +35,13 @@
       <div class="main">
         <quickMenu :menuUrlList="items" @process="onClick" />
         <landingpage v-if="chartEnabled==='landing'" :items='items' @onselect='onClick' class="landing"></landingpage>
-        <b-card  v-if="chartEnabled!='landing'">
+        <b-card v-if="chartEnabled!='landing'">
           <statistics v-if="chartEnabled==='ST'" :token="token"></statistics>
           <ReqSolution v-if="chartEnabled==='REQ'" :children-request="letParentResponse" :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home" :version="options"></formrfp>
-          <statusTracker v-if="chartEnabled==='RFPS'"  :version="selectedversion" :token="token"></statusTracker>
+          <statusTracker v-if="chartEnabled==='RFPS'" :version="selectedversion" :token="token"></statusTracker>
           <!-- <manualproduct v-if="chartEnabled==='PCM'"  :version="options" :token="token"></manualproduct> -->
-          <manualquestion v-if="chartEnabled==='ME'"  :version="options" :token="token"></manualquestion>
+          <manualquestion v-if="chartEnabled==='ME'" :version="options" :token="token"></manualquestion>
         </b-card>
         <ModelDialog @submit="hide" :remarks='remarks' :token="token" :question='question' :version='version' />
       </div>
@@ -47,7 +49,7 @@
         <chatbot :messages='messages' @messageSent='onMessageSent' :token="token" @remarkssent='onremarks' :version="selectedversion"></chatbot>
       </div>
     </div>
-     <loginpage @login="loginsuccess" v-else></loginpage>
+    <loginpage @login="loginsuccess" v-else></loginpage>
   </div>
 </template>
 
@@ -215,8 +217,6 @@
       }).catch(err => {
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
       })
-      console.log('req solution');
-      
     },
 
       letParentResponse(request){
@@ -529,6 +529,11 @@
     left: -19px;
 }
 
+.avatar:hover {
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.02); 
+}
 .company{
       /* background-color: rgba(255,255,255,0.88); */
 
