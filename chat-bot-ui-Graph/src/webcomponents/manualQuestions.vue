@@ -311,7 +311,13 @@ export default {
     },
 
     uploadtrainingdata() {
+
       this.single = false;
+      this.questionname= '',
+      this.answername= '',
+      this.doc_refname= '',
+      this.featurestatusname= '',
+      this.headerindex= ''
     },
 
     fileobj(obj) {
