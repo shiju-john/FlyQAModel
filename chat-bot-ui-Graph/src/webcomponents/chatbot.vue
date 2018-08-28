@@ -131,7 +131,8 @@ body {
   -webkit-transform: rotate(180deg);
   /* Chrome, Safari, Opera */
   transform: rotate(180deg);
-  opacity: 0;
+  /* opacity: 0; */
+  display: none;
 }
 
 .my-float {
@@ -168,7 +169,7 @@ body {
   max-height: 483px;
   position: fixed;
   right: 25px;
-  bottom: 62px !important;
+  bottom: 17px !important;
   box-sizing: border-box;
   box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.3);
   background: white;
