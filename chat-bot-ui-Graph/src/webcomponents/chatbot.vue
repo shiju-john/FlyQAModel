@@ -113,6 +113,7 @@ body {
   text-align: center;
   box-shadow: 2px 2px 3px #999;
   -webkit-transition: opacity 1s ease-in-out, -webkit-transform 1s ease-in-out;
+  display: block;
 }
 
 .float1 {
