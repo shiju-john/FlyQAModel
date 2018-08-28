@@ -485,7 +485,7 @@ textarea {
   width: 100%;
   box-shadow: 0px 0px 6px 0px grey;
   border-radius: 16px;
-  margin-top: 4%;
+  margin-top: 3%;
 }
 
 .flex-container>div {
