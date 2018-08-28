@@ -80,6 +80,7 @@ export default {
   border-radius: 50%;
   align-self: center;
   margin-right: 15px;
+  margin-left: 6px;
 }
 
 .sc-message--meta {
