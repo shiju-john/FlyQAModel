@@ -92,6 +92,10 @@
 <!-- multiple training data file upload starts here -->
 
     <div class="container"  v-else>
+        <div v-if="loader">
+    <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
+    </loading>
+  </div>
       <b-form @submit="onSubmit"  @reset="onReset" >
         <div class="flex-container">
           <div>
@@ -315,12 +319,19 @@ export default {
     },
 
     onSubmit(evt) {
-      this.loader = true;
+      
       evt.preventDefault();
       var fileObj = this.fileobject
+      if(Object.keys(fileObj).length === 0){
+        // console.log('no file');
+        this.$toaster.warning('Please try after uploading the file!');
+        
+      }else{
+        
       if (this.headerindex && this.questionname && this.answername && this.doc_refname && this.featurestatusname != '') {
-
+        
         var config = {};
+        config.productversion=this.selectedversion,
         config.headerIndex = this.headerindex,
         config.questionColumn = this.questionname,
         config.answerColumn = this.answername,
@@ -334,7 +345,7 @@ export default {
             data.append('file', fileObj[x]);
             data.append('config', JSON.stringify(config));
           });
-        
+        this.loader = true;
         const url = process.env.SERV_URL + '/trainingdatauploaderendpoints?token=' + this.token;
         axios.post(url,
           data, {
@@ -343,16 +354,23 @@ export default {
             }
           }).then((resp) => {
           this.loader = false;
-          console.log(resp);
+          // console.log(resp);
+          this.$toaster.success('Training data succesfully uploaded!');
           this.single = true;
         }).catch(err => {
           this.loader = false;
           const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-          console.log(message);
+          // console.log(message);
+          this.$toaster.warning('Please try again!');
         })
       } else {
         this.header = true;
       }
+      }
+
+
+
+
     },
     onReset(evt) {
       evt.preventDefault();

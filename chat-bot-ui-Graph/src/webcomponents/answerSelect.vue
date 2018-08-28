@@ -22,7 +22,7 @@
           <b-form-group label="Document Reference:">
             <b-form-textarea v-if="src"   type="text" v-model="a.doc_ref" placeholder="No documents available" @keyup.native="edited" disabled>
             </b-form-textarea>
-                  <b-form-textarea v-else  type="text" v-model="a.doc_ref" placeholder="No documents available" >
+                  <b-form-textarea v-else @keyup.native="edited"  type="text" v-model="a.doc_ref" placeholder="No documents available" >
             </b-form-textarea>
           </b-form-group>
 
@@ -30,7 +30,7 @@
           <b-form-group label="Answer:">
             <b-form-textarea v-if="src" :rows="5" disabled :max-rows="5" @keyup.native="edited" placeholder="No documents available" v-model="a.answer">
               </b-form-textarea>
-               <b-form-textarea v-else :rows="5" :max-rows="5"  placeholder="No documents available" v-model="a.answer">
+               <b-form-textarea v-else :rows="5" :max-rows="5" @keyup.native="edited" placeholder="No documents available" v-model="a.answer">
               </b-form-textarea>
           </b-form-group>
         </b-form>

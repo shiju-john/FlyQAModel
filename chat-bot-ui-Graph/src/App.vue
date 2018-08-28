@@ -8,7 +8,6 @@
             <b-navbar-brand>
               <div class="company">
                 <img style="width:143px;" src="../static/img/flytxt-logo-color.svg">
-                <img :src="dp" onerror="this.src='../static/img/avatar.png'" style="cursor: pointer;" :title="name" class="avatar">
               </div>
               <i class="fa fa-home" style="font-size:22px; color:white; cursor:pointer; padding:10px;top: 9px;" v-on:click="home()" title="home">
               </i>
@@ -26,6 +25,7 @@
             <!-- <i  class="fas fa-bell  faa-ring animated" v-on:click="notify()"  style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;" title="Pending solutions">
               <b-badge variant="danger">{{msg}}</b-badge>
               </i> -->
+              <img :src="dp" onerror="this.src='../static/img/avatar.png'" style="cursor: pointer;" :title="name" class="avatar">
             <select style="cursor: pointer;font-size: smaller;padding: 2px;width: 90px;border-radius: 4px;" title="select version" v-model="selectedversion">
               <option v-for="option of options">{{option}}</option>
             </select>
