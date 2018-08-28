@@ -1,17 +1,21 @@
 <template>
-  <div class="RfpUploader">
+  <div class="multipleUploader">
     <div class="container">
       <div v-if="loader">
       <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
       </loading>
     </div>
       <!--UPLOAD-->
-      <form enctype="multipart/form-data">  
+   
+      <form enctype="multipart/form-data" style="margin-top: 30%;">  
+      
+          <div>File Input</div>
         <div class="dropbox">
+         
           <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
             class="input-file">
           <p v-if="isInitial">
-            Drag your RFP file here to begin
+            Drag your Training data file here to begin
             <br> or click to browse
           </p>
           <p v-if="isSaving">
@@ -24,7 +28,7 @@
           <div v-if="isFailed">
             <h2>Uploaded failed.</h2>
             <p>
-              <a href="javascript:void(0)" @click="reset()">Try again</a>
+              <a href="javascript:void(0)" @click="resetfile()">Try again</a>
             </p>
           </div>
         </div>
@@ -54,7 +58,7 @@ export default {
       sheetnames: [],
       uploadError: null,
       currentStatus: null,
-      uploadFieldName: 'rfpfile',
+      uploadFieldName: 'trainingdata',
       loader: false,
     }
   },
@@ -73,55 +77,23 @@ export default {
       return this.currentStatus === STATUS_FAILED;
     }
   },
+
   methods: {
-    reset() {
-      // reset form to initial state
+    resetfile() {
+      // resetfile form to initial state
       this.currentStatus = STATUS_INITIAL;
       this.uploadedFiles = [];
       this.uploadError = null;
     },
-    
+
     filesChange(fieldName, fileList) {
-      // handle file changes
-      const formData = new FormData();
-
-      if (!fileList.length) return;
-      Array
-        .from(Array(fileList.length).keys())
-        .map(x => {
-          formData.append('filetoupload', fileList[x], fileList[x].name);
-        });
-      // save it
-      this.save(formData);
+    this.currentStatus = STATUS_SAVING;
+      this.$emit('fileobject', fileList);
+      this.currentStatus = STATUS_SUCCESS;
     },
-    save(formData) {
-      // upload data to the server
-      this.currentStatus = STATUS_SAVING;
-      this.upload(formData)
-    },
-
-    upload(data) {
-      this.loader=true;
-      const url =process.env.SERV_URL+'uploaderendpoints?token='+this.token;
-      axios.post(url, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then((resp) => {
-        this.loader=false;
-        this.$emit('sheetnames', resp.data)
-        this.currentStatus = STATUS_SUCCESS;
-      }).catch(err => {
-        this.loader=false;
-        const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
-        console.log(message);
-      })
-    },
-
-
   },
   mounted() {
-    this.reset();
+    this.resetfile();
   },
 }
 </script>
@@ -132,6 +104,7 @@ export default {
     outline: 2px dashed grey;
     outline-offset: -10px;
     background: lightcyan;
+   
     color: dimgray;
     padding: 10px 10px;
     min-height: 200px;

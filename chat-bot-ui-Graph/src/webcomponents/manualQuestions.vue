@@ -1,9 +1,13 @@
 <template>
-<div class="ManualQuestions">
+<div class="ManualQuestions" v-if="single">
   <div style="margin-top:1%;">
-    <b-button style="margin-left:1%;z-index: 46;" title="Add Training Data" variant="warning lg" v-on:click="addtrainingdata()">
-      <span>
+    <b-button style="margin-left:1%;z-index: 1;" title="Add Training Data" variant="warning lg" v-on:click="addtrainingdata()">
+      <span >
         <i class="fas fa-plus"></i> Training Data</span>
+    </b-button>
+      <b-button style="margin-left:1%;z-index: 1;" title="Upload Training Data File" variant="warning lg" v-on:click="uploadtrainingdata()">
+      <span >
+        <i class="fas fa-upload"></i>Upload Training Data</span>
     </b-button>
     <div style="height:100%;"> 
       <table-component caption="heading" :data="manualquestion" cache-key="t2" sort-by="requestTime" style="font-size: 13px;height: 83vh;overflow:hidden;margin-top: -35px;">
@@ -24,7 +28,7 @@
 
   </div>
 
-  <!-- add manual questions starts -->
+  <!-- add manual questions model starts -->
   <modal name="Model" height="auto" :scrollable="true" style="overflow: hidden; height:auto;">
     <div class="head1" style="background-color: #0996b2;">
       <span v-if="updateflag">Edit Training Data</span>
@@ -77,25 +81,96 @@
     </div>
   </modal>
   <!-- add manual questions ends -->
+
+ 
   <div v-if="loader">
     <loading :active.sync="loader" :can-cancel="false" :is-full-page="true">
     </loading>
   </div>
 </div>
+
+<!-- multiple training data file upload starts here -->
+
+    <div class="container"  v-else>
+      <b-form @submit="onSubmit"  @reset="onReset" >
+        <div class="flex-container">
+          <div>
+            <b-form-group>
+                <multipleUploader @fileobject="fileobj" ref="multipleUploader"></multipleUploader>
+            </b-form-group>
+          </div>
+          <div>
+            <div >
+              <b-form-group label="Product Version">
+                <select class="select" v-model="selectedversion" title="select version">
+            <option v-for="option of version">{{option}}</option>
+          </select>
+              </b-form-group>
+
+              <b-form-group label="Header Index">
+                <b-form-input type="text" v-model="headerindex" required placeholder="Header index">
+                </b-form-input>
+                <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
+
+              </b-form-group>
+
+              <b-form-group label="Question Column Name">
+                <b-form-input type="text" v-model="questionname" required placeholder="Question Column Name">
+                </b-form-input>
+                <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
+                
+              </b-form-group>
+
+                 <b-form-group label="Answer Column Name">
+                <b-form-input type="text" v-model="answername" required placeholder="Answer Column Name">
+                </b-form-input>
+                <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
+               
+              </b-form-group>
+
+                <b-form-group label="Document Reference Column Name">
+                <b-form-input type="text" v-model="doc_refname" required placeholder="Document Reference Column Name">
+                </b-form-input>
+                <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
+
+              </b-form-group>
+              
+                 <b-form-group label="Feature Status Column Name">
+                <b-form-input type="text" v-model="featurestatusname" required placeholder="Feature Status Column Name">
+                </b-form-input>
+                <span v-if="header" style="color:red;font-size: 11px; margin-left: 4px;">Please fill this field!</span>
+
+              </b-form-group>
+
+              <div style="text-align: right;">
+                <b-button type="reset" variant="danger">Reset</b-button>
+                <b-button type="submit" variant="primary" >Submit</b-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </b-form>
+    </div>
+
+    <!-- multiple training data file upload ends here -->
+
 </template>
 <script>
     
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
+import multipleUploader from '../webcomponents/multipletrainingdata'
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.min.css';
 export default {
   components: {
-    Loading
+    Loading,
+    multipleUploader
   },
   props: ['version', 'token'],
   data() {
     return {
+      single: true,
       question: '',
       featureStatus: '',
       answer: '',
@@ -105,6 +180,14 @@ export default {
       manualquestion: [],
       id: '',
       loader: false,
+
+      questionname: '',
+      answername: '',
+      doc_refname: '',
+      featurestatusname: '',
+      headerindex: '',
+      fileobject: {},
+      header: false,
     }
   },
 
@@ -160,16 +243,15 @@ export default {
       } else {
         this.loader = false
         this.$toaster.warning('Please fill fields marked as important!');
-
       }
     },
 
     addtrainingdata() {
       this.question = '',
-        this.productVersion = ''
+      this.productVersion = ''
       this.answer = '',
-        this.docversion = '',
-        this.featureStatus = ''
+      this.docversion = '',
+      this.featureStatus = ''
       this.$modal.show('Model');
       this.updateflag = false;
     },
@@ -191,7 +273,6 @@ export default {
 
         }).then((resp) => {
           this.getQuestions();
-          
           this.$toaster.success('Training data succesfully submitted!');
           this.question = '',
             this.productVersion = ''
@@ -210,11 +291,10 @@ export default {
 
     getQuestions() {
       this.loader = true;
-      axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token+'&status='+'MANUAL_ENTRY'
-      ).then((resp) => {
+      axios.get(process.env.SERV_URL + 'visionendpoints?token=' + this.token + '&status=' + 'MANUAL_ENTRY').then((resp) => {
         this.loader = false;
         this.manualquestion = resp.data;
-        console.log(resp)
+        // console.log(resp)
       }).catch(err => {
         this.loader = false;
         const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
@@ -226,8 +306,71 @@ export default {
       this.$modal.hide('Model');
     },
 
-  },
+    uploadtrainingdata() {
+      this.single = false;
+    },
 
+    fileobj(obj) {
+      this.fileobject = obj;
+    },
+
+    onSubmit(evt) {
+      this.loader = true;
+      evt.preventDefault();
+      var fileObj = this.fileobject
+      if (this.headerindex && this.questionname && this.answername && this.doc_refname && this.featurestatusname != '') {
+
+        var config = {};
+        config.headerIndex = this.headerindex,
+        config.questionColumn = this.questionname,
+        config.answerColumn = this.answername,
+        config.docRefColumn = this.doc_refname,
+        config.featureColumn = this.featurestatusname
+
+        var data = new FormData();
+        Array
+          .from(Array(fileObj.length).keys())
+          .map(x => {
+            data.append('file', fileObj[x]);
+            data.append('config', JSON.stringify(config));
+          });
+        
+        const url = process.env.SERV_URL + '/trainingdatauploaderendpoints?token=' + this.token;
+        axios.post(url,
+          data, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then((resp) => {
+          this.loader = false;
+          console.log(resp);
+          this.single = true;
+        }).catch(err => {
+          this.loader = false;
+          const message = err.response ? `${err.response.status} ${err.response.data}` : err.message
+          console.log(message);
+        })
+      } else {
+        this.header = true;
+      }
+    },
+    onReset(evt) {
+      evt.preventDefault();
+      this.$refs.multipleUploader.resetfile()
+      /* Reset our form values */
+      this.questionname = '',
+        this.answername = '',
+        this.doc_refname = '',
+        this.featurestatusname = ''
+      this.headerindex = ''
+      /* Trick to reset/clear native browser form validation state */
+
+      this.$nextTick(() => {
+        this.show = true
+      });
+    },
+
+  },
 }
 </script>
 
@@ -249,7 +392,7 @@ textarea {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-name: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
@@ -312,5 +455,22 @@ textarea {
     margin-left: 81%;
 }
 
+/* multiple file upload */
+.flex-container {
+  display: flex;
+  width: 100%;
+  box-shadow: 0px 0px 6px 0px grey;
+  border-radius: 16px;
+  margin-top: 4%;
+}
+
+.flex-container>div {
+  margin: -1px;
+  padding: 1%;
+  /* font-size: 20px; */
+  /* width: 31%; */
+  margin-top: 1%;
+  width: 47%;
+}
 
 </style>

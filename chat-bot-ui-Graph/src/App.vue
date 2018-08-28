@@ -18,10 +18,10 @@
             </b-navbar-brand>
           </div>
           <div style="float:right;padding-right:8%;top:18px;">
-            <i class="fas fa-bell  faa-ring animated" v-on:click="notify()" style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;"
+            <!-- <i class="fas fa-bell  faa-ring animated" v-on:click="notify()" style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;"
               title="Pending solutions">
               <b-badge variant="danger">{{msg}}</b-badge>
-            </i>
+            </i> -->
 
             <!-- <i  class="fas fa-bell  faa-ring animated" v-on:click="notify()"  style="color:white;cursor:pointer;padding-right: 14px;font-size:22px;" title="Pending solutions">
               <b-badge variant="danger">{{msg}}</b-badge>
@@ -40,7 +40,7 @@
           <ReqSolution v-if="chartEnabled==='REQ'" :children-request="letParentResponse" :token="token" @reqsent='onfeedback' />
           <formrfp v-if="chartEnabled==='RFPU'" :token="token" @finish="home" :version="options"></formrfp>
           <statusTracker v-if="chartEnabled==='RFPS'" :version="selectedversion" :token="token"></statusTracker>
-          <!-- <manualproduct v-if="chartEnabled==='PCM'"  :version="options" :token="token"></manualproduct> -->
+          <!-- <multitrain v-if="chartEnabled==='PCM'"  :version="options" :token="token"></multitrain> -->
           <manualquestion v-if="chartEnabled==='ME'" :version="options" :token="token"></manualquestion>
         </b-card>
         <ModelDialog @submit="hide" :remarks='remarks' :token="token" :question='question' :version='version' />
@@ -65,7 +65,7 @@
   import formrfp from './webcomponents/form-rfp'
   import statusTracker from './webcomponents/statusTracker'
   import loginpage from './webcomponents/loginPage'
-  import manualproduct from './webcomponents/manualProduct'
+  // import multitrain from './webcomponents/manualProduct'
   import manualquestion from './webcomponents/manualQuestions'
   import axios from 'axios'
   
@@ -81,7 +81,7 @@
       formrfp,
       statusTracker,
       loginpage,
-      manualproduct,
+      // multitrain,
       manualquestion
   
     },
@@ -151,11 +151,11 @@
             icon: 'fa fa-power-off',
           },
           // {
-          //   url: '../static/img/manual.svg',
-          //   name: 'Product Creation',
+          //   url: '../static/img/folder.svg',
+          //   name: 'Multiple Training Data',
           //   type: 'PCM',
           //   card: true,
-          //   content: 'Create Product Manualy',
+          //   content: 'Add multiple data files',
           //   icon: '',
           // },
       
@@ -246,8 +246,8 @@
       onremarks(message) {
         this.remarks = message.text;
         this.question = message.text.question,
-          this.flag = 'block',
-          this.version = this.selectedversion;
+        this.flag = 'block',
+        this.version = this.selectedversion;
         this.show();
       },
   
