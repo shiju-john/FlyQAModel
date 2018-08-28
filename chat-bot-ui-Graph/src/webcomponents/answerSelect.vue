@@ -69,8 +69,9 @@ components: {Loading},
       text: true,
       disabled:true,
       count: 0,
-      drop:'Fully Compliance',
+      drop:'Please Select Feature Status',
       options: [
+      { text: 'Please Select Feature Status', },
       { text: 'Fully Compliance', },
       { text: 'Partially Compliance', },
       { text: 'Non Compliance', }

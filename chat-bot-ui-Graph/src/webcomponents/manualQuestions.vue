@@ -1,13 +1,13 @@
 <template>
 <div class="ManualQuestions" v-if="single">
-  <div style="margin-top:1%;">
+  <div style="margin-top: 5px;">
     <b-button style="margin-left:1%;z-index: 1;" title="Add Training Data" variant="warning lg" v-on:click="addtrainingdata()">
       <span >
-        <i class="fas fa-plus"></i> Training Data</span>
+        <i class="fas fa-plus">&nbsp;&nbsp;</i> Training Data</span>
     </b-button>
       <b-button style="margin-left:1%;z-index: 1;" title="Upload Training Data File" variant="warning lg" v-on:click="uploadtrainingdata()">
       <span >
-        <i class="fas fa-upload"></i>Upload Training Data</span>
+        <i class="fas fa-upload">&nbsp;&nbsp;</i>Upload Training Data</span>
     </b-button>
     <div style="height:100%;"> 
       <table-component caption="heading" :data="manualquestion" cache-key="t2" sort-by="requestTime" style="font-size: 13px;height: 83vh;overflow:hidden;margin-top: -35px;">
