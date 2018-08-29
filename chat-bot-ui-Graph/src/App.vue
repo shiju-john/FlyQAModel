@@ -231,7 +231,7 @@
         this.dp=obj.dp;
         this.name=obj.username;
         this.checkversion();
-        this.reqsolution();
+        // this.reqsolution();
       },
       home() {
         this.chartEnabled = 'landing';
