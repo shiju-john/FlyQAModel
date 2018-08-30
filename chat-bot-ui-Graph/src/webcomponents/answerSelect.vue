@@ -97,6 +97,7 @@ components: {Loading},
     toggle() {
       this.updateFlag = false;
       this.text = true;
+      this.disabled=true;
       
 
     },
